@@ -29,13 +29,39 @@ class Player extends Race {
     this.name = name;
     this.passed = false;
     // this.roundBooster = undefined;
-    // this.planetType = 
+    // this.planetType =
     this.planets = [];
     this.numGaia = 0;
     this.techs = []
     this.techTiles = [];
     this.federations = [];
     this.pid =  -1;  // pid is player id for example 0 1 2 3
+  }
+
+  /*
+  * add the benefit into the benefit array by the triger,
+  * notice: this is only add them into the array, the benefit has not come true yet
+  * input: benefit
+  * output: add the benefit into the array
+  * @yalei
+  */
+  public getBenefit(benefit: Benefit){
+    if(benefit.trigger === Income){
+      this.incomeBenefits.push(benefit);
+    }
+    if(benefit.trigger === Now){
+      this.nowBenefits.push(benefit);
+      // since it is now, so we call the onBenefit at once;
+      onBenefit(benefit);
+    }
+  }
+
+  /*
+  * call the super function to make the benefit come true;
+  * @yalei
+  */
+  public onBenefit(benefit: Benefit){
+    super(benefit);
   }
 
   /*

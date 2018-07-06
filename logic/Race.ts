@@ -78,20 +78,13 @@ class Race {
     this.gaiaformer = 0;
 
     // this.cost = new Cost();
-
-    this.dig = 0;
-    this.nav = 0;
-    this.qic = 0;
-    this.gaia = 0;
-    this.resources = 0;
-    this.knowledge = 0;
     this.range = 1; // how far you can jump
 }
 
 public initialize(race: RaceType){
   this.race = race;
   this.buildingLib = new BuildingLib(race);
-  
+
   if(race === RaceType.Terrans) {
     this.planetType = PlanetType.Blue;
 
@@ -162,10 +155,34 @@ public initialize(race: RaceType){
   }
 }
 
+/*
+* make the benefit come true;
+* input: the benefit
+* output: change the number of gold or ore of the race
+* @yalei
+*/
+public onBenefit(benefit: Benefit){
+  const values = benefit.benefits;
+  let i = 0;
+  let value;
+  for(; i < values.length; i++){
+    value = values[i];
+    if(value.material === Material.Gold){ this.gold += value.quantity; }
+    if(value.material === Material.Ore){ this.ore += value.quantity; }
+    if(value.material === Material.Science){ this.science += value.quantity; }
+    if(value.material === Material.QIC){ this.qic += value.quantity; }
+    if(value.material === Material.Power){ this.power1 += value.quantity; }
+    if(value.material === Material.Charge){ chargePower(value.quantity); }
+    if(value.material === Material.Dig){ /*lets discuss this part later --- by yalei*/ }
+    if(value.material === Material.VP){ this.vp += value.quantity; }
+    if(value.material === Material.SpecialDig){ /*what is the special dig? ---by yalei*/ }
+    if(value.material === Material.SpecialRange){ this.range += value.quantity; }
+  }
+}
 
 //  public planetType(): PlanetType {
 
-//   return 
+//   return
 //  }
 
  public chargePower(charge: number){
