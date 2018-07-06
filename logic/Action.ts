@@ -1,3 +1,11 @@
+import Game from "./Game";
+import {MapBoard} from "./MapBoard";
+import {Player} from "./Player";
+
+/**
+ * Types of actions that a player can make on his turn 
+ * Not including free actions
+ */
 enum ActionType {
   Mine = 'mine',
   Gaia = 'gaia',
@@ -8,47 +16,65 @@ enum ActionType {
   Pass = 'pass'
 }
 
+/**
+ * Action class considers factors relating to making an action
+ */
 class Action {
-  private game;
-  private data;
-  private check;
-  private board;
-  private player;
+  private game: Game;
+  private action: ActionType;
+  private check: boolean;
+  private board: MapBoard;
+  private player: Player;
 
-  constructor(game, board, data) {
+  constructor(game: Game, board: MapBoard, action: ActionType) {
     this.game = game;
-    this.data = data;
+    this.action = action;
     this.check = true;
     this.board = board;
-
   }
 
    public checkValid(){
-     if(this.data.type === 'mine'){
+     if(this.action === 'mine'){
        this.buildMineCheck()
        return this.check;
      }
 
-     if(this.data.type === 'gaia'){
+     if(this.action === 'gaia'){
        return this.checkGaiaProject()
      }
 
-     if(this.data.type === 'update'){
+     if(this.action === 'update'){
        return this.checkUpdateBuilding()
      }
+
+     if(this.action === 'federation'){
+      return 
+    }
+
+    if(this.action === 'research'){
+      return 
+    }
+
+    if(this.action === 'special'){
+      return 
+    }
+
+    if(this.action === 'pass'){
+      return 
+    }
 
      return true;
    }
 
    public checkUpdateBuilding(){
-      const planet = this.board.getPlanet(this.data.hex);
+      const planet = this.board.getPlanet(this.action.hex);
       if(planet.pid !== this.player.pid){
         console.log("you do not own this planet");
       }
 
 
 
-      if(this.data.subType === 1){ // Mine ➜ Trading Station
+      if(this.action.subType === 1){ // Mine ➜ Trading Station
 
         if(this.planet.sid !== 0){  // this is mine
           console.log(" Mine ➜ Trading Station cost insufficient this.data.subType == 1 require mine type ");
@@ -236,4 +262,4 @@ public    doAction(){
 }
 
 
-export default Action
+export {Action};

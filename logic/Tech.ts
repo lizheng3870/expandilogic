@@ -8,7 +8,7 @@ class Tech{
   constructor(lane: number, level: number){
     this.lane = lane;
     this.level = level;
-    initialize();//git the benefit according the lane and level
+    initialize(); //git the benefit according the lane and level
   }
 
 /*

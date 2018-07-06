@@ -1,15 +1,3 @@
-
-
-class Value {
-    public quantity : number;
-    public material : Material
-    constructor(quantity : number, material : Material){
-      this.quantity = quantity;
-      this.material = material;
-
-    }
-}
-
 enum Material {
     Gold,
     Ore,
@@ -22,6 +10,29 @@ enum Material {
     VP,
     SpecialDig,
     SpecialRange
+}
+
+class Value {
+    public quantity : number;
+    public material : Material
+    constructor(quantity : number, material : Material){
+      this.quantity = quantity;
+      this.material = material;
+
+    }
+}
+
+const enum Trigger {
+    Now,
+    Fed,
+    Dig,
+    Build,
+    Income,
+    Pass,
+    Special,
+    ScienceUp,
+    GaiaBuild,
+    Buy
 }
 
 enum Count {
@@ -45,19 +56,6 @@ enum Struct {
     Institute = 'institute'
 }
 
-const enum Trigger {
-    Now,
-    Fed,
-    Dig,
-    Build,
-    Income,
-    Pass,
-    Special,
-    ScienceUp,
-    GaiaBuild,
-    Buy
-}
-
 
 class Benefit {
     public trigger: Trigger
@@ -70,8 +68,6 @@ class Benefit {
         this.object = object
         this.benefits = benefits
     }
-
-
 }
 
-export  { Benefit, Value, Material, Count, Struct, Trigger}
+export  {Benefit, Value, Material, Count, Struct, Trigger}

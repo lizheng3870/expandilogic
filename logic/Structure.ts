@@ -33,4 +33,4 @@ class Structure {
 }
 
 
-export {Structure, Building }
+export {Structure, Building}

@@ -185,4 +185,4 @@ class MapBoard {
 
 }
 
-export {Hex, MapBoard}
+export {Hex, MapBoard};

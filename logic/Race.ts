@@ -76,6 +76,8 @@ class Race {
     this.academies = 0;
     this.gaiaformer = 0;
 
+    // this.cost = new Cost();
+
     this.dig = 0;
     this.nav = 0;
     this.qic = 0;
@@ -87,6 +89,7 @@ class Race {
 
 public initialize(race: RaceType){
   this.buildingLib = new BuildingLib(race);
+  
   if(race === RaceType.Terrans) {
     this.planetType = PlanetType.Blue;
     
@@ -157,6 +160,12 @@ public initialize(race: RaceType){
   }
 }
 
+
+//  public planetType(): PlanetType {
+
+//   return 
+//  }
+
  public chargePower(charge: number){
     if(charge <= this.power1){
       this.power1 -= charge;
@@ -179,13 +188,14 @@ public initialize(race: RaceType){
 /**
 * Gaia Cost here exists in cost class which needs discussion for structure
 */
-public checkPowerForGaiaProject(){
-    if(this.power1 + this.power2 + this.power3 >= this.cost.getGaiaCost()){
-      return true;
-    } else {
-      return false;
-    }
-}
+// public checkPowerForGaiaProject(){
+//     if(this.power1 + this.power2 + this.power3 >= this.cost.getGaiaCost()){
+//       return true;
+//     } else {
+//       return false;
+//     }
+// }
+
 }
 
 export {Race, RaceType};

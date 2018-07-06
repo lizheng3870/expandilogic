@@ -9,4 +9,4 @@ class Location{
   }
 }
 
-export default Location
+export {Location};

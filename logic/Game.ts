@@ -1,13 +1,16 @@
-import Action from './Action'
+import {Action} from './Action'
 import Exchange from './Exchange'
-import MapBoard from './MapBoard'
+import {MapBoard} from './MapBoard'
 import RoundBooster from './RoundBooster'
 import TechBoard from './TechBoard'
 
 
 
 class Game {
-   constructor(gid){
+    public round: number;
+    public players: string[]
+   
+    constructor(gid: number){
      this.round = 1;
      this.players = [];
      this.playerNum = 0;

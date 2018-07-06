@@ -1,18 +1,18 @@
-import Race from './Race'
-import {Benefit, Value, Material, Count, Struct, Trigger}   from './Benefit'
-import MapBoard from './MapBoard'
+import {Race, RaceType} from './Race'
+import {Benefit, Value, Material, Count, Struct, Trigger} from './Benefit'
+import {MapBoard} from './MapBoard'
 
 enum Fed{
-  12vp,
-  8vp1qic,
-  8vp2pw,
-  7vp2ore,
-  7vp6gold,
-  6vp2klgs,
-  1ore1klg2gold
+  vp12,
+  vp8qic1,
+  vp8pw2,
+  vp7ore2,
+  vp7gold6,
+  vp6 2klgs,
+  ore1klg1gold2
 }
 
-class Federation{
+class Federation {
   public fed: Fed
   public fedStatus: string //green or gray
   public race: RaceType
@@ -91,4 +91,4 @@ class Federation{
     }
 }
 
-export{Fed}
+export {Federation};
