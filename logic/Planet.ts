@@ -1,5 +1,6 @@
 import {Structure, Building} from "./Structure"
-import Player from "./Player"
+import {Hex as Location } from 'react-hexgrid';
+
 
 enum PlanetType{
   Red,
@@ -18,14 +19,16 @@ enum PlanetType{
 class Planet{
   public building: Structure[]
   public type : PlanetType
-  public loc : Location
+  public hex : Location
+  public playerID: number
 //  public type : PlanetType
   constructor(loc: Location, type : PlanetType){
     this.type = type
-    this.loc = loc
+    this.hex = loc
+    this.playerID = -1;
   }
 
-  public terraformingCalculate(player: Player){
+  public terraformingCalculate(playerPlanetType: PlanetType){
     if(this.type === PlanetType.Purple){
       console.log("Transdim, need  gaia project ");
       return 1000000;
@@ -41,10 +44,12 @@ class Planet{
       return 0;
     }
 
-     let distance = Math.abs(this.type - player.planetType);
+     let distance = Math.abs(this.type - playerPlanetType);
      if(distance > 3) {
         distance = 3 - (distance -4)
      }
+
+     return distance;
 
   }
 

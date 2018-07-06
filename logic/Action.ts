@@ -1,3 +1,8 @@
+import Player from './Player'
+import Game from './Game'
+import {MapBoard} from './MapBoard'
+
+
 enum ActionType {
   Mine = 'mine',
   Gaia = 'gaia',
@@ -9,17 +14,18 @@ enum ActionType {
 }
 
 class Action {
-  private game;
+  private game: Game;
   private data;
-  private check;
-  private board;
+  private check: boolean;
+  private board: MapBoard;
   private player;
 
-  constructor(game, board, data) {
-    this.game = game;
-    this.data = data;
-    this.check = true;
-    this.board = board;
+  constructor(game, board, player, data) {
+    this.game = game
+    this.data = data
+    this.check = true
+    this.board = board
+    this.player = player
 
   }
 
@@ -42,7 +48,7 @@ class Action {
 
    public checkUpdateBuilding(){
       const planet = this.board.getPlanet(this.data.hex);
-      if(planet.pid !== this.player.pid){
+      if(planet.playerID !== this.player.pid){
         console.log("you do not own this planet");
       }
 
@@ -50,13 +56,13 @@ class Action {
 
       if(this.data.subType === 1){ // Mine ➜ Trading Station
 
-        if(this.planet.sid !== 0){  // this is mine
-          console.log(" Mine ➜ Trading Station cost insufficient this.data.subType == 1 require mine type ");
-          return false;
-        }
+        // if(this.planet.sid !== 0){  // this is mine todo
+        //   console.log(" Mine ➜ Trading Station cost insufficient this.data.subType == 1 require mine type ");
+        //   return false;
+        // }
 
 
-        if(this.board.hasNeighboring(this.data.hex, player.pid)){
+        if(this.board.hasNeighboring(this.data.hex, this.player.pid)){
               if(this.player.ore >= this.player.cost.station2.ore &&
                 this.player.gold >= this.player.cost.station2.gold ){
                   return true;
@@ -101,13 +107,13 @@ class Action {
      }
 
      const planet = this.board.getPlanet(this.data.hex);
-     // Transdim
-     if(planet.pid !== 8){
-       console.log("not  Transdim  can not start gaia project ");
-       return false;
-     }
+     // Transdim todo
+     // if(planet.pid !== 8){
+     //   console.log("not  Transdim  can not start gaia project ");
+     //   return false;
+     // }
 
-     if(this.player.checkPlanetDistance(data.hex) === false){
+     if(this.player.checkPlanetDistance(this.data.hex) === false){
              console.log("checkPlanetDistance error ");
              return false;
      }
@@ -128,7 +134,7 @@ public    doAction(){
 
     if(this.data.type === "update"){
       if(this.data.subType === 1){
-        if(this.board.hasNeighboring(this.data.hex, player.pid)){
+        if(this.board.hasNeighboring(this.data.hex, this.player.pid)){
               this.player.ore -= this.player.cost.station2.ore;
               this.player.gold -= this.player.cost.station2.gold;
 
@@ -137,7 +143,7 @@ public    doAction(){
             this.player.gold -= this.player.cost.station1.gold;
          }
 
-         this.board.updateBuiding(hex, 1);
+         // todo this.board.updateBuiding(hex, 1);
 
 
 
@@ -151,23 +157,23 @@ public    doAction(){
 
 
    public buildMine() {
-
-     if (buildMineCheck() === true) {
-       const planet = this.board.getPlanet(this.data.hex);
-       this.board.buildMine(this.data.location, this.player);
-       const terraforming = planet.terraformingCalculate(this.player);
-       const needOres = terraforming * this.player.cost.terraforming.ore;
-       this.player.ore -= needOres;
-       if(planet.pid === 7){  // Gaia
-         this.player.QIC -= 1;
-       }
-
-       this.player.gold -= this.cost.mine.gold;
-       this.player.ore -= this.cost.mine.ore;
-       this.player.mine++;
-       this.player.planets.push(planet);
-       planet.playerID = this.player.pid;
-     }
+//todo
+     // if (buildMineCheck() === true) {
+     //   const planet = this.board.getPlanet(this.data.hex);
+     //   this.board.buildMine(this.data.location, this.player);
+     //   const terraforming = planet.terraformingCalculate(this.player);
+     //   const needOres = terraforming * this.player.cost.terraforming.ore;
+     //   this.player.ore -= needOres;
+     //   if(planet.pid === 7){  // Gaia
+     //     this.player.QIC -= 1;
+     //   }
+     //
+     //   this.player.gold -= this.cost.mine.gold;
+     //   this.player.ore -= this.cost.mine.ore;
+     //   this.player.mine++;
+     //   this.player.planets.push(planet);
+     //   planet.playerID = this.player.pid;
+     //}
    }
 
    // Needs to check if player has any mines available on faction board
@@ -205,28 +211,30 @@ public    doAction(){
 
    public pass(){
      this.player.passed = true;
-     this.game.passed++;
+     this.game.passed.push(this.player.playerID);
    }
 
+//todo
    private checkHabitable() {
-     const planet = this.board.getPlanet(this.data.hex);
-     const terraforming = planet.terraformingCalculate(this.player);
-     const needOres = terraforming * this.player.cost.terraforming.ore;
-     if(this.player.ore >= needOres){
-       return true;
-     }else{
-       return false;
-     }
+     // const planet = this.board.getPlanet(this.data.hex);
+     // const terraforming = planet.terraformingCalculate(this.player.planetType);
+     // const needOres = terraforming * this.player.cost.terraforming.ore;
+     // if(this.player.ore >= needOres){
+     //   return true;
+     // }else{
+     //   return false;
+     // }
 
 
    }
 
+   //todo
    private checkResources() {
-     if(this.gold >= this.cost.mine.gold && this.ore >= this.cost.mine.ore){
-       return true;
-     } else {
-       return false;
-     }
+     // if(this.gold >= this.cost.mine.gold && this.ore >= this.cost.mine.ore){
+     //   return true;
+     // } else {
+     //   return false;
+     // }
    }
 
 
