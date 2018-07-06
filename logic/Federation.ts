@@ -58,81 +58,37 @@ class Federation{
       const benefit  = new Benefit(Trigger.Fed, null, null,
           [new Value(12, Material.VP)]);
       this.benefit.push(benefit)
-      //types[0]--;
-      hasFed.addFed(0);
     }
     if(fed === '8vp1qic'){
       const benefit  = new Benefit(Trigger.Fed, null, null,
           [new Value(8, Material.VP), new Value(1, Material.QIC)]);
       this.benefit.push(benefit)
-      //types[1]--;
-      hasFed.addFed(0);
     }
     if(fed === '8vp2pw'){
       const benefit  = new Benefit(Trigger.Fed, null, null,
           [new Value(8, Material.VP), new Value(2, Material.Power)]);
       this.benefit.push(benefit)
-      //types[2]--;
-      hasFed.addFed(0);
     }
     if(fed === '7vp2ore'){
       const benefit  = new Benefit(Trigger.Fed, null, null,
           [new Value(7, Material.VP), new Value(2, Material.Ore)]);
       this.benefit.push(benefit)
-      //types[2]--;
-      hasFed.addFed(0);
     }
     if(fed === '7vp6gold'){
       const benefit  = new Benefit(Trigger.Fed, null, null,
           [new Value(7, Material.VP), new Value(6, Material.Gold)]);
       this.benefit.push(benefit)
-      //types[2]--;
-      hasFed.addFed(0);
     }
     if(fed === '6vp2klgs'){
       const benefit  = new Benefit(Trigger.Fed, null, null,
           [new Value(6, Material.VP), new Value(2, Material.Science)]);
       this.benefit.push(benefit)
-      //types[2]--;
-      hasFed.addFed(0);
     }
-
-    if(fedID == 2)
-      this.vp += 8;
-      this.power += 2;
-      types[2]--;
-    if(fedID == 3)
-      this.vp += 7;
-      this.ore += 2;
-      types[3]--;
-    if(fedID == 4)
-      this.vp += 7;
-      this.gold += 6;
-      types[4]--;
-    if(fedID == 5)
-      this.vp += 6;
-      this.knowledge += 3;
-      types[5]--;
-    if(fedID == 6)
-      this.ore++;
-      this.gold++;
-      this.knowledge++;
-  }
-
-  useFed(fedID, actionID){
-    if(!this.hasFed.includes(fedID) || !this.hasFed[fedID].status == 'green'){
-       console.log('you have no such fed or have already used.');
-       return false;
-    }else{
-      types[fedID]++;
+    if(fed === '1ore1klg2gold'){
+      const benefit  = new Benefit(Trigger.Fed, null, null,
+          [new Value(1, Material.Ore), new Value(1, Material.Science)], new Value(2, Material.Gold)]);
+      this.benefit.push(benefit)
     }
-    if(actionID == 0)
-      //gain an advanced tech tile
-    if(actionID == 1)
-      //if level 5 is not occupied
-        //advance to the highest level (level 5) of a research area.
-    hasFed[fedID].side == 'gray';
-  }
 }
 
 export{Fed}
