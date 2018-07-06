@@ -7,7 +7,7 @@ import {Benefit, Value, Material, Count, Struct, Trigger} from './Benefit'
 import {Federation} from './Federation';
 
 
- import { GridGenerator, HexGrid, Layout, Path, Text, Hexagon, Pattern, HexUtils, Hex } from 'react-hexgrid';
+ import {GridGenerator, HexGrid, Layout, Path, Text, Hexagon, Pattern, HexUtils, Hex} from 'react-hexgrid';
 
 
 class Player extends Race {
@@ -27,13 +27,31 @@ class Player extends Race {
     this.name = name;
     this.passed = false;
     // this.roundBooster = undefined;
-    // this.planetType = 
+    // this.planetType =
     this.planets = [];
     this.numGaia = 0;
     this.techs = []
     this.techTiles = [];
     this.federations = [];
     this.pid =  -1;  // pid is player id for example 0 1 2 3
+  }
+
+  /*
+  * Add the benefit into the benefit array by the trigger,
+  * notice: this is only add them into the array, the benefit has not been used yet
+  * input: benefit
+  * output: add the benefit into the array
+  * @yalei
+  */
+  public getBenefit(benefit: Benefit){
+    if(benefit.trigger === Trigger.Income){
+      this.incomeBenefits.push(benefit);
+    }
+    if(benefit.trigger === Trigger.Now){
+      this.nowBenefits.push(benefit);
+      // since it is now, so we call the onBenefit at once;
+      super.onBenefit(benefit);
+    }
   }
 
   /*
@@ -62,7 +80,7 @@ class Player extends Race {
     const distance = this.nearDistance(hex);
     if(this.range >= distance){
       return true;
-    }else{
+    } else {
       if(this.range + this.qic * 2 >= distance){
         console.log("checkPlanetDistance OK  but need QIC ");
         return true;
