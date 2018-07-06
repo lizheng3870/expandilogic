@@ -89,7 +89,6 @@ class Race {
 }
 
 public initialize(race: RaceType){
-  this.race = race;
   this.buildingLib = new BuildingLib(race);
   
   if(race === RaceType.Terrans) {
@@ -190,7 +189,6 @@ public initialize(race: RaceType){
 /*
 * Gaia Cost here exists in cost class which needs discussion for structure
 */
-<<<<<<< HEAD
 // public checkPowerForGaiaProject(){
 //     if(this.power1 + this.power2 + this.power3 >= this.cost.getGaiaCost()){
 //       return true;
@@ -198,22 +196,6 @@ public initialize(race: RaceType){
 //       return false;
 //     }
 // }
-=======
-public checkPowerForGaiaProject(){
-    if(this.power1 + this.power2 + this.power3 >= this.getGaiaCost()){
-      return true;
-    } else {
-      return false;
-    }
-}
-
-public getGaiaCost(){
-  // if(this.race === RaceType.Gleens){ todo add
-  //   return 8;
-  // }
-  return 6;
-}
->>>>>>> 7616b770646b890ba562247147b8e25a0eb043db
 
 }
 

@@ -22,8 +22,6 @@ class Player extends Race {
   public nowBenefits: Benefit[];
   public incomeBenefits: Benefit[];
 
-
-
   constructor(name: string, raceType: RaceType){
     super(raceType);
     this.name = name;
