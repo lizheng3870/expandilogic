@@ -3,7 +3,7 @@ enum Material {
     Ore,
     Science,
     QIC,
-    Power,
+    Power, 
   //  ExtraPower,
     Charge,
     Dig,

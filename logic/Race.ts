@@ -25,7 +25,7 @@ enum RaceType {
  }
 
 /**
- * Race base class. Every race shares similar base 
+ * Race base class. Every race shares similar base
  * initialization aspects which are included here
  */
 class Race {
@@ -38,7 +38,7 @@ class Race {
     public power2: number;
     public power3:number;
     public pid: number;
-    
+
     public mine: number;
     public station: number;
     public institute: number;
@@ -57,7 +57,8 @@ class Race {
     public resources: number;
     public knowledge: number;
     public range: number;
-    
+    public race: RaceType;
+
   constructor(pid: number){
     this.vp = 10;
     this.gold = 15;
@@ -85,14 +86,15 @@ class Race {
     this.resources = 0;
     this.knowledge = 0;
     this.range = 1; // how far you can jump
-} 
+}
 
 public initialize(race: RaceType){
+  this.race = race;
   this.buildingLib = new BuildingLib(race);
   
   if(race === RaceType.Terrans) {
     this.planetType = PlanetType.Blue;
-    
+
   }
 
   if(race === RaceType.Lantids) {
@@ -112,7 +114,7 @@ public initialize(race: RaceType){
 
   if(race === RaceType.Taklons) {
     this.planetType = PlanetType.Brown;
-    
+
   }
 
   if(race === RaceType.Ambas) {
@@ -123,7 +125,7 @@ public initialize(race: RaceType){
     this.planetType = PlanetType.White;
     this.ore = 5;
   }
-  
+
   if(race === RaceType.Nevlas) {
     this.planetType = PlanetType.White;
     this.science = 2;
@@ -131,12 +133,12 @@ public initialize(race: RaceType){
 
   if(race === RaceType.HadschHallas) {
     this.planetType = PlanetType.White;
-  
+
   }
 
   if(race === RaceType.Ivits) {
     this.planetType = PlanetType.White;
-  
+
   }
 
   if(race === RaceType.Geodens) {
@@ -145,7 +147,7 @@ public initialize(race: RaceType){
 
   if(race === RaceType.Baltaks) {
     this.planetType = PlanetType.Orange;
-  
+
   }
 
   if(race === RaceType.Bescods) {
@@ -185,9 +187,10 @@ public initialize(race: RaceType){
     }
   }
 
-/**
+/*
 * Gaia Cost here exists in cost class which needs discussion for structure
 */
+<<<<<<< HEAD
 // public checkPowerForGaiaProject(){
 //     if(this.power1 + this.power2 + this.power3 >= this.cost.getGaiaCost()){
 //       return true;
@@ -195,6 +198,22 @@ public initialize(race: RaceType){
 //       return false;
 //     }
 // }
+=======
+public checkPowerForGaiaProject(){
+    if(this.power1 + this.power2 + this.power3 >= this.getGaiaCost()){
+      return true;
+    } else {
+      return false;
+    }
+}
+
+public getGaiaCost(){
+  // if(this.race === RaceType.Gleens){ todo add
+  //   return 8;
+  // }
+  return 6;
+}
+>>>>>>> 7616b770646b890ba562247147b8e25a0eb043db
 
 }
 

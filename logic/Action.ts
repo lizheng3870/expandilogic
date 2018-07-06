@@ -196,6 +196,10 @@ public    doAction(){
      }
    }
 
+  
+  /**
+   * Checks if the player can undertake this action
+   */
    // Needs to check if player has any mines available on faction board
    // It is empty (i.e., has no structures on it).
    // It is accessible from one of your planets.
