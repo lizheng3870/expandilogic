@@ -1,35 +1,33 @@
 import {Benefit, Value, Material, Count, Struct, Trigger} from './Benefit'
+import {Player} from './Player'
 
 class Tech{
   public lane: number;
   public level: number;
-  public benefit: Benefit;
 
   constructor(lane: number, level: number){
     this.lane = lane;
     this.level = level;
-    this.initialize();//git the benefit according the lane and level
   }
 
 /*
 * initialize the benefit
 */
-  public initialize(){
+  public update(player: Player){
     if(this.level === 3){
       //player.chargePower(3);
-      const value = new Value(3, Material.Charge);
-
+      const b1 = new Benefit(Trigger.Now， null, null, [new Value(3, Material.Charge)]);
     }
 
+    const b2;
+    if(lane === 0){
+      if(level === 1) {b2 = new Benefit(Trigger.Now, null, null, [new Value(2, Material.Ore)])}
+      if(level === 2) {;player.cost.terraforming.ore = 2;}
+      if(level === 3) {player.cost.terraforming.ore = 1;}
+      if(level === 4) {player.ore += 2;}
+      //if(level == 5) // player.getFedaration();
+    }
 
-  //   if(lane == 0){
-  //     if(level == 1) player.ore += 2;
-  //     if(level == 2) player.cost.terraforming.ore = 2;
-  //     if(level == 3) player.cost.terraforming.ore = 1;
-  //     if(level == 4) player.ore += 2;
-  //     //if(level == 5) // player.getFedaration();
-  //   }
-  //
   //   if(lane == 1){
   //     if(level == 1) player.QIC += 1;
   //     if(level == 2) player.range = 2;
