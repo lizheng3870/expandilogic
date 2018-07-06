@@ -7,18 +7,17 @@ class BuildCost {
     this.material = material;
     this.quantity = quantity;
   }
-
 }
 // todo this class later redesign
 
  class Cost {
-    public items : BuildCost[];
+    public items: BuildCost[];
 
 
 
 
 // this code affects my Race and Player class but unsure how it should be structured at this point
-  constructor(items:BuildCost[]) {
+  constructor(items: BuildCost[]) {
       this.items = items;
 
     // this.mine = [{material:'gold', quantity: 2}, {material:'ore', quantity: 1}];

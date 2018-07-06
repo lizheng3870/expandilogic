@@ -181,14 +181,8 @@ class MapBoard {
 
   }
 
-  //todo
-
-  public getPlanet(hex: Hex):Planet{
-      return new Planet(Hex(0,0,0), PlanetType.Red)
-  }
-
 
 
 }
 
-export {Hex, MapBoard}
+export {Hex, MapBoard};

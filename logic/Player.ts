@@ -3,7 +3,8 @@ import {Planet, PlanetType} from './Planet'
 import Tech from './Tech'
 import TechTiles from './TechTiles'
 import RoundBooster from './RoundBooster'
-import {Federation} from './Federation'
+import {Benefit, Value, Material, Count, Struct, Trigger} from './Benefit'
+import {Federation} from './Federation';
 
 
  import { GridGenerator, HexGrid, Layout, Path, Text, Hexagon, Pattern, HexUtils, Hex } from 'react-hexgrid';
@@ -13,21 +14,22 @@ class Player extends Race {
   public name: string;
   public passed: boolean;
   public roundBooster: RoundBooster;
-  public planets: Planet[];
+  public planets: PlanetType[];
   public numGaia: number;
   public techs: Tech[];
   public techTiles: TechTiles[];
   public federations: Federation[];
-  public planetType: PlanetType;
-  public pid: number;
+  public nowBenefits: Benefit[];
+  public incomeBenefits: Benefit[];
+
 
 
   constructor(name: string, raceType: RaceType){
     super(raceType);
     this.name = name;
     this.passed = false;
-    this.roundBooster = null;
-    this.planetType = null;
+    // this.roundBooster = undefined;
+    // this.planetType = 
     this.planets = [];
     this.numGaia = 0;
     this.techs = []
@@ -74,4 +76,4 @@ class Player extends Race {
 
 }
 
-export default Player;
+export {Player};

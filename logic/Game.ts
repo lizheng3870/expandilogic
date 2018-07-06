@@ -1,30 +1,16 @@
-import Action from './Action'
+import {Action} from './Action'
 import Exchange from './Exchange'
-import {Hex, MapBoard} from './MapBoard'
+import {MapBoard} from './MapBoard'
 import RoundBooster from './RoundBooster'
 import TechBoard from './TechBoard'
-import Player from './Player'
-
-//import Exchange from './Exchange' todo
 
 
 
 class Game {
-    public passed: number[]
-    
-    private roundBoosters : RoundBooster[];
-    private round : number
-    private players: Player[]
-    private playerNum: number
-    private turn: number
-    private phase: number
-    private status: number
-    private board : MapBoard
-    private techBoard: TechBoard
-//    private exchange: Exchange;
-
-
-   constructor(gid){
+    public round: number;
+    public players: string[]
+   
+    constructor(gid: number){
      this.round = 1;
      this.players = [];
      this.playerNum = 0;
@@ -38,7 +24,7 @@ class Game {
 
      this.roundBoosters = [];
      this.loadRoundBooster();
-     //this.exchange = new Exchange(); todo
+     this.exchange = new Exchange();
 
    }
 
@@ -72,7 +58,7 @@ class Game {
 
    public nextTurn(){
      console.log("current round " + this.round + " turn " + this.turn);
-     if(this.passed.length === 4){
+     if(this.passed === 4){
        this.endRound();
        this.newRound();
      }
@@ -131,13 +117,13 @@ class Game {
      player.income.doIncome(player);
    }
 
-   public GaiaPhase(){
-
-   }
-
-   public CleanUPPhase(){
-
-   }
+   // public GaiaPhase(){
+   //
+   // }
+   //
+   // public CleanUPPhase(){
+   //
+   // }
 
 
    public processRoundRooter(data){
@@ -170,7 +156,6 @@ class Game {
        }
 
        const player = this.players[data.pid];
-      // (game, board, data)
        const action = new Action(this, this.board, player, data);
        if(player.pid !== this.turn){
          console.log("pid error "+ player.pid + "   "+ this.turn);

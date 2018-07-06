@@ -1,6 +1,4 @@
-import Player from './Player'
-
-//class Exchange {
+// class Exchange {
 //   constructor() {
 //     this.items = ['qic', 'ore', 'knowledge', 'credit', 'power'];
 //   }

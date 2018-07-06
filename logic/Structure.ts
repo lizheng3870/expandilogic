@@ -21,7 +21,7 @@ class Structure {
   public status : BuildingStatus
   public benefit : Benefit
   public location : Location | null = null
-
+  
   constructor(type: Building, price: Cost, power: number, benefit: Benefit){
     this.value = power
     this.status = BuildingStatus.Unbuilt

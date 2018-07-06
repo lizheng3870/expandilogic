@@ -1,6 +1,6 @@
-//import Race from './Race'
-import {Benefit, Value, Material, Count, Struct, Trigger}   from './Benefit'
-//import MapBoard from './MapBoard'
+// import {Race, RaceType} from './Race'
+// import {Benefit, Value, Material, Count, Struct, Trigger} from './Benefit'
+// import {MapBoard} from './MapBoard'
 
 
 // enum Fed{
@@ -15,22 +15,16 @@ import {Benefit, Value, Material, Count, Struct, Trigger}   from './Benefit'
 
 // todo rename a better name like VP VP
 enum Fed{
-  vp,
-  vp1qic,
-  vp2pw,
-  vp2ore,
-  vp6gold,
-  vp2klgs,
-  ore1klg2gold
+  vp12,
+  vp8qic1,
+  vp8pw2,
+  vp7ore2,
+  vp7gold6,
+  vp62klgs,
+  ore1klg1gold2
 }
 
-
-
-//todo  define this class clearly. Federation is fedaration token.
-// do not checkValid. that is Action class method. when do action of fedaration will check it.
-// please focus only on token benefit for Federation like TechTile
-// rong will concern race. you only need build token of 6. he is will to race of Gleens.
-class Federation{
+class Federation {
   public fed: Fed
   public fedStatus: string //green or gray
   //public race: RaceType
@@ -111,5 +105,5 @@ class Federation{
     // }
   }
 }
-// todo not Federation?
-export {Federation, Fed}
+
+export {Federation, Fed};
