@@ -1,6 +1,9 @@
 import {Structure} from "./Structure";
 import { RaceType } from "./Race";
 
+/**
+ * Building Libraries for each faction
+ */
 class BuildingLib {
 
     public mines: Structure[]

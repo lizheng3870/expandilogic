@@ -4,6 +4,9 @@ import Tech from './Tech'
 import {Structure} from './Structure';
 import {BuildingLib} from './BuildingLib';
 
+/**
+ * Enum Racetype
+ */
 enum RaceType {
     Terrans,
     Lantids,
