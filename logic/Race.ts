@@ -46,7 +46,6 @@ class Race {
     public cost: Cost;
     public planetType: PlanetType;
     public tech: Tech;
-
     public buildingLib: BuildingLib;
 
     public dig: number;
@@ -88,7 +87,6 @@ public initialize(race: RaceType){
   if(race === RaceType.Terrans) {
     this.planetType = PlanetType.Blue;
     
-      
   }
 
   if(race === RaceType.Lantids) {
@@ -97,19 +95,22 @@ public initialize(race: RaceType){
   }
 
   if(race === RaceType.Xenos) {
-    // this.planetType = PlanetType.;
+    this.planetType = PlanetType.Yellow;
+
   }
 
   if(race === RaceType.Gleens) {
+    this.planetType = PlanetType.Yellow;
     this.qic = 0;
   }
 
   if(race === RaceType.Taklons) {
+    this.planetType = PlanetType.Brown;
     
   }
 
   if(race === RaceType.Ambas) {
-  
+    this.planetType = PlanetType.Brown;
   }
 
   if(race === RaceType.Itars) {
@@ -123,15 +124,13 @@ public initialize(race: RaceType){
   }
 
   if(race === RaceType.HadschHallas) {
-   
+    this.planetType = PlanetType.White;
+  
   }
 
   if(race === RaceType.Ivits) {
-   
-  }
-
-  if(race === RaceType.Itars) {
-    this.ore = 5;
+    this.planetType = PlanetType.White;
+  
   }
 
   if(race === RaceType.Geodens) {
@@ -177,13 +176,13 @@ public initialize(race: RaceType){
 /**
 * Gaia Cost here exists in cost class which needs discussion for structure
 */
-// public checkPowerForGaiaProject(){
-//     if(this.power1 + this.power2 + this.power3 >= this.cost.getGaiaCost()){
-//       return true;
-//     } else {
-//       return false;
-//     }
-// }
+public checkPowerForGaiaProject(){
+    if(this.power1 + this.power2 + this.power3 >= this.cost.getGaiaCost()){
+      return true;
+    } else {
+      return false;
+    }
+}
 }
 
 export {Race, RaceType};
