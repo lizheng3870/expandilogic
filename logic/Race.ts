@@ -1,5 +1,4 @@
 import {Planet, PlanetType} from './Planet'
-import Cost from './Cost'
 import Tech from './Tech'
 import {Structure} from './Structure';
 import {BuildingLib} from './BuildingLib';
@@ -47,7 +46,6 @@ class Race {
     public academies: number;
     public gaiaformer: number;
 
-    public cost: Cost;
     public planetType: PlanetType;
     public tech: Tech;
     public buildingLib: BuildingLib;
@@ -78,10 +76,14 @@ class Race {
     this.academies = 0;
     this.gaiaformer = 0;
 
-    // this.cost = new Cost();
     this.range = 1; // how far you can jump
 }
 
+/**
+ * Initializes Racetype depending on selected Race.
+ * Need to add tech level 
+ * @param race 
+ */
 public initialize(race: RaceType){
   this.buildingLib = new BuildingLib(race);
 
@@ -97,6 +99,7 @@ public initialize(race: RaceType){
 
   if(race === RaceType.Xenos) {
     this.planetType = PlanetType.Yellow;
+
 
   }
 

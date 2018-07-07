@@ -51,7 +51,6 @@ enum Struct {
     Mine = 'mine',
     TradingStation = 'trading',
     Lab = 'Lab',
-    BigBuildings = 'bigbuildings',
     Academy = 'academy',
     Institute = 'institute'
 }

@@ -74,7 +74,7 @@ class Action {
 
 
 
-      if(this.action.subType === 1){ // Mine ➜ Trading Station
+      if(this.action.subtype === 1){ // Mine ➜ Trading Station
 
         if(this.planet.sid !== 0){  // this is mine
           console.log(" Mine ➜ Trading Station cost insufficient this.data.subType == 1 require mine type ");
@@ -147,7 +147,7 @@ class Action {
 
    }
 
-public    doAction(){
+public doAction(){
     if(this.data.type === 'mine') {
         this.buildMine();
     }
@@ -169,12 +169,7 @@ public    doAction(){
 
       }
     }
-
-
-
   }
-
-
 
    public buildMine() {
 
