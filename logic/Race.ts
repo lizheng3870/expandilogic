@@ -212,6 +212,16 @@ public onBenefit(benefit: Benefit){
     }
   }
 
+  /*
+  * spend the power to get something
+  * this function only consume power
+  * @yalei;
+  */
+  public spendPower(charge: number){
+    this.power3 -= charge;
+    this.power1 += charge;
+  }
+
 /*
 * Gaia Cost here exists in cost class which needs discussion for structure
 */
