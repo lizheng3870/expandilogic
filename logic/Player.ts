@@ -5,9 +5,7 @@ import TechTiles from './TechTiles'
 import RoundBooster from './RoundBooster'
 import {Benefit, Value, Material, Count, Struct, Trigger} from './Benefit'
 import {Federation} from './Federation';
-
-
- import {GridGenerator, HexGrid, Layout, Path, Text, Hexagon, Pattern, HexUtils, Hex} from 'react-hexgrid';
+import {GridGenerator, HexGrid, Layout, Path, Text, Hexagon, Pattern, HexUtils, Hex} from 'react-hexgrid';
 
 
 class Player extends Race {
