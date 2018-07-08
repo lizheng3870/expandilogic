@@ -1,5 +1,7 @@
 import {Structure, Building} from "./Structure"
-import Player from "./Player"
+import {Player} from "./Player"
+import {Hex as Location} from 'react-hexgrid';
+
 
 enum PlanetType{
   Red,
