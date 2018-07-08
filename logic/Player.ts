@@ -13,15 +13,17 @@ class Player extends Race {
   public name: string;
   public passed: boolean;
   public roundBooster: RoundBooster;
-  public planets: PlanetType[];
+  public planets: Planet[];
   public numGaia: number;
   public digCost: Cost;
   public gaiaFormingCost: Cost;
   public techs: Tech[];
   public techTiles: TechTiles[];
   public federations: Federation[];
+  public planetType: PlanetType;
   public nowBenefits: Benefit[];
   public incomeBenefits: Benefit[];
+  public pid: number;
 
   constructor(name: string, raceType: RaceType){
     super(raceType);
@@ -71,7 +73,7 @@ class Player extends Race {
     let min = 10000;
 
     for(let i = 0; i < this.planets.length; i++){
-      const d = HexUtils.distance(this.planets[i].hex, hex);
+      const d = HexUtils.distance(this.planets[i].loc, hex);
       if(d < min) {
         min = d;
       }

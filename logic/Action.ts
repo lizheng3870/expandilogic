@@ -2,8 +2,13 @@ import Game from "./Game";
 import {MapBoard} from "./MapBoard";
 import {Player} from "./Player";
 
+class UserRequest{
+  public type : ActionType;
+
+}
+
 /**
- * Types of actions that a player can make on his turn 
+ * Types of actions that a player can make on his turn
  * Not including free actions
  */
 enum ActionType {
@@ -25,17 +30,19 @@ class Action {
   private check: boolean;
   private board: MapBoard;
   private player: Player;
+  private data: UserRequest;
 
-  constructor(game: Game, board: MapBoard, action: ActionType) {
+  constructor(game: Game, board: MapBoard, player: Player, data: UserRequest) {
     this.game = game;
-    this.action = action;
+    //this.action = action;
     this.check = true;
     this.board = board;
+    this.data = data;
   }
 
    public checkValid(){
      if(this.action === 'mine'){
-       this.buildMineCheck()
+      /* todo this.buildMineCheck() */
        return this.check;
      }
 
@@ -48,61 +55,63 @@ class Action {
      }
 
      if(this.action === 'federation'){
-      return 
+      return
     }
 
     if(this.action === 'research'){
-      return 
+      return
     }
 
     if(this.action === 'special'){
-      return 
+      return
     }
 
     if(this.action === 'pass'){
-      return 
+      return
     }
 
      return true;
    }
 
+  //todo
    public checkUpdateBuilding(){
-      const planet = this.board.getPlanet(this.action.hex);
-      if(planet.pid !== this.player.pid){
-        console.log("you do not own this planet");
-      }
-
-
-
-      if(this.action.subtype === 1){ // Mine ➜ Trading Station
-
-        if(this.planet.sid !== 0){  // this is mine
-          console.log(" Mine ➜ Trading Station cost insufficient this.data.subType == 1 require mine type ");
-          return false;
-        }
-
-
-        if(this.board.hasNeighboring(this.data.hex, player.pid)){
-              if(this.player.ore >= this.player.cost.station2.ore &&
-                this.player.gold >= this.player.cost.station2.gold ){
-                  return true;
-                }else{
-                  console.log(" Mine ➜ Trading Station cost insufficient ");
-                  return false;
-                }
-
-        }else{
-
-          if(this.player.ore >= this.player.cost.station1.ore &&
-            this.player.gold >= this.player.cost.station1.gold ){
-              return true;
-            }else{
-              console.log(" Mine ➜ Trading Station cost insufficient ");
-              return false;
-            }
-         }
-
-      }
+   /*
+      // const planet = this.board.getPlanet(this.data.hex);
+      // if(planet.pid !== this.player.pid){
+      //   console.log("you do not own this planet");
+      // }
+      //
+      //
+      //
+      // if(this.action.subtype === 1){ // Mine ➜ Trading Station
+      //
+      //   if(this.planet.sid !== 0){  // this is mine
+      //     console.log(" Mine ➜ Trading Station cost insufficient this.data.subType == 1 require mine type ");
+      //     return false;
+      //   }
+      //
+      //
+      //   if(this.board.hasNeighboring(this.data.hex, player.pid)){
+      //         if(this.player.ore >= this.player.cost.station2.ore &&
+      //           this.player.gold >= this.player.cost.station2.gold ){
+      //             return true;
+      //           }else{
+      //             console.log(" Mine ➜ Trading Station cost insufficient ");
+      //             return false;
+      //           }
+      //
+      //   }else{
+      //
+      //     if(this.player.ore >= this.player.cost.station1.ore &&
+      //       this.player.gold >= this.player.cost.station1.gold ){
+      //         return true;
+      //       }else{
+      //         console.log(" Mine ➜ Trading Station cost insufficient ");
+      //         return false;
+      //       }
+      //    }
+      //
+      // }
 
       // if(this.data.subType === 2){
       //
@@ -115,11 +124,13 @@ class Action {
       // if(this.data.subType === 4){
       //
       // }
+      */
 
 
    }
 
    public checkGaiaProject(){
+     /*
      // page 11
      if(this.player.gaiaformer === 0){
        console.log("gaiaformer not available");
@@ -143,11 +154,13 @@ class Action {
        return false;
      }
 
+*/
      return true;
 
    }
 
 public doAction(){
+  /*
     if(this.data.type === 'mine') {
         this.buildMine();
     }
@@ -169,9 +182,12 @@ public doAction(){
 
       }
     }
+
+    */
   }
 
    public buildMine() {
+     /*
 
      if (buildMineCheck() === true) {
        const planet = this.board.getPlanet(this.data.hex);
@@ -189,9 +205,10 @@ public doAction(){
        this.player.planets.push(planet);
        planet.playerID = this.player.pid;
      }
+     */
    }
 
-  
+
   /**
    * Checks if the player can undertake this action
    */
@@ -200,6 +217,7 @@ public doAction(){
    // It is accessible from one of your planets.
    // It is habitable to your faction.
    // If the planet is not habitable, you must pay any costs required to make it habitable
+   /*
    public buildMineCheck() {
 
 
@@ -247,6 +265,7 @@ public doAction(){
    }
 
    private checkResources() {
+
      if(this.gold >= this.cost.mine.gold && this.ore >= this.cost.mine.ore){
        return true;
      } else {
@@ -254,7 +273,7 @@ public doAction(){
      }
    }
 
-
+*/
 
 
 

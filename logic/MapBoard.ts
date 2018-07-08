@@ -181,6 +181,11 @@ class MapBoard {
 
   }
 
+ //todo
+  public getPlanet(hex){
+    return new Planet(Hex(0,0,0), PlanetType.Red)
+  }
+
 
 
 }

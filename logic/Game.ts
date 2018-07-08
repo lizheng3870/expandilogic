@@ -1,15 +1,28 @@
 import {Action} from './Action'
-import Exchange from './Exchange'
+import {Merchandise, Exchange} from './Exchange'
 import {MapBoard} from './MapBoard'
 import RoundBooster from './RoundBooster'
 import TechBoard from './TechBoard'
+import {Player} from "./Player";
+
 
 
 
 class Game {
-    public round: number;
-    public players: string[]
-   
+    private round: number
+    private players: Player[]
+    private playerNum: number
+    private turn: number
+    private phase: number
+    private status: number
+    private board: MapBoard
+    private techBoard: TechBoard
+    private passed: boolean[]
+
+    private roundBoosters: RoundBooster[]
+    private exchange: Exchange
+
+
     constructor(gid: number){
      this.round = 1;
      this.players = [];
@@ -58,7 +71,7 @@ class Game {
 
    public nextTurn(){
      console.log("current round " + this.round + " turn " + this.turn);
-     if(this.passed === 4){
+     if(this.passed.length === 4){
        this.endRound();
        this.newRound();
      }
@@ -76,7 +89,7 @@ class Game {
 
      const player = this.players[this.turn];
 
-     if(player.passed){
+     if(player.passed === true){
        this.nextTurn();
      }
 
@@ -116,14 +129,14 @@ class Game {
    public calculateIncomeAtBeginOfRound(player){
      player.income.doIncome(player);
    }
+  //todo
+   public GaiaPhase(){
 
-   // public GaiaPhase(){
-   //
-   // }
-   //
-   // public CleanUPPhase(){
-   //
-   // }
+   }
+
+   public CleanUPPhase(){
+
+   }
 
 
    public processRoundRooter(data){
