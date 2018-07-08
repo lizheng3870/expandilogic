@@ -36,7 +36,7 @@ class Race {
     public qic: number;
     public power1: number;
     public power2: number;
-    public power3:number;
+    public power3: number;
     public pid: number;
 
     public mine: number;
@@ -56,6 +56,7 @@ class Race {
     public resources: number;
     public knowledge: number;
     public range: number;
+    public specialRange: number;
     public race: RaceType;
 
   constructor(pid: number){
@@ -77,6 +78,7 @@ class Race {
     this.gaiaformer = 0;
 
     this.range = 1; // how far you can jump
+    this.specialRange = 0;// the bonus range from using QIC or Special Power;
 }
 
 /**
@@ -187,7 +189,8 @@ public onBenefit(benefit: Benefit){
     if(value.material === Material.Dig){ /*lets discuss this part later --- by yalei*/ }
     if(value.material === Material.VP){ this.vp += value.quantity; }
     if(value.material === Material.SpecialDig){ /*what is the special dig? ---by yalei*/ }
-    if(value.material === Material.SpecialRange){ this.range += value.quantity; }
+    if(value.material === Material.SpecialRange){ this.specialRange += value.quantity; }
+    if(value.material === Material.GaiaFormer){this.gaiaformer += value.quantity;}
   }
 }
 

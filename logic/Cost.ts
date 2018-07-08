@@ -42,4 +42,4 @@ class BuildCost {
 
 }
 
-export default Cost
+export {Cost, BuildCost}

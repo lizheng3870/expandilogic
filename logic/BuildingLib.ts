@@ -272,5 +272,4 @@ class BuildingLib {
             }        
         }
     }
-}
 export {BuildingLib};

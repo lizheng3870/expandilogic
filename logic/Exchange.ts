@@ -101,7 +101,7 @@ class Exchange{
      * // problem: how to reduce it after one action?
      * In player's class, if does exchange and get === Material.SpecialRange, do player.range-=totalGet after the exchange
      */
-    if(get === Material.SpecialRange) player.range += totalGet;
+    if(get === Material.SpecialRange) player.specialRange += totalGet;
     if(get === Material.QIC) player.qic += totalGet;
     if(get === Material.Ore) player.ore += totalGet;
     if(get === Material.Gold) player.gold += totalGet;

@@ -5,248 +5,109 @@ class Tech{
   public lane: number;
   public level: number;
 
+  /**
+   * each square of technology in the tech board would have the this.lane and this.level to stand for its position
+   * @param this.lane the type of technology
+   * @param this.level the this.level of technology
+   */
   constructor(lane: number, level: number){
-    this.lane = lane;
-    this.level = level;
+    this.lane = this.lane;
+    this.level = this.level;
   }
 
-/*
-* initialize the benefit
-*/
+/**
+ * update and get the benefit
+ * @param player the player who do the update
+ */
   public update(player: Player){
     if(this.level === 3){
       //player.chargePower(3);
-      const b1 = new Benefit(Trigger.Now， null, null, [new Value(3, Material.Charge)]);
-      player.nowBenefits.push(b1);
+      const b1 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(3, Material.Charge)]);
+      player.getBenefit(b1);
     }
 
+    let b2 = null;
 
-  //   if(lane == 0){
-  //     if(level == 1) player.ore += 2;
-  //     if(level == 2) player.cost.terraforming.ore = 2;
-  //     if(level == 3) player.cost.terraforming.ore = 1;
-  //     if(level == 4) player.ore += 2;
-  //     //if(level == 5) // player.getFedaration();
-  //   }
-  //
-
-    const b2;
-    if(lane === 0){
-      if(level === 1) {b2 = new Benefit(Trigger.Now, null, null, [new Value(2, Material.Ore)])}
-      if(level === 2) {;player.cost.terraforming.ore = 2;}
-      if(level === 3) {player.cost.terraforming.ore = 1;}
-      if(level === 4) {player.ore += 2;}
-      //if(level == 5) // player.getFedaration();
+    //dig
+    if(this.lane === 0){
+      if(this.level === 1) {b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(2, Material.Ore)]);}
+      if(this.level === 2) {player.digCost.items[0].quantity = 2;}
+      if(this.level === 3) {player.digCost.items[0].quantity = 1;}
+      if(this.level === 4) {b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(2, Material.Ore)]);}
+      //if(this.level == 5) // player.getFedaration();
     }
-  //   if(lane == 1){
-  //     if(level == 1) player.QIC += 1;
-  //     if(level == 2) player.range = 2;
-  //     if(level == 3) player.QIC += 1;
-  //     if(level == 4) player.range = 3;
-  //     if(level == 5){
-  //       player.range = 4;
-  //       //player.getLostPlanet();
-  //     }
-  //   }
-  //
-  //   if(lane == 2){
-  //     if(level == 1) player.QIC += 1;
-  //     if(level == 2) player.QIC += 1;
-  //     if(level == 3) player.QIC += 2;
-  //     if(level == 4) player.QIC += 2;
-  //     if(level == 5) player.QIC += 4;
-  //   }
-  //
-  //   if(lane == 3){
-  //     if(level == 1) player.gaiaformer += 1;
-  //     if(level == 2) player.power1 += 3;
-  //     if(level == 3){
-  //       player.gaiaformer += 1;
-  //       player.cost.convertGaia = 4;
-  //     }
-  //     if(level == 4){
-  //       player.gaiaformer += 1;
-  //       player.cost.convertGaia = 3;
-  //     }
-  //     if(level == 5) player.VP += 4 + 1 * player.numGaia;
-  //   }
-  //
-  //   if(lane == 4){
-  //     if(level == 1){
-  //       player.income.gold += 2;
-  //       player.income.charge += 1;
-  //     }
-  //     if(level == 2){
-  //       player.income.ore += 1;
-  //       player.income.charge += 1;
-  //     }
-  //     if(level == 3){
-  //       player.income.gold += 1;
-  //       player.income.charge += 1;
-  //     }
-  //     if(level == 4){
-  //       player.income.ore += 1;
-  //       player.income.gold += 1;
-  //       player.income.charge += 1;
-  //     }
-  //     if(level == 5){
-  //       player.income.ore -= 2;
-  //       player.income.gold -= 4;
-  //       player.income.charge -= 4;
-  //       player.ore += 3;
-  //       player.gold += 6;
-  //       player.chargePower(6);
-  //     }
-  //   }
-  //
-  //   if(lane == 5){
-  //     if(level == 1) player.income.science += 1;
-  //     if(level == 2) player.income.science += 1;
-  //     if(level == 3) player.income.science += 1;
-  //     if(level == 4) player.income.science += 1;
-  //     if(level == 5){
-  //       player.income.science -= 4;
-  //       player.science += 9;
-  //     }
-  //   }
-  //
-  // }
-  //
-  //   public update(player){
-  //      const lane = this.lane;
-  //      const level = this.level;
-  //
-  //      if(level == 3){
-  //        player.chargePower(3);
-  //      }
-  //
-  //      if(lane == 0){
-  //        if(level == 1) player.ore += 2;
-  //        if(level == 2) player.cost.terraforming.ore = 2;
-  //        if(level == 3) player.cost.terraforming.ore = 1;
-  //        if(level == 4) player.ore += 2;
-  //        //if(level == 5) // player.getFedaration();
-  //      }
-  //
-  //      if(lane == 1){
-  //        if(level == 1) player.QIC += 1;
-  //        if(level == 2) player.range = 2;
-  //        if(level == 3) player.QIC += 1;
-  //        if(level == 4) player.range = 3;
-  //        if(level == 5){
-  //          player.range = 4;
-  //          //player.getLostPlanet();
-  //        }
-  //      }
-  //
-  //      if(lane == 2){
-  //        if(level == 1) player.QIC += 1;
-  //        if(level == 2) player.QIC += 1;
-  //        if(level == 3) player.QIC += 2;
-  //        if(level == 4) player.QIC += 2;
-  //        if(level == 5) player.QIC += 4;
-  //      }
-  //
-  //      if(lane == 3){
-  //        if(level == 1) player.gaiaformer += 1;
-  //        if(level == 2) player.power1 += 3;
-  //        if(level == 3){
-  //          player.gaiaformer += 1;
-  //          player.cost.convertGaia = 4;
-  //        }
-  //        if(level == 4){
-  //          player.gaiaformer += 1;
-  //          player.cost.convertGaia = 3;
-  //        }
-  //        if(level == 5) player.VP += 4 + 1 * player.numGaia;
-  //      }
-  //
-  //      if(lane == 4){
-  //        if(level == 1){
-  //          player.income.gold += 2;
-  //          player.income.charge += 1;
-  //        }
-  //        if(level == 2){
-  //          player.income.ore += 1;
-  //          player.income.charge += 1;
-  //        }
-  //        if(level == 3){
-  //          player.income.gold += 1;
-  //          player.income.charge += 1;
-  //        }
-  //        if(level == 4){
-  //          player.income.ore += 1;
-  //          player.income.gold += 1;
-  //          player.income.charge += 1;
-  //        }
-  //        if(level == 5){
-  //          player.income.ore -= 2;
-  //          player.income.gold -= 4;
-  //          player.income.charge -= 4;
-  //          player.ore += 3;
-  //          player.gold += 6;
-  //          player.chargePower(6);
-  //        }
-  //      }
-  //
-  //      if(lane == 5){
-  //        if(level == 1) player.income.science += 1;
-  //        if(level == 2) player.income.science += 1;
-  //        if(level == 3) player.income.science += 1;
-  //        if(level == 4) player.income.science += 1;
-  //        if(level == 5){
-  //          player.income.science -= 4;
-  //          player.science += 9;
-  //        }
-  //      }
-  //
 
-    //   }
-    //   if(level == 4){
-    //     player.gaiaformer += 1;
-    //     player.cost.convertGaia = 3;
-    //   }
-    //   if(level == 5) player.VP += 4 + 1 * player.numGaia;
-    // }
-    //
-    // if(lane == 4){
-    //   if(level == 1){
-    //     player.income.gold += 2;
-    //     player.income.charge += 1;
-    //   }
-    //   if(level == 2){
-    //     player.income.ore += 1;
-    //     player.income.charge += 1;
-    //   }
-    //   if(level == 3){
-    //     player.income.gold += 1;
-    //     player.income.charge += 1;
-    //   }
-    //   if(level == 4){
-    //     player.income.ore += 1;
-    //     player.income.gold += 1;
-    //     player.income.charge += 1;
-    //   }
-    //   if(level == 5){
-    //     player.income.ore -= 2;
-    //     player.income.gold -= 4;
-    //     player.income.charge -= 4;
-    //     player.ore += 3;
-    //     player.gold += 6;
-    //     player.chargePower(6);
-    //   }
-    // }
-    //
-    // if(lane == 5){
-    //   if(level == 1) player.income.science += 1;
-    //   if(level == 2) player.income.science += 1;
-    //   if(level == 3) player.income.science += 1;
-    //   if(level == 4) player.income.science += 1;
-    //   if(level == 5){
-    //     player.income.science -= 4;
-    //     player.science += 9;
-    //   }
-    // }
+    //range
+    if(this.lane === 1){
+      if(this.level === 1) {b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(1, Material.QIC)]);}
+      if(this.level === 2) {player.range = 2;}
+      if(this.level === 3) {b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(1, Material.QIC)]);}
+      if(this.level === 4) {player.range = 3;}
+      if(this.level === 5){
+        player.range = 4;
+        //player.getLostPlanet();
+      }
+    }
+
+    //qic
+    if(this.lane === 2){
+      if(this.level === 1) {b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(1, Material.QIC)]);}
+      if(this.level === 2) {b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(1, Material.QIC)]);}
+      if(this.level === 3) {b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(2, Material.QIC)]);}
+      if(this.level === 4) {b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(2, Material.QIC)]);}
+      if(this.level === 5) {b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(4, Material.QIC)]);}
+    }
+
+    //gaia
+    if(this.lane === 3){
+      if(this.level === 1) {b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(1, Material.GaiaFormer)]);}
+      if(this.level === 2) {b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(3, Material.Power)]);}
+      if(this.level === 3){
+        b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(1, Material.GaiaFormer)]);
+        player.gaiaFormingCost.items[2].quantity = 4;
+      }
+      if(this.level === 4){
+        b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(1, Material.GaiaFormer)]);
+        player.gaiaFormingCost.items[2].quantity = 3;
+      }
+      if(this.level === 5) {
+        b2 = new Benefit(Trigger.Now, Count.Gaia, Struct.None, [new Value(1, Material.VP)]);
+        const b3 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(4, Material.VP)]);
+        player.getBenefit(b3);
+      }
+    }
+
+    //income
+    if(this.lane === 4){
+      if(this.level === 1){
+        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(2, Material.Gold), new Value(1, Material.Charge)]);
+      }
+      if(this.level === 2){
+        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(1, Material.Ore), new Value(1, Material.Charge)]);
+      }
+      if(this.level === 3){
+        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(1, Material.Gold), new Value(1, Material.Charge)]);
+      }
+      if(this.level === 4){
+        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(1, Material.Ore), new Value(1, Material.Gold), new Value(1, Material.Charge)]);
+      }
+      if(this.level === 5){
+        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(-2, Material.Ore), new Value(-4, Material.Gold), new Value(-4, Material.Charge)]);
+        b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(3, Material.Ore), new Value(6, Material.Gold), new Value(6, Material.Charge)]);
+      }
+    }
+
+    //science
+    if(this.lane === 5){
+      if(this.level === 1) {b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(1, Material.Science)]);}
+      if(this.level === 2) {b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(1, Material.Science)]);}
+      if(this.level === 3) {b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(1, Material.Science)]);}
+      if(this.level === 4) {b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(1, Material.Science)]);}
+      if(this.level === 5){
+        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(-4, Material.Science)]);
+        b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(9, Material.Science)]);
+      }
+    }
 
   }
 }

@@ -6,10 +6,12 @@ enum Material {
     Power, 
   //  ExtraPower,
     Charge,
+    GaiaFormingPower,//yalei: the type of gaia forming way
     Dig,
     VP,
     SpecialDig,
-    SpecialRange
+    SpecialRange,
+    GaiaFormer
 }
 
 class Value {
@@ -44,7 +46,8 @@ enum Count {
     Feds = 'feds',
     PlanetTypes = 'planetTypes',
     Satellites = 'satellites',
-    Gaia = 'gaia'
+    Gaia = 'gaia',
+    None = 'none'
 }
 
 enum Struct {
@@ -52,14 +55,15 @@ enum Struct {
     TradingStation = 'trading',
     Lab = 'Lab',
     Academy = 'academy',
-    Institute = 'institute'
+    Institute = 'institute',
+    None = "none"
 }
 
 
 class Benefit {
     public trigger: Trigger
-    public count: Count
-    public object: Struct
+    public count: Count | null
+    public object: Struct | null
     public benefits : Value[]
     constructor(trigger: Trigger, count: Count, object: Struct, benefits: Value[]){
         this.trigger = trigger

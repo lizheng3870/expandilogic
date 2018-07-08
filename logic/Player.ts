@@ -6,6 +6,7 @@ import RoundBooster from './RoundBooster'
 import {Benefit, Value, Material, Count, Struct, Trigger} from './Benefit'
 import {Federation} from './Federation';
 import {GridGenerator, HexGrid, Layout, Path, Text, Hexagon, Pattern, HexUtils, Hex} from 'react-hexgrid';
+import { BuildCost, Cost } from './Cost';
 
 
 class Player extends Race {
@@ -14,6 +15,8 @@ class Player extends Race {
   public roundBooster: RoundBooster;
   public planets: PlanetType[];
   public numGaia: number;
+  public digCost: Cost;
+  public gaiaFormingCost: Cost;
   public techs: Tech[];
   public techTiles: TechTiles[];
   public federations: Federation[];
@@ -26,9 +29,11 @@ class Player extends Race {
     this.passed = false;
     // this.roundBooster = undefined;
     // this.planetType =
+    this.digCost = new Cost([new BuildCost(Material.Ore, 3)]);
+    this.gaiaFormingCost = new Cost([new BuildCost(Material.GaiaFormer, 1), new BuildCost(Material.GaiaFormingPower, 6)])
     this.planets = [];
     this.numGaia = 0;
-    this.techs = []
+    this.techs = [];
     this.techTiles = [];
     this.federations = [];
     this.pid =  -1;  // pid is player id for example 0 1 2 3
