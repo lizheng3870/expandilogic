@@ -1,6 +1,11 @@
 import Tech from './Tech'
+import TechTile from './TechTiles'
 
 class TechBoard {
+  public table: Tech[][];
+  public normal6Techs: TechTile[];
+  public normal3Tech3: TechTile[];
+
   constructor() {
     this.table = [[]];
     this.normal6Techs = [];

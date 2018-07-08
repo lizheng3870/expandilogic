@@ -52,6 +52,7 @@ enum Count {
 
 enum Struct {
     Mine = 'mine',
+    MineOnGaia = 'mineOnGaia',
     TradingStation = 'trading',
     Lab = 'Lab',
     Academy = 'academy',

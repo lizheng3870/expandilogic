@@ -271,5 +271,16 @@ class BuildingLib {
                 this.institute.push(bescodsInstitute);    
             }        
         }
+
+        public changeBigBuildingValue(value: number){
+            for(let i = 0; i < this.academies.length; i++){
+                let struct = this.academies[i];
+                struct.changePowerValue(value);
+            }
+            for(let i = 0; i < this.institute.length; i++){
+                let struct = this.institute[i];
+                struct.changePowerValue(value);
+            }
+        }
     }
 export {BuildingLib};

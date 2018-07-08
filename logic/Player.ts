@@ -46,7 +46,8 @@ class Player extends Race {
   * output: add the benefit into the array
   * @yalei
   */
-  public getBenefit(benefit: Benefit){
+  public getBenefit(benefit: Benefit | null = null){
+    if(benefit === null) return;
     if(benefit.trigger === Trigger.Income){
       this.incomeBenefits.push(benefit);
     }

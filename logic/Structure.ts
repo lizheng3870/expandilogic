@@ -1,4 +1,4 @@
-import Cost from "./Cost"
+import {Cost} from "./Cost"
 import {Benefit, Value, Material, Count, Struct, Trigger}   from './Benefit'
 
 enum Building {
@@ -30,6 +30,9 @@ class Structure {
     this.benefit = benefit
   }
 
+  public changePowerValue(power: number){
+    this.value = power;
+  }
 }
 
 

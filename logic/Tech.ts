@@ -92,8 +92,9 @@ class Tech{
         b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(1, Material.Ore), new Value(1, Material.Gold), new Value(1, Material.Charge)]);
       }
       if(this.level === 5){
-        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(-2, Material.Ore), new Value(-4, Material.Gold), new Value(-4, Material.Charge)]);
+        const b3 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(-2, Material.Ore), new Value(-4, Material.Gold), new Value(-4, Material.Charge)]);
         b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(3, Material.Ore), new Value(6, Material.Gold), new Value(6, Material.Charge)]);
+        player.getBenefit(b3);
       }
     }
 
@@ -104,11 +105,12 @@ class Tech{
       if(this.level === 3) {b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(1, Material.Science)]);}
       if(this.level === 4) {b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(1, Material.Science)]);}
       if(this.level === 5){
-        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(-4, Material.Science)]);
+        const b3 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(-4, Material.Science)]);
+        player.getBenefit(b3);
         b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(9, Material.Science)]);
       }
     }
-
+    player.getBenefit(b2);
   }
 }
 
