@@ -5,13 +5,13 @@ class RoundBooster{
   public id : number;
   public valid : boolean;
   public benefit : Benefit[];
-  constructor(id){
+  constructor(id: number){
     this.valid = true;
     this.benefit = [];
     this.initialize(id);
   }
 
-  public initialize(id) {
+  public initialize(id: number) {
     this.id = id;
     if(id === 0){
       const benefit  = new Benefit(Trigger.Income, null, null,
@@ -38,11 +38,17 @@ class RoundBooster{
       // this.income.ore = 1;
     }
 
-
+    /**
+     * @Rong I changed this to two benefits. Because one is a special benefit and the other is 
+     * an income benefit 
+     */
     if(id === 3){
-      const benefit = new Benefit(Trigger.Income, null, null,
-        [new Value(2, Material.Gold), new Value(1, Material.SpecialDig)])
-        this.benefit.push(benefit)
+      const benefit = new Benefit(Trigger.Income, Count.None, Struct.None,
+                        [new Value(2, Material.Gold)])
+      const benefit2 = new Benefit(Trigger.Special, Count.None, Struct.None,
+                        [new Value(1, Material.Dig)]);  
+      this.benefit.push(benefit);
+      this.benefit.push(benefit2);
 
       //this.benefit.push(benefit)
 
@@ -50,14 +56,25 @@ class RoundBooster{
       // this.benefit.range = 3;
     }
 
+    /**
+     * @Rong I changed this to two benefits. Because one is a special benefit and the other is 
+     * an income benefit 
+     */
     if(id === 4) {
-      const benefit = new Benefit(Trigger.Income, null, null,
-        [new Value(2, Material.Charge), new Value(1, Material.SpecialRange)])
-        this.benefit.push(benefit)
-      // When you return this round booster by taking the “Pass” action,
-      // gain 1 VP for each of your mines on the board
-    }
+      const benefit = new Benefit(Trigger.Income, Count.None, Struct.None,
+        [new Value(2, Material.Charge)])
 
+      const benefit2 = new Benefit(Trigger.Special, Count.None, Struct.None,
+        [new Value(3, Material.SpecialRange)])
+        
+      this.benefit.push(benefit);
+      this.benefit.push(benefit2);
+     
+    }
+    /**
+     * When you return this round booster by taking the “Pass” action,
+     * gain 1 VP for each of your mines on the board
+     */
     if(id === 5) {
       const benefit = new Benefit(Trigger.Income, null, null,
         [new Value(1, Material.Ore)])
@@ -66,10 +83,13 @@ class RoundBooster{
           [new Value(1, Material.VP)])
       this.benefit.push(benefit2)
 
-      // When you return this round booster by taking the “Pass” action,
-      // gain 3 VP for each of your research labs on the board.
+      
     }
 
+    /**
+     * When you return this round booster by taking the “Pass” action,
+     * gain 3 VP for each of your research labs on the board.
+     */
     if(id === 6) {
       const benefit = new Benefit(Trigger.Income, null, null,
         [new Value(1, Material.Science)])
@@ -77,11 +97,57 @@ class RoundBooster{
       const benefit2 = new Benefit(Trigger.Pass, Count.Labs, null,
           [new Value(3, Material.VP)])
       this.benefit.push(benefit2)
-      // When you return this round booster by taking the “Pass” action,
-      // gain 2 VP for each of your trading stations on the board.
+     
     }
 
-    /*
+    /**
+     * When you return this round booster by taking the “Pass” action,
+     * gain 2 VP for each of your trading stations on the board.
+     */
+
+    if(id === 7) {
+      const benefit = new Benefit(Trigger.Income, null, null,
+        [new Value(1, Material.Ore)])
+      this.benefit.push(benefit)
+      const benefit2 = new Benefit(Trigger.Pass,  Count.TradingStations, null,
+          [new Value(2, Material.VP)])
+      this.benefit.push(benefit2)
+      // Free terraforming step ----? Rong
+
+    }
+
+    /**
+     *  When you return this round booster by taking the “Pass” action,
+     * gain 4 VP for each of your planetary institutes and academies on the board.
+     * 
+     */
+    if(id === 8) {
+      const benefit = new Benefit(Trigger.Income, null, null,
+        [new Value(4, Material.Charge)])
+      this.benefit.push(benefit)
+      const benefit2 = new Benefit(Trigger.Pass, Count.BigBuildings, null,
+          [new Value(4, Material.VP)])
+      this.benefit.push(benefit2)
+      
+
+    }
+
+    /**
+     * When you return this round booster by taking the “Pass” action, gain 1 VP for each Gaia Planet you have colonized
+     * (you do not gain VP for Gaiaformers on Gaia or Transdim Planets).
+     */
+    if(id === 9) {
+      const benefit = new Benefit(Trigger.Income, null, null,
+        [new Value(4, Material.Gold)])
+      this.benefit.push(benefit)
+      const benefit2 = new Benefit(Trigger.Pass,  Count.Gaia, null,
+          [new Value(1, Material.VP)])
+      this.benefit.push(benefit2)
+    
+    }
+  }
+
+   /*
 
     enum Count {
         Sectors = 'sectors',
@@ -104,44 +170,6 @@ class RoundBooster{
         Institute = 'institute'
     }
     */
-
-    if(id === 7) {
-      const benefit = new Benefit(Trigger.Income, null, null,
-        [new Value(1, Material.Ore)])
-      this.benefit.push(benefit)
-      const benefit2 = new Benefit(Trigger.Pass,  Count.TradingStations, null,
-          [new Value(2, Material.VP)])
-      this.benefit.push(benefit2)
-      // Free terraforming step
-
-    }
-
-    if(id === 8) {
-      const benefit = new Benefit(Trigger.Income, null, null,
-        [new Value(4, Material.Charge)])
-      this.benefit.push(benefit)
-      const benefit2 = new Benefit(Trigger.Pass, Count.BigBuildings, null,
-          [new Value(4, Material.VP)])
-      this.benefit.push(benefit2)
-      // When you return this round booster by taking the “Pass” action,
-      // gain 4 VP for each of your planetary institutes and academies on the board.
-
-    }
-
-    if(id === 9) {
-      const benefit = new Benefit(Trigger.Income, null, null,
-        [new Value(4, Material.Gold)])
-      this.benefit.push(benefit)
-      const benefit2 = new Benefit(Trigger.Pass,  Count.Gaia, null,
-          [new Value(1, Material.VP)])
-      this.benefit.push(benefit2)
-      // When you return this round booster by taking the “Pass” action, gain 1 VP for each Gaia Planet you have colonized
-      // (you do not gain VP for Gaiaformers on Gaia or Transdim Planets).
-
-    }
-
-
-  }
 //
 //   public doBeforeRound(player) {
 //     // todo

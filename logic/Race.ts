@@ -50,13 +50,17 @@ class Race {
     public tech: Tech;
     public buildingLib: BuildingLib;
 
+    /**
+     * Tech levels
+     */
     public dig: number;
-    public nav: number;
+    public range: number;
+    public qicTech: number;
     public gaia: number;
     public resources: number;
     public knowledge: number;
-    public range: number;
     public specialRange: number;
+
     public race: RaceType;
 
   constructor(pid: number){
@@ -68,8 +72,8 @@ class Race {
     this.power1 = 0;
     this.power2 = 0;
     this.power3 = 0;
-
     this.pid = pid;
+
     this.mine = 0;
     this.station = 0;
     this.institute = 0;
@@ -77,13 +81,23 @@ class Race {
     this.academies = 0;
     this.gaiaformer = 0;
 
+    /**
+     * Tech level initialization
+     */
+    this.dig = 0;
+    this.range = 0;
+    this.qicTech = 0;
+    this.gaia = 0;
+    this.resources = 0;
+    this.knowledge = 0;
+
     this.range = 1; // how far you can jump
     this.specialRange = 0;// the bonus range from using QIC or Special Power;
 }
 
 /**
  * Initializes Racetype depending on selected Race.
- * Need to add tech level 
+ * Need to add tech level initialization for each Race 
  * @param race 
  */
 public initialize(race: RaceType){
@@ -91,32 +105,36 @@ public initialize(race: RaceType){
 
   if(race === RaceType.Terrans) {
     this.planetType = PlanetType.Blue;
+    this.gaia = 1;
 
   }
 
   if(race === RaceType.Lantids) {
     this.planetType = PlanetType.Blue;
     this.gold = 13;
+
   }
 
   if(race === RaceType.Xenos) {
     this.planetType = PlanetType.Yellow;
-
+    this.qicTech = 1;
 
   }
 
   if(race === RaceType.Gleens) {
     this.planetType = PlanetType.Yellow;
     this.qic = 0;
+    this.range = 1;
   }
 
   if(race === RaceType.Taklons) {
     this.planetType = PlanetType.Brown;
-
+    
   }
 
   if(race === RaceType.Ambas) {
     this.planetType = PlanetType.Brown;
+    this.range = 1;
   }
 
   if(race === RaceType.Itars) {
@@ -127,11 +145,12 @@ public initialize(race: RaceType){
   if(race === RaceType.Nevlas) {
     this.planetType = PlanetType.White;
     this.science = 2;
+    this.knowledge = 1;
   }
 
   if(race === RaceType.HadschHallas) {
     this.planetType = PlanetType.White;
-
+    this.resources = 1;
   }
 
   if(race === RaceType.Ivits) {
@@ -141,16 +160,18 @@ public initialize(race: RaceType){
 
   if(race === RaceType.Geodens) {
     this.planetType = PlanetType.Orange;
+    this.dig = 1;
    }
 
   if(race === RaceType.Baltaks) {
     this.planetType = PlanetType.Orange;
-
+    this.gaia = 1;
   }
 
   if(race === RaceType.Bescods) {
     this.planetType = PlanetType.Black;
     this.science = 1;
+    // Not sure what tech level advantage it has
   }
 
   if(race === RaceType.Firaks) {

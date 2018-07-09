@@ -69,6 +69,7 @@ class Tech{
       if(this.level === 4){
         b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(1, Material.GaiaFormer)]);
         player.gaiaFormingCost.items[2].quantity = 3;
+        
       }
       if(this.level === 5) {
         b2 = new Benefit(Trigger.Now, Count.Gaia, Struct.None, [new Value(1, Material.VP)]);

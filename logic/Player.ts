@@ -23,6 +23,7 @@ class Player extends Race {
   public planetType: PlanetType;
   public nowBenefits: Benefit[];
   public incomeBenefits: Benefit[];
+  public specialBenefits: Benefit[];
   public pid: number;
 
   constructor(name: string, raceType: RaceType){
@@ -30,7 +31,7 @@ class Player extends Race {
     this.name = name;
     this.passed = false;
     // this.roundBooster = undefined;
-    // this.planetType =
+    // this.planetType = 
     this.digCost = new Cost([new BuildCost(Material.Ore, 3)]);
     this.gaiaFormingCost = new Cost([new BuildCost(Material.GaiaFormer, 1), new BuildCost(Material.GaiaFormingPower, 6)])
     this.planets = [];
@@ -50,14 +51,29 @@ class Player extends Race {
   */
   public getBenefit(benefit: Benefit | null = null){
     if(benefit === null) return;
+
+     /**
+     Income benefit - occurs every round
+     */
     if(benefit.trigger === Trigger.Income){
       this.incomeBenefits.push(benefit);
     }
+
+    /**
+     * Now benefit - occurs once, when obtained (Now)
+     */
     if(benefit.trigger === Trigger.Now){
       this.nowBenefits.push(benefit);
-      // since it is now, so we call the onBenefit at once;
       super.onBenefit(benefit);
     }
+
+    /**
+     * Special benefit - user decides when to use the power
+     */
+    if(benefit.trigger === Trigger.Special) {
+      this.specialBenefits.push(benefit);
+    }
+
   }
 
   /*
@@ -68,7 +84,7 @@ class Player extends Race {
 
   // }
 
-  public nearDistance(hex){
+  public nearDistance(hex: Hex){
 
     let min = 10000;
 
@@ -82,13 +98,13 @@ class Player extends Race {
 
   }
 
-  public checkPlanetDistance(hex){
+  public checkPlanetDistance(hex: Hex){
     const distance = this.nearDistance(hex);
     if(this.range >= distance){
       return true;
     } else {
       if(this.range + this.qic * 2 >= distance){
-        console.log("checkPlanetDistance OK  but need QIC ");
+        console.log("checkPlanetDistance OK but need QIC ");
         return true;
       }
     }
