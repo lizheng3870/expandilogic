@@ -1,8 +1,9 @@
 import {Action} from './Action'
-import Exchange from './Exchange'
+import {Exchange} from './Exchange'
 import {MapBoard} from './MapBoard'
 import RoundBooster from './RoundBooster'
 import TechBoard from './TechBoard'
+import { Player } from './Player';
 
 enum Phase {
   Income,
@@ -10,47 +11,56 @@ enum Phase {
   Actions
 }
 
+enum GameStatus{
+  Open,
+  Setup,
+  Playing,
+  Scoring,
+  Over
+}
+
+enum Config{
+  PlayerLimit = 4
+}
+
 class Game {
     public round: number;
-    public players: string[]
-    public playerNum : number
+    public players: Player[]
+    public nextRound: Player[]
     public turn: number
-    public phase
+    public phase: Phase
+    public status: GameStatus
+    public board: MapBoard
+    public techBoard: TechBoard
+    public roundBoosters: RoundBooster[]
+    public exchange: Exchange
+
     constructor(gid: number){
      this.round = 1;
      this.players = [];
-     this.playerNum = 0;
      this.turn = 0;  // start from 0;
-     this.phase = 0;  // 0 wait for roundbooter 1 after roundbooter calculate income, 2 wait for player 3 end of round
-
-     this.status = 0;  // 0 waiting 0  1 processind 2 end
+     this.phase = Phase.Income;
+     this.status = GameStatus.Open
      this.board = new MapBoard();
      this.techBoard = new TechBoard();
-     this.passed = []; // how many  players passed
 
      this.roundBoosters = [];
-     this.loadRoundBooster();
      this.exchange = new Exchange();
 
    }
 
-   public addPlayer(player){
-     if(this.playerNum === 4){
+   public addPlayer(player: Player): boolean{
+     if (this.players.length === Config.PlayerLimit){
        return false;
+     } else {
+       this.players.push(player)
+       player.pid = this.players.length - 1;
      }
-     else{
-       this.players[this.playerNum] = player;
-       player.pid = this.playerNum;
-       this.playerNum++;
-       if(this.playerNum === 4){
-         this.status = 1;
-         this.start();
-
-       }
-
-       return true;
-     }
-
+     if(this.players.length === Config.PlayerLimit){
+      this.status = GameStatus.Setup;
+      this.start();
+    }
+     return true;
    }
 
 
@@ -85,18 +95,9 @@ class Game {
      if(player.passed){
        this.nextTurn();
      }
-
-
    }
 
-
-
-   // whatNext(){
-   //
-   // }
-
    public endRound(){
-     this.CleanUPPhase()
      this.round++;
      this.turn = 0;
      for(let i = 0; i < 4; i++){
@@ -106,30 +107,20 @@ class Game {
    }
 
    public newRound(){
-     // this.exchange.clear();
      this.IncomePhase();
-
    }
 
    public IncomePhase(){
 
      for(let i = 0; i < 4; i++ ){
-      this.calculateIncomeAtBeginOfRound(this.players[i]);
+      this.calculateIncome(this.players[i]);
      }
 
    }
 
-   public calculateIncomeAtBeginOfRound(player){
+   public calculateIncome(player){
      player.income.doIncome(player);
    }
-
-   // public GaiaPhase(){
-   //
-   // }
-   //
-   // public CleanUPPhase(){
-   //
-   // }
 
 
    public processRoundRooter(data){

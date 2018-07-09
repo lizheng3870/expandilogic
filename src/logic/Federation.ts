@@ -26,7 +26,7 @@ enum Fed{
 
 class Federation {
   public fed: Fed
-  public fedStatus: string //green or gray
+  public spendable: boolean
   //public race: RaceType
   //public //which building formed this Federation
   public valid : boolean;//if the points are enough for federating

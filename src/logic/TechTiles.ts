@@ -1,4 +1,5 @@
 import Income from './Income'
+import {Player} from './Player'
 
 class TechTile {
    constructor(techId){
@@ -9,7 +10,7 @@ class TechTile {
    when get a normal techtile
    get something or get some power
    */
-   public onTechTile(player, techId){
+   public onTechTile(player: Player, techId){
      if(techId === 0){
        player.ore += 1;
        player.QIC += 1;

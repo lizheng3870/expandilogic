@@ -7,13 +7,13 @@ import {Player} from "./Player";
  * Not including free actions
  */
 enum ActionType {
-  Mine = 'mine',
-  Gaia = 'gaia',
-  Update = 'update',
-  Federation = 'federation',
-  Research = 'research',
-  Special = 'special',
-  Pass = 'pass'
+  Mine,
+  Gaia,
+  Upgrade,
+  Federate,
+  Research,
+  Special,
+  Pass
 }
 
 /**
@@ -35,31 +35,31 @@ class Action {
 
    public checkValid(){
 
-     if(this.action === 'mine'){
+     if(this.action === ActionType.Mine){
        this.buildMineCheck()
        return this.check;
      }
-     if(this.action === 'gaia'){
+     if(this.action === ActionType.Gaia){
        return this.checkGaiaProject()
      }
 
-     if(this.action === 'update'){
+     if(this.action === ActionType.Upgrade){
        return this.checkUpdateBuilding()
      }
 
-     if(this.action === 'federation'){
+     if(this.action === ActionType.Federate){
       return 
     }
 
-    if(this.action === 'research'){
+    if(this.action === ActionType.Research){
       return 
     }
 
-    if(this.action === 'special'){
+    if(this.action === ActionType.Special){
       return 
     }
 
-    if(this.action === 'pass'){
+    if(this.action === ActionType.Pass){
       return 
     }
 
