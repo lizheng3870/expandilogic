@@ -1,4 +1,4 @@
-import {Benefit, Value, Material, Count, Struct, Trigger}   from './Benefit'
+import {Benefit, Value, Material, Count, Structure, Trigger}   from './Benefit'
 
 class BuildCost {
   public material: Material;

@@ -1,5 +1,5 @@
-import Cost from "./Cost"
-import {Benefit, Value, Material, Count, Struct, Trigger}   from './Benefit'
+import {Cost} from "./Cost"
+import {Benefit, Value, Material, Count, Structure, Trigger}   from './Benefit'
 
 enum Building {
   Mine = 0,
@@ -13,7 +13,7 @@ enum BuildingStatus{
   Unbuilt = 1
 }
 
-class Structure {
+class StructureType {
   public value : number
   public cost : Cost
   public type : Building
@@ -33,4 +33,4 @@ class Structure {
 }
 
 
-export {Structure, Building}
+export {StructureType, Building}

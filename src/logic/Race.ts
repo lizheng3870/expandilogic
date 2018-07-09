@@ -1,8 +1,8 @@
 import {Planet, PlanetType} from './Planet'
 import Tech from './Tech'
-import {Structure} from './Structure';
+import {StructureType} from './Structure';
 import {BuildingLib} from './BuildingLib';
-import {Benefit, Value, Material, Count, Struct, Trigger} from "./Benefit";
+import {Benefit, Value, Material, Count, Structure, Trigger} from "./Benefit";
 
 /**
  * Enum Racetype
@@ -183,7 +183,7 @@ public onBenefit(benefit: Benefit){
     }
     if(value.material === Material.QIC){ this.qic += value.quantity; }
     if(value.material === Material.Power){ this.power1 += value.quantity; }
-    if(value.material === Material.Charge){
+    if(value.material === Material.Power){
       this.chargePower(value.quantity); 
     }
     if(value.material === Material.Dig){ /*lets discuss this part later --- by yalei*/ }

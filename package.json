@@ -5,11 +5,9 @@
   "main": "index.js",
   "scripts": {
     "pretest": "npm run compile",
-    "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
-    "compile": "tsc",
+    "compile": "rm dist/*; tsc",
     "test": "lab -l --timeout 10000 -S ./dist/tests",
-    "test:fe": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject"
   },
   "repository": {
@@ -24,30 +22,12 @@
   "homepage": "https://github.com/jonrahoi/expandilogic#readme",
   "dependencies": {
     "@types/code": "^4.0.4",
-    "@types/react": "^16.4.1",
-    "@types/react-dom": "^16.0.6",
-    "@types/react-router-dom": "^4.2.7",
     "code": "^5.2.0",
-    "express": "^4.16.3",
-    "firebase": "^5.0.4",
     "lab": "^15.5.0",
-    "mysql": "^2.15.0",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
-    "react-hexgrid": "1.0.3",
-    "react-router": "^4.3.1",
-    "react-router-dom": "^4.3.1",
-    "react-scripts-ts": "^2.16.0",
-    "socket.io": "^2.1.1",
     "tslint": "^5.10.0",
     "tslint-config-prettier": "^1.13.0",
-    "tslint-react": "^3.6.0",
-    "ws": "^5.2.0"
-  },
-  "devDependencies": {
-    "babel-preset-env": "^1.7.0",
-    "babel-register": "^6.26.0",
     "prettier": "^1.13.6",
     "typescript": "^2.9.2"
-  }
+  },
+  "devDependencies": {}
 }

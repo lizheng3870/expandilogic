@@ -4,12 +4,18 @@ import {MapBoard} from './MapBoard'
 import RoundBooster from './RoundBooster'
 import TechBoard from './TechBoard'
 
-
+enum Phase {
+  Income,
+  Gaiaforming,
+  Actions
+}
 
 class Game {
     public round: number;
     public players: string[]
-   
+    public playerNum : number
+    public turn: number
+    public phase
     constructor(gid: number){
      this.round = 1;
      this.players = [];

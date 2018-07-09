@@ -52,7 +52,7 @@ class RoundBooster{
 
     if(id === 4) {
       const benefit = new Benefit(Trigger.Income, null, null,
-        [new Value(2, Material.Charge), new Value(1, Material.SpecialRange)])
+        [new Value(2, Material.Power), new Value(1, Material.SpecialRange)])
         this.benefit.push(benefit)
       // When you return this round booster by taking the “Pass” action,
       // gain 1 VP for each of your mines on the board
@@ -118,7 +118,7 @@ class RoundBooster{
 
     if(id === 8) {
       const benefit = new Benefit(Trigger.Income, null, null,
-        [new Value(4, Material.Charge)])
+        [new Value(4, Material.Power)])
       this.benefit.push(benefit)
       const benefit2 = new Benefit(Trigger.Pass, Count.BigBuildings, null,
           [new Value(4, Material.VP)])

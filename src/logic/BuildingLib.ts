@@ -1,19 +1,19 @@
-import {Structure, Building} from "./Structure";
+import {StructureType, Building} from "./Structure";
 import {Race, RaceType} from "./Race";
 import {Cost, BuildCost} from "./Cost";
-import   {Benefit, Value, Material, Count, Struct, Trigger} from "./Benefit";
+import   {Benefit, Value, Material, Count, Structure, Trigger} from "./Benefit";
 
 /**
  * Building Libraries for each faction
  */
 class BuildingLib {
 
-    public mines: Structure[]
-    public station: Structure[];
-    public institute: Structure[];
-    public lab: Structure[];
-    public academies: Structure[];
-    public gaiaformer: Structure[];
+    public mines: StructureType[]
+    public station: StructureType[];
+    public institute: StructureType[];
+    public lab: StructureType[];
+    public academies: StructureType[];
+    public gaiaformer: StructureType[];
     public race: RaceType;
 
     constructor(race: RaceType) {
@@ -23,79 +23,79 @@ class BuildingLib {
              * Mine types on Faction Board
              */
             //Mine 1
-            const mine1 = new Structure(Building.Mine, 
+            const mine1 = new StructureType(Building.Mine, 
                                 new Cost([new BuildCost(Material.Gold, 2), 
                                     new BuildCost(Material.Ore, 1)]), 
                                 1, 
                                 new Benefit(Trigger.Income, Count.Mines, 
-                                    Struct.Mine, [new Value(1, Material.Ore)]));
+                                    Structure.Mine, [new Value(1, Material.Ore)]));
             //Mine 2
-            const mine2 = new Structure(Building.Mine, 
+            const mine2 = new StructureType(Building.Mine, 
                                 new Cost([new BuildCost(Material.Gold, 2), 
                                     new BuildCost(Material.Ore, 1)]), 
                                 1, 
                                 new Benefit(Trigger.Income, Count.Mines, 
-                                    Struct.Mine, [new Value(0, Material.Ore)]));
+                                    Structure.Mine, [new Value(0, Material.Ore)]));
             
             /**
              * Trading Station types on Faction Board
              */
-            const station1 = new Structure(Building.Station, 
+            const station1 = new StructureType(Building.Station, 
                                 new Cost([new BuildCost(Material.Gold, 3),
                                     new BuildCost(Material.Ore, 1)]), 
                                 2, 
                                 new Benefit(Trigger.Income, Count.TradingStations,
-                                    Struct.TradingStation, [new Value(3, Material.Gold)]));
+                                    Structure.TradingStation, [new Value(3, Material.Gold)]));
             
-            const station2 = new Structure(Building.Station, 
+            const station2 = new StructureType(Building.Station, 
                                 new Cost([new BuildCost(Material.Gold, 3),
                                     new BuildCost(Material.Ore, 1)]), 
                                 2, 
                                 new Benefit(Trigger.Income, Count.TradingStations,
-                                    Struct.TradingStation, [new Value(4, Material.Gold)]));
+                                    Structure.TradingStation, [new Value(4, Material.Gold)]));
 
-            const station3 = new Structure(Building.Station, 
+            const station3 = new StructureType(Building.Station, 
                                 new Cost([new BuildCost(Material.Gold, 3),
                                     new BuildCost(Material.Ore, 1)]), 
                                 2, 
                                 new Benefit(Trigger.Income, Count.TradingStations,
-                                    Struct.TradingStation, [new Value(5, Material.Gold)]));     
+                                    Structure.TradingStation, [new Value(5, Material.Gold)]));     
 
             /**
              * Lab types on Faction Board
              */
-            const lab = new Structure(Building.Lab, 
+            const lab = new StructureType(Building.Lab, 
                             new Cost([new BuildCost(Material.Gold, 5), 
                                 new BuildCost(Material.Ore, 3)]), 
-                                2, new Benefit(Trigger.Income, Count.Labs, Struct.Lab, [new Value(1, Material.Science)]));
+                                2, new Benefit(Trigger.Income, Count.Labs, Structure.Lab, [new Value(1, Material.Science)]));
 
             
              /**
              * Academy types on Faction Board
              */
 
-            const academy1 = new Structure(Building.Academy, 
+            const academy1 = new StructureType(Building.Academy, 
                                 new Cost([new BuildCost(Material.Gold, 6),
                                     new BuildCost(Material.Ore, 6)]),
-                                    3, new Benefit(Trigger.Income, Count.BigBuildings, Struct.Academy, [new Value(2, Material.Science)]));
+                                    3, new Benefit(Trigger.Income, Count.BigBuildings, Structure.Academy, [new Value(2, Material.Science)]));
 
-            const academy1a = new Structure(Building.Academy, 
+            const academy1a = new StructureType(Building.Academy, 
                                 new Cost([new BuildCost(Material.Gold, 6),
                                     new BuildCost(Material.Ore, 6)]),
-                                    3, new Benefit(Trigger.Income, Count.BigBuildings, Struct.Academy, [new Value(3, Material.Science)]));
+                                    3, new Benefit(Trigger.Income, Count.BigBuildings, Structure.Academy, [new Value(3, Material.Science)]));
                                             
 
-            const academy2 = new Structure(Building.Academy, 
+            const academy2 = new StructureType(Building.Academy, 
                                 new Cost([new BuildCost(Material.Gold, 6),
                                     new BuildCost(Material.Ore, 6)]),
                                 3, 
-                                new Benefit(Trigger.Special, Count.BigBuildings, Struct.Academy, [new Value(1, Material.QIC)]));                    
+                                new Benefit(Trigger.Special, Count.BigBuildings, Structure.Academy, [new Value(1, Material.QIC)]));                    
 
-            const academy2a = new Structure(Building.Academy, 
+            const academy2a = new StructureType(Building.Academy, 
                                 new Cost([new BuildCost(Material.Gold, 6),
                                     new BuildCost(Material.Ore, 6)]),
                                 3, 
-                                new Benefit(Trigger.Special, Count.BigBuildings, Struct.Academy, [new Value(4, Material.Gold)]));                    
+                                new Benefit(Trigger.Special, Count.BigBuildings, Structure.Academy, [new Value(4, Material.Gold)]));                    
              
             
              /**
@@ -155,118 +155,118 @@ class BuildingLib {
              * Different Institute powers
              */
             if (this.race === RaceType.Terrans) {
-                const terranInstitute = new Structure(Building.Institute, 
+                const terranInstitute = new StructureType(Building.Institute, 
                                             new Cost([new BuildCost(Material.Gold, 6),
                                                 new BuildCost(Material.Ore, 4)]),
                                             3, 
-                                            new Benefit(Trigger.Income, Count.BigBuildings, Struct.Institute, [new Value(1, Material.Power), new Value(4, Material.Charge)]));                 
+                                            new Benefit(Trigger.Income, Count.BigBuildings, Structure.Institute, [new Value(1, Material.ExtraPower), new Value(4, Material.Power)]));                 
                 this.institute.push(terranInstitute);    
 
             } else if (this.race === RaceType.Lantids){
-                const lantidsInstitute = new Structure(Building.Institute, 
+                const lantidsInstitute = new StructureType(Building.Institute, 
                                             new Cost([new BuildCost(Material.Gold, 6),
                                                 new BuildCost(Material.Ore, 4)]),
                                             3, 
-                                            new Benefit(Trigger.Income, Count.BigBuildings, Struct.Institute, [new Value(4, Material.Charge)])); 
+                                            new Benefit(Trigger.Income, Count.BigBuildings, Structure.Institute, [new Value(4, Material.Power)])); 
                 this.institute.push(lantidsInstitute);
 
             } else if(this.race === RaceType.Xenos) {
-                const xenosInstitute = new Structure(Building.Institute, 
+                const xenosInstitute = new StructureType(Building.Institute, 
                                             new Cost([new BuildCost(Material.Gold, 6),
                                                 new BuildCost(Material.Ore, 4)]),
                                             3,
-                                            new Benefit(Trigger.Income, Count.BigBuildings, Struct.Institute, [new Value(4, Material.Charge), new Value(1, Material.QIC)]));
+                                            new Benefit(Trigger.Income, Count.BigBuildings, Structure.Institute, [new Value(4, Material.Power), new Value(1, Material.QIC)]));
                 this.institute.push(xenosInstitute);
 
                        
             } else if (this.race === RaceType.Gleens) {
-                const gleensInstitute = new Structure(Building.Institute, 
+                const gleensInstitute = new StructureType(Building.Institute, 
                                             new Cost([new BuildCost(Material.Gold, 6),
                                                 new BuildCost(Material.Ore, 4)]),
                                             3,
-                                            new Benefit(Trigger.Income, Count.BigBuildings, Struct.Institute, [new Value(4, Material.Charge), new Value(1, Material.Ore)]));
+                                            new Benefit(Trigger.Income, Count.BigBuildings, Structure.Institute, [new Value(4, Material.Power), new Value(1, Material.Ore)]));
                 this.institute.push(gleensInstitute);
 
             } else if (this.race === RaceType.Taklons) {
-                const taklonsInstitute = new Structure(Building.Institute, 
+                const taklonsInstitute = new StructureType(Building.Institute, 
                                             new Cost([new BuildCost(Material.Gold, 6),
                                                 new BuildCost(Material.Ore, 4)]),
                                             3,
-                                            new Benefit(Trigger.Income, Count.BigBuildings, Struct.Institute, [new Value(4, Material.Charge), new Value(1, Material.Power)]));
+                                            new Benefit(Trigger.Income, Count.BigBuildings, Structure.Institute, [new Value(4, Material.Power), new Value(1, Material.Power)]));
                 this.institute.push(taklonsInstitute);                            
 
             } else if (this.race === RaceType.Ambas) {
-                const ambasInstitute = new Structure(Building.Institute, 
+                const ambasInstitute = new StructureType(Building.Institute, 
                     new Cost([new BuildCost(Material.Gold, 6),
                         new BuildCost(Material.Ore, 4)]),
                     3,
-                    new Benefit(Trigger.Income, Count.BigBuildings, Struct.Institute, [new Value(4, Material.Charge), new Value(2, Material.Power)]));
+                    new Benefit(Trigger.Income, Count.BigBuildings, Structure.Institute, [new Value(4, Material.Power), new Value(2, Material.Power)]));
                 this.institute.push(ambasInstitute);
 
             } else if (this.race === RaceType.Nevlas) {
-                const nevlasInstitute = new Structure(Building.Institute, 
+                const nevlasInstitute = new StructureType(Building.Institute, 
                     new Cost([new BuildCost(Material.Gold, 6),
                         new BuildCost(Material.Ore, 4)]),
                     3,
-                    new Benefit(Trigger.Income, Count.BigBuildings, Struct.Institute, [new Value(4, Material.Charge), new Value(1, Material.Power)]));
+                    new Benefit(Trigger.Income, Count.BigBuildings, Structure.Institute, [new Value(4, Material.Power), new Value(1, Material.Power)]));
                 this.institute.push(nevlasInstitute);
 
             } else if (this.race === RaceType.Itars) {
-                const itarsInstitute = new Structure(Building.Institute, 
+                const itarsInstitute = new StructureType(Building.Institute, 
                     new Cost([new BuildCost(Material.Gold, 6),
                         new BuildCost(Material.Ore, 4)]),
                     3,
-                    new Benefit(Trigger.Income, Count.BigBuildings, Struct.Institute, [new Value(4, Material.Charge), new Value(1, Material.Power)]));
+                    new Benefit(Trigger.Income, Count.BigBuildings, Structure.Institute, [new Value(4, Material.Power), new Value(1, Material.Power)]));
                 this.institute.push(itarsInstitute);
 
             } else if (this.race === RaceType.Ivits) {
-                const ivitsInstitute = new Structure(Building.Institute, 
+                const ivitsInstitute = new StructureType(Building.Institute, 
                     new Cost([new BuildCost(Material.Gold, 6),
                         new BuildCost(Material.Ore, 4)]),
                     3,
-                    new Benefit(Trigger.Income, Count.BigBuildings, Struct.Institute, [new Value(4, Material.Charge), new Value(1, Material.Power)]));
+                    new Benefit(Trigger.Income, Count.BigBuildings, Structure.Institute, [new Value(4, Material.Power), new Value(1, Material.Power)]));
                 this.institute.push(ivitsInstitute);
 
             } else if (this.race === RaceType.HadschHallas) {
-                const hHInstitute = new Structure(Building.Institute, 
+                const hHInstitute = new StructureType(Building.Institute, 
                     new Cost([new BuildCost(Material.Gold, 6),
                         new BuildCost(Material.Ore, 4)]),
                     3,
-                    new Benefit(Trigger.Income, Count.BigBuildings, Struct.Institute, [new Value(4, Material.Charge), new Value(1, Material.Power)]));
+                    new Benefit(Trigger.Income, Count.BigBuildings, Structure.Institute, [new Value(4, Material.Power), new Value(1, Material.Power)]));
 
                 this.institute.push(hHInstitute);    
 
             } else if (this.race === RaceType.Geodens) {
-                const geodensInstitute = new Structure(Building.Institute, 
+                const geodensInstitute = new StructureType(Building.Institute, 
                     new Cost([new BuildCost(Material.Gold, 6),
                         new BuildCost(Material.Ore, 4)]),
                     3,
-                    new Benefit(Trigger.Income, Count.BigBuildings, Struct.Institute, [new Value(4, Material.Charge), new Value(1, Material.Power)]));
+                    new Benefit(Trigger.Income, Count.BigBuildings, Structure.Institute, [new Value(4, Material.Power), new Value(1, Material.Power)]));
                 this.institute.push(geodensInstitute);   
                 
             } else if (this.race === RaceType.Baltaks) {
-                const baltaksInstitute = new Structure(Building.Institute, 
+                const baltaksInstitute = new StructureType(Building.Institute, 
                     new Cost([new BuildCost(Material.Gold, 6),
                         new BuildCost(Material.Ore, 4)]),
                     3,
-                    new Benefit(Trigger.Income, Count.BigBuildings, Struct.Institute, [new Value(4, Material.Charge), new Value(1, Material.Power)]));
+                    new Benefit(Trigger.Income, Count.BigBuildings, Structure.Institute, [new Value(4, Material.Power), new Value(1, Material.Power)]));
                 this.institute.push(baltaksInstitute);        
 
             } else if (this.race === RaceType.Firaks) {
-                const firaksInstitute = new Structure(Building.Institute, 
+                const firaksInstitute = new StructureType(Building.Institute, 
                     new Cost([new BuildCost(Material.Gold, 6),
                         new BuildCost(Material.Ore, 4)]),
                     3,
-                    new Benefit(Trigger.Income, Count.BigBuildings, Struct.Institute, [new Value(4, Material.Charge), new Value(1, Material.Power)]));
+                    new Benefit(Trigger.Income, Count.BigBuildings, Structure.Institute, [new Value(4, Material.Power), new Value(1, Material.Power)]));
 
                 this.institute.push(firaksInstitute);    
 
             } else if (this.race === RaceType.Bescods) {
-                const bescodsInstitute = new Structure(Building.Institute, 
+                const bescodsInstitute = new StructureType(Building.Institute, 
                     new Cost([new BuildCost(Material.Gold, 6),
                         new BuildCost(Material.Ore, 4)]),
                     3,
-                    new Benefit(Trigger.Income, Count.BigBuildings, Struct.Institute, [new Value(4, Material.Charge), new Value(2, Material.Power)]));
+                    new Benefit(Trigger.Income, Count.BigBuildings, Structure.Institute, [new Value(4, Material.Power), new Value(2, Material.Power)]));
 
                 this.institute.push(bescodsInstitute);    
             }        

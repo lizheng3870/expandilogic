@@ -22,7 +22,7 @@ class Tech{
   public update(player: Player){
     if(this.level === 3){
       //player.chargePower(3);
-      const b1 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(3, Material.Charge)]);
+      const b1 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(3, Material.Power)]);
       player.getBenefit(b1);
     }
 
@@ -80,20 +80,20 @@ class Tech{
     //income
     if(this.lane === 4){
       if(this.level === 1){
-        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(2, Material.Gold), new Value(1, Material.Charge)]);
+        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(2, Material.Gold), new Value(1, Material.Power)]);
       }
       if(this.level === 2){
-        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(1, Material.Ore), new Value(1, Material.Charge)]);
+        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(1, Material.Ore), new Value(1, Material.Power)]);
       }
       if(this.level === 3){
-        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(1, Material.Gold), new Value(1, Material.Charge)]);
+        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(1, Material.Gold), new Value(1, Material.Power)]);
       }
       if(this.level === 4){
-        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(1, Material.Ore), new Value(1, Material.Gold), new Value(1, Material.Charge)]);
+        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(1, Material.Ore), new Value(1, Material.Gold), new Value(1, Material.Power)]);
       }
       if(this.level === 5){
-        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(-2, Material.Ore), new Value(-4, Material.Gold), new Value(-4, Material.Charge)]);
-        b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(3, Material.Ore), new Value(6, Material.Gold), new Value(6, Material.Charge)]);
+        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(-2, Material.Ore), new Value(-4, Material.Gold), new Value(-4, Material.Power)]);
+        b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(3, Material.Ore), new Value(6, Material.Gold), new Value(6, Material.Power)]);
       }
     }
 

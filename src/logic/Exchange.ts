@@ -3,7 +3,7 @@ import { Player } from "./Player";
 
 /**
  * the class Merchandise
- * this class will be used in the Exchange to reperesent a material
+ * this class will be used in the Exchange to represent material
  * will also be used in the store in the TechBoard class
  * @argument give: the material used to trade
  * @argument get: the material you want
@@ -32,7 +32,7 @@ class Merchandise{
 class Exchange{
   public powerToQIC: Merchandise;
   public powerToOre: Merchandise;
-  public powerToSicence: Merchandise;
+  public powerToScience: Merchandise;
   public powerToGold: Merchandise;
   public oreToGold: Merchandise;
   public oreToExtra: Merchandise;
@@ -42,10 +42,10 @@ class Exchange{
   public exchanges: Merchandise[];
 
   constructor(){
-    this.powerToQIC = new Merchandise(Material.Charge, Material.QIC, 4, 1);
-    this.powerToOre = new Merchandise(Material.Charge, Material.Ore, 3, 1);
-    this.powerToSicence = new Merchandise(Material.Charge, Material.Science, 4, 1);
-    this.powerToGold = new Merchandise(Material.Charge, Material.Gold, 1, 1);
+    this.powerToQIC = new Merchandise(Material.Power, Material.QIC, 4, 1);
+    this.powerToOre = new Merchandise(Material.Power, Material.Ore, 3, 1);
+    this.powerToScience = new Merchandise(Material.Power, Material.Science, 4, 1);
+    this.powerToGold = new Merchandise(Material.Power, Material.Gold, 1, 1);
     this.oreToGold = new Merchandise(Material.Ore, Material.Gold, 1, 1);
     this.oreToExtra = new Merchandise(Material.Ore, Material.Power, 1, 1);
     this.qicToRange = new Merchandise(Material.QIC, Material.SpecialRange, 1, 2);
@@ -92,7 +92,7 @@ class Exchange{
       return;
     }
 
-    if(give === Material.Charge) player.spendPower(totalGive);
+    if(give === Material.Power) player.spendPower(totalGive);
     if(give === Material.Ore) player.ore -= totalGive;
     if(give === Material.QIC) player.qic -= totalGive;
     if(give === Material.Science) player.science -= totalGive;
@@ -116,7 +116,7 @@ class Exchange{
    * @param quantity the total number of resource needed
    */
   public checkResources(player: Player, give: Material, quantity: number){
-    if(give === Material.Charge) return player.power3 >= quantity;
+    if(give === Material.Power) return player.power3 >= quantity;
     if(give === Material.Ore) return player.ore >= quantity;
     if(give === Material.QIC) return player.qic >= quantity;
     if(give === Material.Science) return player.science >= quantity;

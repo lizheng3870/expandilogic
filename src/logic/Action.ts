@@ -34,11 +34,11 @@ class Action {
   }
 
    public checkValid(){
+
      if(this.action === 'mine'){
        this.buildMineCheck()
        return this.check;
      }
-
      if(this.action === 'gaia'){
        return this.checkGaiaProject()
      }
@@ -66,13 +66,12 @@ class Action {
      return true;
    }
 
-   public checkUpdateBuilding(){
+   public checkUpdateBuilding(): boolean{
       const planet = this.board.getPlanet(this.action.hex);
       if(planet.pid !== this.player.pid){
-        console.log("you do not own this planet");
+        console.log("you do not own this planet")
+        return false
       }
-
-
 
       if(this.action.subtype === 1){ // Mine ➜ Trading Station
 
@@ -80,7 +79,6 @@ class Action {
           console.log(" Mine ➜ Trading Station cost insufficient this.data.subType == 1 require mine type ");
           return false;
         }
-
 
         if(this.board.hasNeighboring(this.data.hex, player.pid)){
               if(this.player.ore >= this.player.cost.station2.ore &&
@@ -103,23 +101,10 @@ class Action {
          }
 
       }
-
-      // if(this.data.subType === 2){
-      //
-      // }
-      //
-      // if(this.data.subType === 3){
-      //
-      // }
-      //
-      // if(this.data.subType === 4){
-      //
-      // }
-
-
+      return false
    }
 
-   public checkGaiaProject(){
+   public checkGaiaProject(): boolean{
      // page 11
      if(this.player.gaiaformer === 0){
        console.log("gaiaformer not available");
@@ -243,7 +228,6 @@ public doAction(){
        return false;
      }
 
-
    }
 
    private checkResources() {
@@ -253,11 +237,6 @@ public doAction(){
        return false;
      }
    }
-
-
-
-
-
 }
 
 

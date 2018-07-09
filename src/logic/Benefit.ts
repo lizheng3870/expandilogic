@@ -4,9 +4,7 @@ enum Material {
     Science,
     QIC,
     Power, 
-  //  ExtraPower,
-    Charge,
-    GaiaFormingPower,//yalei: the type of gaia forming way
+    ExtraPower,
     Dig,
     VP,
     SpecialDig,
@@ -20,7 +18,6 @@ class Value {
     constructor(quantity : number, material : Material){
       this.quantity = quantity;
       this.material = material;
-
     }
 }
 
@@ -38,34 +35,35 @@ const enum Trigger {
 }
 
 enum Count {
-    Sectors = 'sectors',
-    Mines = 'mines',
-    TradingStations = 'tradingstations',
-    Labs = 'labs',
-    BigBuildings = 'bigbuildings',
-    Feds = 'feds',
-    PlanetTypes = 'planetTypes',
-    Satellites = 'satellites',
-    Gaia = 'gaia',
-    None = 'none'
+    Sectors,
+    Mines,
+    TradingStations,
+    Labs,
+    BigBuildings,
+    Feds,
+    PlanetTypes,
+    Satellites,
+    Gaia
 }
 
-enum Struct {
-    Mine = 'mine',
-    TradingStation = 'trading',
-    Lab = 'Lab',
-    Academy = 'academy',
-    Institute = 'institute',
-    None = "none"
+enum Structure {
+    Mine,
+    TradingStation,
+    Lab,
+    Academy,
+    Institute
 }
-
 
 class Benefit {
+    // this is when the benefit happens
     public trigger: Trigger
+    // this is an optional multiplier for the benefit
     public count: Count | null
-    public object: Struct | null
+    // an optional Structure component
+    public object: Structure | null
+    // a list of the total benefits here - usually, but not always, one entry
     public benefits : Value[]
-    constructor(trigger: Trigger, count: Count, object: Struct, benefits: Value[]){
+    constructor( trigger: Trigger, count: Count, object: Structure, benefits: Value[] ){
         this.trigger = trigger
         this.count = count
         this.object = object
@@ -73,4 +71,4 @@ class Benefit {
     }
 }
 
-export  {Benefit, Value, Material, Count, Struct, Trigger}
+export  {Benefit, Value, Material, Count, Structure, Trigger}
