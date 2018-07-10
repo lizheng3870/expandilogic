@@ -1,6 +1,6 @@
-import {Benefit, Count, Trigger, Material, Structure} from './Benefit'
+import {Benefit, Count, Trigger, Material, Structure, Value} from './Benefit'
 import {MapBoard} from './MapBoard'
-import { Value } from 'dist/logic/Benefit';
+import {Planet} from './Planet'
 
 enum Fed{
   vp12, // id 0
@@ -14,57 +14,75 @@ enum Fed{
 
 class Federation {
   public fed: Fed
-  public spendable: boolean
-  public effect: Benefit
+  public used: boolean = false;
+  public benefit: Benefit
+  public planets: Planet[]
+  public satellites: Satellites[]
 
-  constructor(fedName: Fed){
-    this.spendable = true;
+  constructor(fedName: Fed, planets: Planet[], benefit: Benefit){
     //total 7 kinds of federation
+    this.planets = planets;
+    this.benefit = benefit;
+
     if(fedName === Fed.vp12){
       this.fed = fedName;
-      this.spendable = false;
-      this.effect = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(12, Material.VP)]);
+      this.used = true;
+      this.benefit = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(12, Material.VP)]);
     }
     if(fedName === Fed.vp8qic1){
       this.fed = fedName;
-      this.effect = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(8, Material.VP), new Value(1, Material.QIC)]);
+      this.benefit = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(8, Material.VP), new Value(1, Material.QIC)]);
     }
     if(fedName === Fed.vp8pw2){
       this.fed = fedName;
-      this.effect = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(8, Material.VP), new Value(2, Material.Power)]);
+      this.benefit = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(8, Material.VP), new Value(2, Material.Power)]);
     }
     if(fedName === Fed.vp7ore2){
       this.fed = fedName;
-      this.effect = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(7, Material.VP), new Value(2, Material.Ore)]);
+      this.benefit = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(7, Material.VP), new Value(2, Material.Ore)]);
     }
     if(fedName === Fed.vp7gold6){
       this.fed = fedName;
-      this.effect = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(7, Material.VP), new Value(6, Material.Gold)]);
+      this.benefit = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(7, Material.VP), new Value(6, Material.Gold)]);
     }
     if(fedName === Fed.vp6Sci2){
       this.fed = fedName;
-      this.effect = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(6, Material.VP), new Value(2, Material.Science)]);
+      this.benefit = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(6, Material.VP), new Value(2, Material.Science)]);
     }
     if(fedName === Fed.ore1Sci1gold2){
       this.fed = fedName;
-      this.effect = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(2, Material.Gold), new Value(1, Material.Science), new Value(1, Material.Ore)]);
+      this.benefit = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(2, Material.Gold), new Value(1, Material.Science), new Value(1, Material.Ore)]);
     }
   }
 
-  /**
-   * when federate, the turn the token's side from green to grey
-   */
-  public turnGrey(){
-    if(this.spendable === false) return false;
-    this.spendable = false;
-    return true;
+  
+   // use the federation to go into the top spot on a tech track
+  public spend (){
+    if (this.used){
+      throw new Error ("can't spend a federation twice");
+    } else {
+      this.used = true;
+    }
   }
 
   /**
    * when buy a specific stuff in the store, the grey fed can turn green
    */
   public turnGreen(){
-    this.spendable = true;
+    this.used = false;
+  }
+
+  // return the total number of buildings in the federation
+  public getTotalBuildings(): number{
+    return this.planets.length;
+  }
+
+  public getTotalPower(): number{
+    let sum = 0;
+    this.planets.forEach(p => {
+      sum += p.type;
+    })
+    return sum;
   }
 
   /**
