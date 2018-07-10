@@ -31,7 +31,7 @@ const enum Trigger {
     Special,
     ScienceUp,
     GaiaBuild,
-    Buy
+    Buy,
 }
 
 enum Count {
@@ -43,15 +43,21 @@ enum Count {
     Feds,
     PlanetTypes,
     Satellites,
-    Gaia
+    Gaia,
+    None // this none means the benefit do not need to count anything
 }
 
 enum Structure {
     Mine,
+    // there is a techtile which is get 3 VP when you build a mine on gaia;
+    // and there is a techtile which is get 3 VP when you build a mine;
+    // so we need a new type MineOnGaia to distinguish them;
+    MineOnGaia, 
     TradingStation,
     Lab,
     Academy,
-    Institute
+    Institute,
+    None // this none means the benefit do not require the building type
 }
 
 class Benefit {
