@@ -17,7 +17,7 @@ class Player extends Race {
   public numGaia: number;
   public digCost: Cost;
   public gaiaFormingCost: Cost;
-  public techs: Tech[];
+  public techs: number[];
   public techTiles: TechTiles[];
   public federations: Federation[];
   public nowBenefits: Benefit[];
@@ -30,10 +30,10 @@ class Player extends Race {
     // this.roundBooster = undefined;
     // this.planetType =
     this.digCost = new Cost([new BuildCost(Material.Ore, 3)]);
-    this.gaiaFormingCost = new Cost([new BuildCost(Material.GaiaFormer, 1), new BuildCost(Material.GaiaFormingPower, 6)])
+    this.gaiaFormingCost = new Cost([new BuildCost(Material.GaiaFormer, 1), new BuildCost(Material.Power, 6)])
     this.planets = [];
     this.numGaia = 0;
-    this.techs = [];
+    this.techs = [0,0,0,0,0,0];
     this.techTiles = [];
     this.federations = [];
     this.pid =  -1;  // pid is player id for example 0 1 2 3
