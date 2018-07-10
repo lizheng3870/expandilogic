@@ -1,9 +1,12 @@
 import Income from './Income'
 import {Player} from './Player'
+import {Benefit} from './Benefit'
 
 class TechTile {
-   constructor(techId){
-     this.techId = techId;
+  public benefit: Benefit
+
+   constructor(benefit: Benefit){
+     this.benefit = benefit
    }
 
    /*
