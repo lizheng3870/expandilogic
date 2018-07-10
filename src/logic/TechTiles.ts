@@ -1,37 +1,50 @@
-import Income from './Income'
 import {Player} from './Player'
+import {Benefit, Value, Material, Count, Structure, Trigger} from './Benefit';
 
 class TechTile {
-   constructor(techId){
-     this.techId = techId;
-   }
+  public techId: number;
 
-   /*
-   when get a normal techtile
-   get something or get some power
-   */
-   public onTechTile(player: Player, techId){
+  constructor(techId: number){
+    this.techId = techId;
+  }
+
+   /**
+    * when get a normal techtile
+    * get something or get some power
+    * @param player 
+    * @param techId 
+    */
+   public onTechTile(player: Player, techId: number){
+     let b1 = null;
+     let b2 = null;
+     let b3 = null;
      if(techId === 0){
-       player.ore += 1;
-       player.QIC += 1;
+      //  player.ore += 1;
+      //  player.QIC += 1;
+      b1 = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(1, Material.Ore), new Value(1, Material.QIC)]); 
      }
      if(techId === 1){
-       player.science += player.planetTypes.length * 1;
+      //  player.science += player.planetTypes.length * 1;
+      b1 = new Benefit(Trigger.Now, Count.PlanetTypes, Structure.None, [new Value(1, Material.Science)]);
      }
      if(techId === 2){
-       player.structure.value.academies = 4;
-       player.structure.value.institute = 4;
+      //  player.structure.value.academies = 4;
+      //  player.structure.value.institute = 4;
+      player.buildingLib.changeBigBuildingPowerValue(4);
      }
      if(techId === 3){
-       player.VP += 7;
+      //  player.VP += 7;
+       b1 = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(7, Material.VP)]);
      }
      if(techId === 4){
-       player.income.ore += 1;
-       player.income.charge += 1;
+      //  player.income.ore += 1;
+      //  player.income.charge += 1;
+       b1 = new Benefit(Trigger.Income, Count.None, Structure.None, [new Value(1, Material.Ore), new Value(1, Material.Power)]);
      }
      if(techId === 5){
-       player.income.science += 1;
-       player.income.gold += 1;
+      //  player.income.science += 1;
+      //  player.income.gold += 1;
+      b1 = new Benefit(Trigger.Income, Count.None, Structure.None, [new Value(1, Material.Science), new Value(1, Material.Gold)]);
      }
      if(techId === 6){
        //everytime player build a mine, get 3 VP;

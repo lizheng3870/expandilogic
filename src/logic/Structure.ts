@@ -30,6 +30,14 @@ class StructureType {
     this.benefit = benefit
   }
 
+  /**
+   * when get or loose the techtile of changing value, this function will work
+   * @param value 
+   */
+  public changePowerValue(value: number){
+    this.value = value;
+  }
+
 }
 
 
