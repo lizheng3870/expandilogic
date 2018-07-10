@@ -2,7 +2,6 @@ import {Benefit, Count, Trigger, Material, Structure} from './Benefit'
 import {MapBoard} from './MapBoard'
 import { Value } from 'dist/logic/Benefit';
 
-// todo rename a better name like VP VP
 enum Fed{
   vp12, // id 0
   vp8qic1, // id 1
@@ -19,24 +18,41 @@ class Federation {
   public effect: Benefit
 
   constructor(fedName: Fed){
-    //totally six kind of federation
+    this.spendable = true;
+    //total 7 kinds of federation
     if(fedName === Fed.vp12){
       this.fed = fedName;
       this.spendable = false;
       this.effect = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(12, Material.VP)]);
     }
     if(fedName === Fed.vp8qic1){
-      //nina: do it
+      this.fed = fedName;
+      this.effect = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(8, Material.VP), new Value(1, Material.QIC)]);
     }
-    // if .......
-    // if........
-    // if .......
-    // 
-  
+    if(fedName === Fed.vp8pw2){
+      this.fed = fedName;
+      this.effect = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(8, Material.VP), new Value(2, Material.Power)]);
+    }
+    if(fedName === Fed.vp7ore2){
+      this.fed = fedName;
+      this.effect = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(7, Material.VP), new Value(2, Material.Ore)]);
+    }
+    if(fedName === Fed.vp7gold6){
+      this.fed = fedName;
+      this.effect = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(7, Material.VP), new Value(6, Material.Gold)]);
+    }
+    if(fedName === Fed.vp6Sci2){
+      this.fed = fedName;
+      this.effect = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(6, Material.VP), new Value(2, Material.Science)]);
+    }
+    if(fedName === Fed.ore1Sci1gold2){
+      this.fed = fedName;
+      this.effect = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(2, Material.Gold), new Value(1, Material.Science), new Value(1, Material.Ore)]);
+    }
   }
 
   /**
-   * when federate, the token would turn grey
+   * when federate, the turn the token's side from green to grey
    */
   public turnGrey(){
     if(this.spendable === false) return false;
@@ -51,15 +67,23 @@ class Federation {
     this.spendable = true;
   }
 
-  public getTheName(){
-    if(this.fed === Fed.vp12) return "VP 12";
-    //the rest, do it nana;
+  /**
+   * for output to screen purpose. return a readable string
+   */
+  public getFedName(){
+    if(this.fed === Fed.vp12) return "12 VP";
+    if(this.fed === Fed.vp8qic1) return "8 VP, 1 qic";
+    if(this.fed === Fed.vp8pw2) return "8 VP, 2 power";
+    if(this.fed === Fed.vp7ore2) return "7 VP, 2 ore";
+    if(this.fed === Fed.vp7gold6) return "7 VP, 6 gold";
+    if(this.fed === Fed.vp6Sci2) return "6 VP, 2 science";
+    if(this.fed === Fed.ore1Sci1gold2) return "1 ore, 2 gold, 1 science";
   }
 }
 
 class Federations {
   public specialOne: Federation; // this one is on the techBoard as a special level 5 benefit in dig technology
-  public fiveNormal: Federation[]; // this is the normal selectable
+  public sixNormal: Federation[]; // this is the normal selectable
 
   constructor(){
     let tempArr = [0, 1, 2, 3, 4, 5];
@@ -73,7 +97,7 @@ class Federations {
     // assign the five
     for(let i = 0; i < 5; i++){
       fed = this.hashFed(tempNum[i]);
-      if(fed != null) this.fiveNormal[i] = new Federation(fed);
+      if(fed != null) this.sixNormal[i] = new Federation(fed);
     }
 
   }
