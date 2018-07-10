@@ -1,4 +1,4 @@
-import {Benefit, Value, Material, Count, Struct, Trigger} from './Benefit'
+import {Benefit, Value, Material, Count, Structure, Trigger} from './Benefit'
 import {Player} from './Player'
 
 class Tech{
@@ -22,7 +22,7 @@ class Tech{
   public update(player: Player){
     if(this.level === 3){
       //player.chargePower(3);
-      const b1 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(3, Material.Power)]);
+      const b1 = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(3, Material.Power)]);
       player.getBenefit(b1);
     }
 
@@ -30,18 +30,18 @@ class Tech{
 
     //dig
     if(this.lane === 0){
-      if(this.level === 1) {b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(2, Material.Ore)]);}
+      if(this.level === 1) {b2 = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(2, Material.Ore)]);}
       if(this.level === 2) {player.digCost.items[0].quantity = 2;}
       if(this.level === 3) {player.digCost.items[0].quantity = 1;}
-      if(this.level === 4) {b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(2, Material.Ore)]);}
+      if(this.level === 4) {b2 = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(2, Material.Ore)]);}
       //if(this.level == 5) // player.getFedaration();
     }
 
     //range
     if(this.lane === 1){
-      if(this.level === 1) {b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(1, Material.QIC)]);}
+      if(this.level === 1) {b2 = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(1, Material.QIC)]);}
       if(this.level === 2) {player.range = 2;}
-      if(this.level === 3) {b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(1, Material.QIC)]);}
+      if(this.level === 3) {b2 = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(1, Material.QIC)]);}
       if(this.level === 4) {player.range = 3;}
       if(this.level === 5){
         player.range = 4;
@@ -51,28 +51,28 @@ class Tech{
 
     //qic
     if(this.lane === 2){
-      if(this.level === 1) {b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(1, Material.QIC)]);}
-      if(this.level === 2) {b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(1, Material.QIC)]);}
-      if(this.level === 3) {b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(2, Material.QIC)]);}
-      if(this.level === 4) {b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(2, Material.QIC)]);}
-      if(this.level === 5) {b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(4, Material.QIC)]);}
+      if(this.level === 1) {b2 = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(1, Material.QIC)]);}
+      if(this.level === 2) {b2 = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(1, Material.QIC)]);}
+      if(this.level === 3) {b2 = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(2, Material.QIC)]);}
+      if(this.level === 4) {b2 = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(2, Material.QIC)]);}
+      if(this.level === 5) {b2 = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(4, Material.QIC)]);}
     }
 
     //gaia
     if(this.lane === 3){
-      if(this.level === 1) {b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(1, Material.GaiaFormer)]);}
-      if(this.level === 2) {b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(3, Material.Power)]);}
+      if(this.level === 1) {b2 = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(1, Material.GaiaFormer)]);}
+      if(this.level === 2) {b2 = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(3, Material.Power)]);}
       if(this.level === 3){
-        b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(1, Material.GaiaFormer)]);
+        b2 = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(1, Material.GaiaFormer)]);
         player.gaiaFormingCost.items[2].quantity = 4;
       }
       if(this.level === 4){
-        b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(1, Material.GaiaFormer)]);
+        b2 = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(1, Material.GaiaFormer)]);
         player.gaiaFormingCost.items[2].quantity = 3;
       }
       if(this.level === 5) {
-        b2 = new Benefit(Trigger.Now, Count.Gaia, Struct.None, [new Value(1, Material.VP)]);
-        const b3 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(4, Material.VP)]);
+        b2 = new Benefit(Trigger.Now, Count.Gaia, Structure.None, [new Value(1, Material.VP)]);
+        const b3 = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(4, Material.VP)]);
         player.getBenefit(b3);
       }
     }
@@ -80,34 +80,37 @@ class Tech{
     //income
     if(this.lane === 4){
       if(this.level === 1){
-        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(2, Material.Gold), new Value(1, Material.Power)]);
+        b2 = new Benefit(Trigger.Income, Count.None, Structure.None, [new Value(2, Material.Gold), new Value(1, Material.Power)]);
       }
       if(this.level === 2){
-        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(1, Material.Ore), new Value(1, Material.Power)]);
+        b2 = new Benefit(Trigger.Income, Count.None, Structure.None, [new Value(1, Material.Ore), new Value(1, Material.Power)]);
       }
       if(this.level === 3){
-        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(1, Material.Gold), new Value(1, Material.Power)]);
+        b2 = new Benefit(Trigger.Income, Count.None, Structure.None, [new Value(1, Material.Gold), new Value(1, Material.Power)]);
       }
       if(this.level === 4){
-        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(1, Material.Ore), new Value(1, Material.Gold), new Value(1, Material.Power)]);
+        b2 = new Benefit(Trigger.Income, Count.None, Structure.None, [new Value(1, Material.Ore), new Value(1, Material.Gold), new Value(1, Material.Power)]);
       }
       if(this.level === 5){
-        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(-2, Material.Ore), new Value(-4, Material.Gold), new Value(-4, Material.Power)]);
-        b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(3, Material.Ore), new Value(6, Material.Gold), new Value(6, Material.Power)]);
+        b2 = new Benefit(Trigger.Income, Count.None, Structure.None, [new Value(-2, Material.Ore), new Value(-4, Material.Gold), new Value(-4, Material.Power)]);
+        const b3 = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(3, Material.Ore), new Value(6, Material.Gold), new Value(6, Material.Power)]);
+        player.getBenefit(b3);
       }
     }
 
     //science
     if(this.lane === 5){
-      if(this.level === 1) {b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(1, Material.Science)]);}
-      if(this.level === 2) {b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(1, Material.Science)]);}
-      if(this.level === 3) {b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(1, Material.Science)]);}
-      if(this.level === 4) {b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(1, Material.Science)]);}
+      if(this.level === 1) {b2 = new Benefit(Trigger.Income, Count.None, Structure.None, [new Value(1, Material.Science)]);}
+      if(this.level === 2) {b2 = new Benefit(Trigger.Income, Count.None, Structure.None, [new Value(1, Material.Science)]);}
+      if(this.level === 3) {b2 = new Benefit(Trigger.Income, Count.None, Structure.None, [new Value(1, Material.Science)]);}
+      if(this.level === 4) {b2 = new Benefit(Trigger.Income, Count.None, Structure.None, [new Value(1, Material.Science)]);}
       if(this.level === 5){
-        b2 = new Benefit(Trigger.Income, Count.None, Struct.None, [new Value(-4, Material.Science)]);
-        b2 = new Benefit(Trigger.Now, Count.None, Struct.None, [new Value(9, Material.Science)]);
+        b2 = new Benefit(Trigger.Income, Count.None, Structure.None, [new Value(-4, Material.Science)]);
+        const b3 = new Benefit(Trigger.Now, Count.None, Structure.None, [new Value(9, Material.Science)]);
+        player.getBenefit(b3);
       }
     }
+    if(b2 != null) player.getBenefit(b2);
 
   }
 }

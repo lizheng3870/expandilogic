@@ -271,5 +271,17 @@ class BuildingLib {
                 this.institute.push(bescodsInstitute);    
             }        
         }
+
+        /**
+         * this function serve for the techtile of changing power value of bigbuilding
+         * @param value 
+         */
+        public changeBigBuildingPowerValue(value: number){
+            for(let i = 0; i < this.academies.length; i++){
+                this.academies[i].changePowerValue(value);
+            }
+            this.institute[0].changePowerValue(value);
+        }
+
     }
 export {BuildingLib};

@@ -53,7 +53,7 @@ class Exchange{
     this.scienceToGold = new Merchandise(Material.Science, Material.Gold, 1, 1);
     this.exchanges.push(this.powerToQIC);
     this.exchanges.push(this.powerToOre);
-    this.exchanges.push(this.powerToSicence);
+    this.exchanges.push(this.powerToScience);
     this.exchanges.push(this.powerToGold);
     this.exchanges.push(this.oreToGold);
     this.exchanges.push(this.oreToExtra);

@@ -140,6 +140,7 @@ class Federations {
     if(id === 5) return Fed.vp6Sci2;
     if(id === 6) return Fed.ore1Sci1gold2;
     return null;
+
   }
 
 }
