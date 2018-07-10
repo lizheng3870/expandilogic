@@ -19,10 +19,8 @@ class Federation {
   public planets: Planet[]
   public satellites: Satellites[]
 
-  constructor(fedName: Fed, planets: Planet[], benefit: Benefit){
+  constructor(fedName: Fed){
     //total 7 kinds of federation
-    this.planets = planets;
-    this.benefit = benefit;
 
     if(fedName === Fed.vp12){
       this.fed = fedName;
@@ -56,12 +54,16 @@ class Federation {
   }
 
   
-   // use the federation to go into the top spot on a tech track
-  public spend (){
+  // use the federation to go into the top spot on a tech track
+  public turnGray(){
     if (this.used){
       throw new Error ("can't spend a federation twice");
     } else {
-      this.used = true;
+      if(this.getTotalPower(this.planets) < 7){
+        throw new Error ("not enougn powers to form a federation");
+      }else{
+        this.used = true;
+      }
     }
   }
 
@@ -73,11 +75,11 @@ class Federation {
   }
 
   // return the total number of buildings in the federation
-  public getTotalBuildings(): number{
+  public getTotalBuildings(planets: Planet[]): number{
     return this.planets.length;
   }
 
-  public getTotalPower(): number{
+  public getTotalPower(planets: Planet[]): number{
     let sum = 0;
     this.planets.forEach(p => {
       sum += p.type;
