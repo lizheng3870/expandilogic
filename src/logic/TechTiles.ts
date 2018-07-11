@@ -1,6 +1,5 @@
 import {Player} from './Player'
-import {Benefit, Value, Material, Count, Structure, Trigger} from './Benefit';
-import { Struct } from 'dist/logic/Benefit';
+import {Benefit, Value, Material, Count, Structure, Trigger} from './Benefit'
 
 class TechTile {
   public techId: number;
