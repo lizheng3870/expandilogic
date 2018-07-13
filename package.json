@@ -6,7 +6,7 @@
   "scripts": {
     "pretest": "npm run compile",
     "build": "react-scripts-ts build",
-    "compile": "rm dist/*; tsc",
+    "compile": "rm -r dist/*; tsc",
     "test": "lab -l --timeout 10000 -S ./dist/tests",
     "eject": "react-scripts-ts eject"
   },

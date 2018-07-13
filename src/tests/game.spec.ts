@@ -1,7 +1,14 @@
-import { expect } from 'code'
-import * as lab from 'lab'
-const {it} = lab.script()
+import * as Lab from 'lab'
 
-it('returns true when 1 + 1 equals 2', () => {
-    expect(1 + 1).to.equal(2);
+import { expect } from 'code'
+const lab = Lab.script()
+const { describe, it, before } = lab
+export { lab }
+
+describe('experiment', () => {
+    before(() => {});
+
+    it('verifies 1 equals 1', () => {
+        expect(1).to.equal(1);
+    });
 });

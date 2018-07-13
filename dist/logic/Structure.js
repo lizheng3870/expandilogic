@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var Building;
 (function (Building) {
     Building[Building["Mine"] = 0] = "Mine";
@@ -6,6 +8,7 @@ var Building;
     Building[Building["Academy"] = 3] = "Academy";
     Building[Building["Institute"] = 4] = "Institute";
 })(Building || (Building = {}));
+exports.Building = Building;
 var BuildingStatus;
 (function (BuildingStatus) {
     BuildingStatus[BuildingStatus["Built"] = 0] = "Built";
@@ -21,7 +24,7 @@ var StructureType = /** @class */ (function () {
         this.benefit = benefit;
     }
     /**
-     * when get or loose the techtile of changing value, this function will work
+     * when get or loose the tech tile of changing value, this function will work
      * @param value
      */
     StructureType.prototype.changePowerValue = function (value) {
@@ -29,4 +32,4 @@ var StructureType = /** @class */ (function () {
     };
     return StructureType;
 }());
-export { StructureType, Building };
+exports.StructureType = StructureType;

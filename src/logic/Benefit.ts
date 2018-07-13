@@ -3,22 +3,9 @@ enum Material {
     Ore,
     Science,
     QIC,
-    Power, 
+    Power, // charge power
     ExtraPower,
-    Dig,
-    VP,
-    SpecialDig,
-    SpecialRange,
-    GaiaFormer
-}
-
-class Value {
-    public quantity : number;
-    public material : Material
-    constructor(quantity : number, material : Material){
-      this.quantity = quantity;
-      this.material = material;
-    }
+    VP
 }
 
 const enum Trigger {
@@ -43,8 +30,11 @@ enum Count {
     Feds,
     PlanetTypes,
     Satellites,
-    Gaia,
-    None // this none means the benefit do not need to count anything
+    Gaia
+}
+
+class Value {
+    constructor(public quantity : number, public material : Material){}
 }
 
 enum Structure {
@@ -56,8 +46,7 @@ enum Structure {
     TradingStation,
     Lab,
     Academy,
-    Institute,
-    None // this none means the benefit do not require the building type
+    Institute
 }
 
 class Benefit {
@@ -66,10 +55,11 @@ class Benefit {
     // this is an optional multiplier for the benefit
     public count: Count | null
     // an optional Structure component
+    // i.e., when you build this, you get something
     public object: Structure | null
     // a list of the total benefits here - usually, but not always, one entry
     public benefits : Value[]
-    constructor( trigger: Trigger, count: Count, object: Structure, benefits: Value[] ){
+    constructor( trigger: Trigger, count: Count | null, object: Structure|null, benefits: Value[] ){
         this.trigger = trigger
         this.count = count
         this.object = object

@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var PlanetType;
 (function (PlanetType) {
     PlanetType[PlanetType["Red"] = 0] = "Red";
@@ -12,6 +14,7 @@ var PlanetType;
     PlanetType[PlanetType["Lost"] = 9] = "Lost";
     PlanetType[PlanetType["Gaiaformer"] = 10] = "Gaiaformer";
 })(PlanetType || (PlanetType = {}));
+exports.PlanetType = PlanetType;
 var Planet = /** @class */ (function () {
     //  public type : PlanetType
     function Planet(loc, type) {
@@ -35,7 +38,8 @@ var Planet = /** @class */ (function () {
         if (distance > 3) {
             distance = 3 - (distance - 4);
         }
+        return distance;
     };
     return Planet;
 }());
-export { Planet, PlanetType };
+exports.Planet = Planet;

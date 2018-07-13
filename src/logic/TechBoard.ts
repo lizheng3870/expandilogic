@@ -21,8 +21,8 @@ class TechBoard {
     * @param player 
     */
    public update(lane: number, player: Player){  // 0 - 5  lane 0 -5
-      var level = player.techs[lane];
-      this.table[lane][level + 1].update(player);
+      // var level = player.techs[lane];
+      // this.table[lane][level + 1].update(player);
       player.techs[lane]++;
    }
 

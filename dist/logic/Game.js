@@ -1,8 +1,8 @@
-import { Action } from './Action';
-import { Exchange } from './Exchange';
-import { MapBoard } from './MapBoard';
-import RoundBooster from './RoundBooster';
-import TechBoard from './TechBoard';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Exchange_1 = require("./Exchange");
+var MapBoard_1 = require("./MapBoard");
+var TechBoard_1 = require("./TechBoard");
 var Phase;
 (function (Phase) {
     Phase[Phase["Income"] = 0] = "Income";
@@ -28,10 +28,10 @@ var Game = /** @class */ (function () {
         this.turn = 0; // start from 0;
         this.phase = Phase.Income;
         this.status = GameStatus.Open;
-        this.board = new MapBoard();
-        this.techBoard = new TechBoard();
+        this.board = new MapBoard_1.MapBoard();
+        this.techBoard = new TechBoard_1.default();
         this.roundBoosters = [];
-        this.exchange = new Exchange();
+        this.exchange = new Exchange_1.Exchange();
     }
     Game.prototype.addPlayer = function (player) {
         if (this.players.length === Config.PlayerLimit) {
@@ -48,35 +48,25 @@ var Game = /** @class */ (function () {
         return true;
     };
     Game.prototype.start = function () {
-        // send message to all player
-        // wait for take RoundBooter
     };
     Game.prototype.nextTurn = function () {
-        console.log("current round " + this.round + " turn " + this.turn);
-        if (this.passed === 4) {
+        if (this.players.length === 0) {
             this.endRound();
             this.newRound();
         }
-        if (this.turn === 3 && this.phase === 0 && this.round === 1) {
-            this.phase = 1;
-            this.IncomePhase();
-            this.phase = 2;
-        }
-        this.turn++;
-        if (this.turn === 4) {
-            this.turn = 0;
-        }
-        var player = this.players[this.turn];
-        if (player.passed) {
-            this.nextTurn();
+        else {
+            this.turn++;
+            if (this.turn >= this.players.length) {
+                this.turn = 0;
+            }
         }
     };
     Game.prototype.endRound = function () {
         this.round++;
         this.turn = 0;
-        for (var i = 0; i < 4; i++) {
-            this.players[i].passed = false;
-        }
+        var tmp = this.players;
+        this.players = this.nextRound;
+        this.nextRound = tmp;
     };
     Game.prototype.newRound = function () {
         this.IncomePhase();
@@ -87,52 +77,10 @@ var Game = /** @class */ (function () {
         }
     };
     Game.prototype.calculateIncome = function (player) {
-        player.income.doIncome(player);
-    };
-    Game.prototype.processRoundRooter = function (data) {
-        if (this.phase !== 0) {
-            console.log("error phase for processRoundRooter ");
-        }
-        var player = this.players[data.pid];
-        if (data.type === 'roundbooter') {
-            var roundBoosterId = data.roundBoosterID;
-            if (player.roundBooster == null && this.roundBoosters[roundBoosterId].valid === true) {
-                player.roundBooster = this.roundBoosters[roundBoosterId];
-                this.roundBoosters[roundBoosterId].valid = false;
-            }
-        }
-        // send to all client;
-        this.nextTurn();
-    };
-    Game.prototype.processRequest = function (data) {
-        // console.log(data);
-        if (this.phase !== 2) {
-            console.log("error phase for processRequest expect 2 real phase:  " + this.phase);
-        }
-        var player = this.players[data.pid];
-        var action = new Action(this, this.board, player, data);
-        if (player.pid !== this.turn) {
-            console.log("pid error " + player.pid + "   " + this.turn);
-            console.log(data);
-            return false;
-        }
-        if (action.checkValid() === false) {
-            console.log("checkvalid ");
-            console.log(data);
-            return false;
-        }
-        action.doAction();
-        // send to all client;
-        this.nextTurn();
     };
     Game.prototype.display = function () {
         console.log(this.players);
     };
-    Game.prototype.loadRoundBooster = function () {
-        for (var i = 0; i < 10; i++) {
-            this.roundBoosters[i] = new RoundBooster(i);
-        }
-    };
     return Game;
 }());
-export default Game;
+exports.default = Game;

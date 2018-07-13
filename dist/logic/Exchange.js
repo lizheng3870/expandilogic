@@ -1,4 +1,6 @@
-import { Material } from "./Benefit";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Benefit_1 = require("./Benefit");
 /**
  * the class Merchandise
  * this class will be used in the Exchange to represent material
@@ -17,6 +19,7 @@ var Merchandise = /** @class */ (function () {
     }
     return Merchandise;
 }());
+exports.Merchandise = Merchandise;
 /**
  * Exchange has nine kinds of Merchandise;
  * this class will be initialized in the Action class;
@@ -24,24 +27,6 @@ var Merchandise = /** @class */ (function () {
  */
 var Exchange = /** @class */ (function () {
     function Exchange() {
-        this.powerToQIC = new Merchandise(Material.Power, Material.QIC, 4, 1);
-        this.powerToOre = new Merchandise(Material.Power, Material.Ore, 3, 1);
-        this.powerToScience = new Merchandise(Material.Power, Material.Science, 4, 1);
-        this.powerToGold = new Merchandise(Material.Power, Material.Gold, 1, 1);
-        this.oreToGold = new Merchandise(Material.Ore, Material.Gold, 1, 1);
-        this.oreToExtra = new Merchandise(Material.Ore, Material.Power, 1, 1);
-        this.qicToRange = new Merchandise(Material.QIC, Material.SpecialRange, 1, 2);
-        this.qicToOre = new Merchandise(Material.QIC, Material.Ore, 1, 1);
-        this.scienceToGold = new Merchandise(Material.Science, Material.Gold, 1, 1);
-        this.exchanges.push(this.powerToQIC);
-        this.exchanges.push(this.powerToOre);
-        this.exchanges.push(this.powerToScience);
-        this.exchanges.push(this.powerToGold);
-        this.exchanges.push(this.oreToGold);
-        this.exchanges.push(this.oreToExtra);
-        this.exchanges.push(this.qicToRange);
-        this.exchanges.push(this.qicToOre);
-        this.exchanges.push(this.scienceToGold);
     }
     /**
      * the function to make a particular times of trade;
@@ -70,29 +55,27 @@ var Exchange = /** @class */ (function () {
             console.log("not enough resources");
             return;
         }
-        if (give === Material.Power)
+        if (give === Benefit_1.Material.Power)
             player.spendPower(totalGive);
-        if (give === Material.Ore)
+        if (give === Benefit_1.Material.Ore)
             player.ore -= totalGive;
-        if (give === Material.QIC)
+        if (give === Benefit_1.Material.QIC)
             player.qic -= totalGive;
-        if (give === Material.Science)
+        if (give === Benefit_1.Material.Science)
             player.science -= totalGive;
         /**
          * // problem: how to reduce it after one action?
          * In player's class, if does exchange and get === Material.SpecialRange, do player.range-=totalGet after the exchange
          */
-        if (get === Material.SpecialRange)
-            player.specialRange += totalGet;
-        if (get === Material.QIC)
+        if (get === Benefit_1.Material.QIC)
             player.qic += totalGet;
-        if (get === Material.Ore)
+        if (get === Benefit_1.Material.Ore)
             player.ore += totalGet;
-        if (get === Material.Gold)
+        if (get === Benefit_1.Material.Gold)
             player.gold += totalGet;
-        if (get === Material.Science)
+        if (get === Benefit_1.Material.Science)
             player.science += totalGet;
-        if (get === Material.Power)
+        if (get === Benefit_1.Material.Power)
             player.power1 += totalGet;
     };
     /**
@@ -102,17 +85,17 @@ var Exchange = /** @class */ (function () {
      * @param quantity the total number of resource needed
      */
     Exchange.prototype.checkResources = function (player, give, quantity) {
-        if (give === Material.Power)
+        if (give === Benefit_1.Material.Power)
             return player.power3 >= quantity;
-        if (give === Material.Ore)
+        if (give === Benefit_1.Material.Ore)
             return player.ore >= quantity;
-        if (give === Material.QIC)
+        if (give === Benefit_1.Material.QIC)
             return player.qic >= quantity;
-        if (give === Material.Science)
+        if (give === Benefit_1.Material.Science)
             return player.science >= quantity;
         console.log("material not found");
         return false;
     };
     return Exchange;
 }());
-export { Merchandise, Exchange };
+exports.Exchange = Exchange;

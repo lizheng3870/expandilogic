@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var Material;
 (function (Material) {
     Material[Material["Gold"] = 0] = "Gold";
@@ -6,19 +8,9 @@ var Material;
     Material[Material["QIC"] = 3] = "QIC";
     Material[Material["Power"] = 4] = "Power";
     Material[Material["ExtraPower"] = 5] = "ExtraPower";
-    Material[Material["Dig"] = 6] = "Dig";
-    Material[Material["VP"] = 7] = "VP";
-    Material[Material["SpecialDig"] = 8] = "SpecialDig";
-    Material[Material["SpecialRange"] = 9] = "SpecialRange";
-    Material[Material["GaiaFormer"] = 10] = "GaiaFormer";
+    Material[Material["VP"] = 6] = "VP";
 })(Material || (Material = {}));
-var Value = /** @class */ (function () {
-    function Value(quantity, material) {
-        this.quantity = quantity;
-        this.material = material;
-    }
-    return Value;
-}());
+exports.Material = Material;
 var Count;
 (function (Count) {
     Count[Count["Sectors"] = 0] = "Sectors";
@@ -30,8 +22,16 @@ var Count;
     Count[Count["PlanetTypes"] = 6] = "PlanetTypes";
     Count[Count["Satellites"] = 7] = "Satellites";
     Count[Count["Gaia"] = 8] = "Gaia";
-    Count[Count["None"] = 9] = "None"; // this none means the benefit do not need to count anything
 })(Count || (Count = {}));
+exports.Count = Count;
+var Value = /** @class */ (function () {
+    function Value(quantity, material) {
+        this.quantity = quantity;
+        this.material = material;
+    }
+    return Value;
+}());
+exports.Value = Value;
 var Structure;
 (function (Structure) {
     Structure[Structure["Mine"] = 0] = "Mine";
@@ -43,8 +43,8 @@ var Structure;
     Structure[Structure["Lab"] = 3] = "Lab";
     Structure[Structure["Academy"] = 4] = "Academy";
     Structure[Structure["Institute"] = 5] = "Institute";
-    Structure[Structure["None"] = 6] = "None"; // this none means the benefit do not require the building type
 })(Structure || (Structure = {}));
+exports.Structure = Structure;
 var Benefit = /** @class */ (function () {
     function Benefit(trigger, count, object, benefits) {
         this.trigger = trigger;
@@ -54,4 +54,4 @@ var Benefit = /** @class */ (function () {
     }
     return Benefit;
 }());
-export { Benefit, Value, Material, Count, Structure };
+exports.Benefit = Benefit;

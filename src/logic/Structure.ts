@@ -1,28 +1,27 @@
-import {Cost} from "./Cost"
-import {Benefit, Value, Material, Count, Structure, Trigger}   from './Benefit'
+import {Benefit, Value}   from './Benefit'
 
 enum Building {
-  Mine = 0,
-  Station = 1,
-  Lab = 2,
-  Academy = 3,
-  Institute = 4,
+  Mine,
+  Station,
+  Lab,
+  Academy,
+  Institute,
 }
 enum BuildingStatus{
-  Built = 0,
-  Unbuilt = 1
+  Built,
+  Unbuilt
 }
 
 class StructureType {
   public value : number
-  public cost : Cost
+  public cost : Value[]
   public type : Building
   public owner : number  // change type from player to numer for playerID
   public status : BuildingStatus
   public benefit : Benefit
   public location : Location | null = null
   
-  constructor(type: Building, price: Cost, power: number, benefit: Benefit){
+  constructor(type: Building, price: Value[], power: number, benefit: Benefit){
     this.value = power
     this.status = BuildingStatus.Unbuilt
     this.type = type
@@ -31,7 +30,7 @@ class StructureType {
   }
 
   /**
-   * when get or loose the techtile of changing value, this function will work
+   * when get or loose the tech tile of changing value, this function will work
    * @param value 
    */
   public changePowerValue(value: number){
@@ -39,6 +38,5 @@ class StructureType {
   }
 
 }
-
 
 export {StructureType, Building}

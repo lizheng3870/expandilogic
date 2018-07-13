@@ -1,5 +1,7 @@
-import Tech from './Tech';
-import TechTile from './TechTiles';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Tech_1 = require("./Tech");
+var TechTiles_1 = require("./TechTiles");
 var TechBoard = /** @class */ (function () {
     function TechBoard() {
         this.loadTechs();
@@ -10,8 +12,8 @@ var TechBoard = /** @class */ (function () {
      * @param player
      */
     TechBoard.prototype.update = function (lane, player) {
-        var level = player.techs[lane];
-        this.table[lane][level + 1].update(player);
+        // var level = player.techs[lane];
+        // this.table[lane][level + 1].update(player);
         player.techs[lane]++;
     };
     /**
@@ -49,26 +51,26 @@ var TechBoard = /** @class */ (function () {
         var j = 0;
         for (; i < 6; i++) {
             for (; j < 6; j++) {
-                this.table[i][j] = new Tech(i, j);
+                this.table[i][j] = new Tech_1.default(i, j);
             }
         }
         var arr = [0, 1, 2, 3, 4, 5, 6, 7, 8];
         arr.sort(function () { return 0.5 - Math.random(); });
         for (i = 0; i < 6; i++) {
             this.normal6Id[i] = arr[i];
-            this.normal6TechTiles[i] = new TechTile(arr[i]);
+            this.normal6TechTiles[i] = new TechTiles_1.default(arr[i]);
         }
         for (i = 0; i < 3; i++) {
             this.normal3Id[i] = arr[i + 6];
-            this.normal3TechTiles[i] = new TechTile(arr[i + 6]);
+            this.normal3TechTiles[i] = new TechTiles_1.default(arr[i + 6]);
         }
         arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
         arr.sort(function () { return 0.5 - Math.random(); });
         for (i = 0; i < 6; i++) {
             this.advanceId[i] = arr[i];
-            this.advanceTechTiles[i] = new TechTile(arr[i]);
+            this.advanceTechTiles[i] = new TechTiles_1.default(arr[i]);
         }
     };
     return TechBoard;
 }());
-export default TechBoard;
+exports.default = TechBoard;

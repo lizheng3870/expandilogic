@@ -1,6 +1,5 @@
-import { PlanetType } from './Planet';
-import { BuildingLib } from './BuildingLib';
-import { Material } from "./Benefit";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Enum Racetype
  */
@@ -21,6 +20,7 @@ var RaceType;
     RaceType[RaceType["Firaks"] = 12] = "Firaks";
     RaceType[RaceType["Bescods"] = 13] = "Bescods";
 })(RaceType || (RaceType = {}));
+exports.RaceType = RaceType;
 /**
  * Race base class. Every race shares similar base
  * initialization aspects which are included here
@@ -50,104 +50,8 @@ var Race = /** @class */ (function () {
      * Need to add tech level
      * @param race
      */
-    Race.prototype.initialize = function (race) {
-        this.buildingLib = new BuildingLib(race);
-        if (race === RaceType.Terrans) {
-            this.planetType = PlanetType.Blue;
-        }
-        if (race === RaceType.Lantids) {
-            this.planetType = PlanetType.Blue;
-            this.gold = 13;
-        }
-        if (race === RaceType.Xenos) {
-            this.planetType = PlanetType.Yellow;
-        }
-        if (race === RaceType.Gleens) {
-            this.planetType = PlanetType.Yellow;
-            this.qic = 0;
-        }
-        if (race === RaceType.Taklons) {
-            this.planetType = PlanetType.Brown;
-        }
-        if (race === RaceType.Ambas) {
-            this.planetType = PlanetType.Brown;
-        }
-        if (race === RaceType.Itars) {
-            this.planetType = PlanetType.White;
-            this.ore = 5;
-        }
-        if (race === RaceType.Nevlas) {
-            this.planetType = PlanetType.White;
-            this.science = 2;
-        }
-        if (race === RaceType.HadschHallas) {
-            this.planetType = PlanetType.White;
-        }
-        if (race === RaceType.Ivits) {
-            this.planetType = PlanetType.White;
-        }
-        if (race === RaceType.Geodens) {
-            this.planetType = PlanetType.Orange;
-        }
-        if (race === RaceType.Baltaks) {
-            this.planetType = PlanetType.Orange;
-        }
-        if (race === RaceType.Bescods) {
-            this.planetType = PlanetType.Black;
-            this.science = 1;
-        }
-        if (race === RaceType.Firaks) {
-            this.planetType = PlanetType.Black;
-            this.ore = 3;
-            this.science = 2;
-        }
+    Race.prototype.initialize = function () {
     };
-    /*
-    * Make the benefit come true;
-    * input: the benefit
-    * output: change the number of gold or ore of the race
-    * @yalei
-    */
-    Race.prototype.onBenefit = function (benefit) {
-        var values = benefit.benefits;
-        var i = 0;
-        var value;
-        for (; i < values.length; i++) {
-            value = values[i];
-            if (value.material === Material.Gold) {
-                this.gold += value.quantity;
-            }
-            if (value.material === Material.Ore) {
-                this.ore += value.quantity;
-            }
-            if (value.material === Material.Science) {
-                this.science += value.quantity;
-            }
-            if (value.material === Material.QIC) {
-                this.qic += value.quantity;
-            }
-            if (value.material === Material.Power) {
-                this.power1 += value.quantity;
-            }
-            if (value.material === Material.Power) {
-                this.chargePower(value.quantity);
-            }
-            if (value.material === Material.Dig) { /*lets discuss this part later --- by yalei*/ }
-            if (value.material === Material.VP) {
-                this.vp += value.quantity;
-            }
-            if (value.material === Material.SpecialDig) { /*what is the special dig? ---by yalei*/ }
-            if (value.material === Material.SpecialRange) {
-                this.specialRange += value.quantity;
-            }
-            if (value.material === Material.GaiaFormer) {
-                this.gaiaformer += value.quantity;
-            }
-        }
-    };
-    //  public planetType(): PlanetType {
-    //   return
-    //  }
     Race.prototype.chargePower = function (charge) {
         if (charge <= this.power1) {
             this.power1 -= charge;
@@ -178,7 +82,7 @@ var Race = /** @class */ (function () {
     };
     return Race;
 }());
-export { Race, RaceType };
+exports.Race = Race;
 /*
 Race (Base Class)
     Points : <victory points>

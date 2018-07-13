@@ -42,24 +42,7 @@ class Exchange{
   public exchanges: Merchandise[];
 
   constructor(){
-    this.powerToQIC = new Merchandise(Material.Power, Material.QIC, 4, 1);
-    this.powerToOre = new Merchandise(Material.Power, Material.Ore, 3, 1);
-    this.powerToScience = new Merchandise(Material.Power, Material.Science, 4, 1);
-    this.powerToGold = new Merchandise(Material.Power, Material.Gold, 1, 1);
-    this.oreToGold = new Merchandise(Material.Ore, Material.Gold, 1, 1);
-    this.oreToExtra = new Merchandise(Material.Ore, Material.Power, 1, 1);
-    this.qicToRange = new Merchandise(Material.QIC, Material.SpecialRange, 1, 2);
-    this.qicToOre = new Merchandise(Material.QIC, Material.Ore, 1, 1);
-    this.scienceToGold = new Merchandise(Material.Science, Material.Gold, 1, 1);
-    this.exchanges.push(this.powerToQIC);
-    this.exchanges.push(this.powerToOre);
-    this.exchanges.push(this.powerToScience);
-    this.exchanges.push(this.powerToGold);
-    this.exchanges.push(this.oreToGold);
-    this.exchanges.push(this.oreToExtra);
-    this.exchanges.push(this.qicToRange);
-    this.exchanges.push(this.qicToOre);
-    this.exchanges.push(this.scienceToGold);
+
   }
 
   /**
@@ -101,7 +84,7 @@ class Exchange{
      * // problem: how to reduce it after one action?
      * In player's class, if does exchange and get === Material.SpecialRange, do player.range-=totalGet after the exchange
      */
-    if(get === Material.SpecialRange) player.specialRange += totalGet;
+
     if(get === Material.QIC) player.qic += totalGet;
     if(get === Material.Ore) player.ore += totalGet;
     if(get === Material.Gold) player.gold += totalGet;

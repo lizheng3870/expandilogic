@@ -1,5 +1,5 @@
-import {Structure, Building} from "./Structure"
-import Player from "./Player"
+import {StructureType} from "./Structure"
+import {Player} from "./Player"
 
 enum PlanetType{
   Red,
@@ -16,7 +16,7 @@ enum PlanetType{
 }
 
 class Planet{
-  public building: Structure[]
+  public building: StructureType[]
   public type : PlanetType
   public loc : Location
 //  public type : PlanetType
@@ -45,7 +45,7 @@ class Planet{
      if(distance > 3) {
         distance = 3 - (distance -4)
      }
-
+     return distance
   }
 
 }
