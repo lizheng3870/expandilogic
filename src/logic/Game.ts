@@ -24,26 +24,23 @@ enum Config{
 
 class Game {
     public round: number;
-    public players: Player[]
-    public nextRound: Player[]
+    public players: Player[] = []
+    public nextRound: Player[] = []
     public turn: number
     public phase: Phase
     public status: GameStatus
     public board: MapBoard
     public techBoard: TechBoard
-    public roundBoosters: Benefit[]
+    public roundBoosters: Benefit[] = []
     public exchange: Exchange
 
     constructor(gid: number){
      this.round = 1;
-     this.players = [];
      this.turn = 0;  // start from 0;
      this.phase = Phase.Income;
      this.status = GameStatus.Open
      this.board = new MapBoard()
      this.techBoard = new TechBoard();
-
-     this.roundBoosters = [];
      this.exchange = new Exchange();
 
    }
@@ -112,4 +109,4 @@ class Game {
 }
 
 
-export default Game;
+export {Game, GameStatus, Phase}

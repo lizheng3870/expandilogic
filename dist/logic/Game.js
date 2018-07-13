@@ -9,6 +9,7 @@ var Phase;
     Phase[Phase["Gaiaforming"] = 1] = "Gaiaforming";
     Phase[Phase["Actions"] = 2] = "Actions";
 })(Phase || (Phase = {}));
+exports.Phase = Phase;
 var GameStatus;
 (function (GameStatus) {
     GameStatus[GameStatus["Open"] = 0] = "Open";
@@ -17,20 +18,22 @@ var GameStatus;
     GameStatus[GameStatus["Scoring"] = 3] = "Scoring";
     GameStatus[GameStatus["Over"] = 4] = "Over";
 })(GameStatus || (GameStatus = {}));
+exports.GameStatus = GameStatus;
 var Config;
 (function (Config) {
     Config[Config["PlayerLimit"] = 4] = "PlayerLimit";
 })(Config || (Config = {}));
 var Game = /** @class */ (function () {
     function Game(gid) {
-        this.round = 1;
         this.players = [];
+        this.nextRound = [];
+        this.roundBoosters = [];
+        this.round = 1;
         this.turn = 0; // start from 0;
         this.phase = Phase.Income;
         this.status = GameStatus.Open;
         this.board = new MapBoard_1.MapBoard();
         this.techBoard = new TechBoard_1.default();
-        this.roundBoosters = [];
         this.exchange = new Exchange_1.Exchange();
     }
     Game.prototype.addPlayer = function (player) {
@@ -83,4 +86,4 @@ var Game = /** @class */ (function () {
     };
     return Game;
 }());
-exports.default = Game;
+exports.Game = Game;
