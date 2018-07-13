@@ -3,8 +3,6 @@ import {PlanetType} from './Planet'
 import TechTiles from './TechTiles'
 import {Benefit, Trigger} from './Benefit'
 import {Federation} from './Federation'
-// import {Hex} from './Hex'
-
 
 class Player extends Race {
   public name: string

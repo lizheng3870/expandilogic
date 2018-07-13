@@ -11,7 +11,6 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Race_1 = require("./Race");
-// import {Hex} from './Hex'
 var Player = /** @class */ (function (_super) {
     __extends(Player, _super);
     function Player(name, raceType) {
