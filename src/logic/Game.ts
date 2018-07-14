@@ -35,6 +35,7 @@ class Game {
     public exchange: Exchange
 
     constructor(gid: number){
+      // console.log(`creating game ${gid}`)
      this.round = 1;
      this.turn = 0;  // start from 0;
      this.phase = Phase.Income;
@@ -47,12 +48,19 @@ class Game {
 
    public addPlayer(player: Player): boolean{
      if (this.players.length === Config.PlayerLimit){
-       return false;
+       throw new Error(`Config.PlayerLimit (${Config.PlayerLimit}) reached`)
      } else {
+       // check for another player of the same race
+      //  console.log(`${this.players.length} players`)
+       let sameRace = this.players.findIndex(p => p.race === player.race)
+       if (player.race !== null && sameRace !== -1){
+          throw new Error(`a player already exists with that raceType: ${player.race}/${this.players[sameRace]}`)
+       }
        this.players.push(player)
        player.pid = this.players.length - 1;
      }
      if(this.players.length === Config.PlayerLimit){
+      // if we have the max number of players, automatically start the game
       this.status = GameStatus.Setup;
       this.start();
     }
@@ -99,11 +107,6 @@ class Game {
    public calculateIncome(player: Player){
      
    }
-
-  public display(){
-    console.log(this.players);
-
-  }
 
 
 }

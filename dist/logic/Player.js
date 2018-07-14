@@ -14,11 +14,13 @@ var Race_1 = require("./Race");
 var Player = /** @class */ (function (_super) {
     __extends(Player, _super);
     function Player(name, raceType) {
+        if (raceType === void 0) { raceType = null; }
         var _this = _super.call(this, raceType) || this;
         _this.gaiaFormingCost = 6;
         _this.digCost = 3;
         _this.initializeSpecialPowers();
         _this.name = name;
+        _this.race = raceType;
         _this.planets = [];
         _this.numGaia = 0;
         _this.techs = [0, 0, 0, 0, 0, 0];

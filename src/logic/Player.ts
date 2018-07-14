@@ -16,10 +16,11 @@ class Player extends Race {
   public gaiaFormingCost: number = 6
   public digCost: number = 3
 
-  constructor(name: string, raceType: RaceType){
+  constructor(name: string, raceType: RaceType|null = null){
     super(raceType);
     this.initializeSpecialPowers();
     this.name = name;
+    this.race = raceType
     this.planets = [];
     this.numGaia = 0;
     this.techs = [0,0,0,0,0,0];

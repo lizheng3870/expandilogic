@@ -34,7 +34,7 @@ class Race {
     public power1: number;
     public power2: number;
     public power3: number;
-    public pid: number;
+    public pid: RaceType | null;
 
     public mine: number;
     public station: number;
@@ -53,9 +53,9 @@ class Race {
     public knowledge: number;
     public range: number;
     public specialRange: number;
-    public race: RaceType;
+    public race: RaceType | null;
 
-  constructor(pid: number){
+  constructor(pid?: RaceType|null){
     this.vp = 10;
     this.gold = 15;
     this.ore = 4;
@@ -65,7 +65,7 @@ class Race {
     this.power2 = 0;
     this.power3 = 0;
 
-    this.pid = pid;
+    this.pid = pid || null
     this.mine = 0;
     this.station = 0;
     this.institute = 0;
