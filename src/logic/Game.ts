@@ -57,7 +57,7 @@ class Game {
           throw new Error(`a player already exists with that raceType: ${player.race}/${this.players[sameRace]}`)
        }
        this.players.push(player)
-       player.pid = this.players.length - 1;
+       player.pid = this.players.length - 1
      }
      if(this.players.length === Config.PlayerLimit){
       // if we have the max number of players, automatically start the game
