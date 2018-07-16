@@ -89,7 +89,8 @@ class Exchange{
     if(get === Material.Ore) player.ore += totalGet;
     if(get === Material.Gold) player.gold += totalGet;
     if(get === Material.Science) player.science += totalGet;
-    if(get === Material.Power) player.power1 += totalGet;
+    // TODO: is this the right way to handle this? VVV
+    // if(get === Material.Power) player.power1 += totalGet;
   }
 
   /**
@@ -99,7 +100,8 @@ class Exchange{
    * @param quantity the total number of resource needed
    */
   public checkResources(player: Player, give: Material, quantity: number){
-    if(give === Material.Power) return player.power3 >= quantity;
+    // TODO : uncomment and fix
+    // if(give === Material.Power) return player.power3 >= quantity;
     if(give === Material.Ore) return player.ore >= quantity;
     if(give === Material.QIC) return player.qic >= quantity;
     if(give === Material.Science) return player.science >= quantity;

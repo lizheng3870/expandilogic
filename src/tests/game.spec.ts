@@ -2,12 +2,29 @@ import * as Lab from 'lab'
 
 import { expect } from 'code'
 import {Game, GameStatus, Phase} from '../logic/Game'
-import {Player} from '../logic/Player'
-import {RaceType} from '../logic/Race'
+import {Player, RaceType} from '../logic/Player'
 
 const lab = Lab.script()
 const { describe, it, before, beforeEach } = lab
 export { lab }
+
+function powerTest(p:Player, charge: number, bowl1:number, bowl2:number, bowl3:number){
+    p.chargePower(charge)
+    expect(p.power.bowl1).to.equal(bowl1)
+    expect(p.power.bowl2).to.equal(bowl2)
+    expect(p.power.bowl3).to.equal(bowl3)
+}
+function setPower(p:Player, bowl1?:number, bowl2?:number, bowl3?:number){
+    if (bowl1 !== undefined){
+        p.power.bowl1 = bowl1
+    }
+    if (bowl2 !== undefined){
+        p.power.bowl2 = bowl2
+    }
+    if (bowl3 !== undefined){
+        p.power.bowl3 = bowl3
+    }
+}
 
 describe('experiment', () => {
     before(() => {});
@@ -74,3 +91,53 @@ describe('Basic Game Tests', () => {
     })
 
 });
+
+describe('Power tests', () => {
+    let p: Player
+    beforeEach(() => {
+        p = new Player('jon')
+    })
+    it('begins each player with the normal default power', ()=>{
+        powerTest(p, 0, 2, 4, 0)
+    })
+    it('properly charges power', ()=>{
+        powerTest(p, 2, 0, 6, 0)
+       
+    })
+    it('properly charges power with overflow', ()=>{
+        setPower(p, 0, 1, 0)
+        powerTest(p, 2, 0, 0, 1)
+    })
+    it('properly charges power', ()=>{
+        setPower(p, 1, 1, 1)
+        powerTest(p, 3, 0, 0, 3)
+    })
+    it('properly charges power', ()=>{
+        setPower(p, 4, 0, 0)
+        powerTest(p, 6, 0, 2, 2)
+    })
+    it('properly charges power', ()=>{
+        setPower(p, 3, 0, 0)
+        powerTest(p, 3, 0, 3, 0)
+    })
+    it('properly charges power', ()=>{
+        setPower(p, 3, 3, 3)
+        powerTest(p, 10, 0, 0, 9)
+    })
+    it('properly charges power', ()=>{
+        setPower(p, 5, 0, 0)
+        powerTest(p, 10, 0, 0, 5)
+    })
+    it('properly charges power when all full', ()=>{
+        setPower(p, 0, 0, 3)
+        powerTest(p, 4, 0, 0, 3)
+    })
+    it('properly charges power when first bowl empty', ()=>{
+        setPower(p, 0, 3, 3)
+        powerTest(p, 4, 0, 0, 6)
+    })
+    it('properly charges max', ()=>{
+        setPower(p, 1, 0, 0)
+        powerTest(p, 4, 0, 0, 1)
+    })
+})

@@ -1,8 +1,25 @@
-import {Race, RaceType} from './Race'
+import {Race} from './Race'
 import {PlanetType} from './Planet'
 import TechTiles from './TechTiles'
 import {Benefit, Trigger} from './Benefit'
 import {Federation} from './Federation'
+
+export enum RaceType {
+  Terrans,
+  Lantids,
+  Xenos,
+  Gleens,
+  Taklons,
+  Ambas,
+  Nevlas,
+  Itars,
+  HadschHallas,
+  Ivits,
+  Geodens,
+  Baltaks,
+  Firaks,
+  Bescods,
+}
 
 class Player extends Race {
   public name: string
@@ -15,9 +32,11 @@ class Player extends Race {
   public incomeBenefits: Benefit[]
   public gaiaFormingCost: number = 6
   public digCost: number = 3
+  public race: RaceType|null
+  public pid: number
 
   constructor(name: string, raceType: RaceType|null = null){
-    super(raceType);
+    super();
     this.initializeSpecialPowers();
     this.name = name;
     this.race = raceType

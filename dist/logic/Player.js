@@ -11,11 +11,28 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Race_1 = require("./Race");
+var RaceType;
+(function (RaceType) {
+    RaceType[RaceType["Terrans"] = 0] = "Terrans";
+    RaceType[RaceType["Lantids"] = 1] = "Lantids";
+    RaceType[RaceType["Xenos"] = 2] = "Xenos";
+    RaceType[RaceType["Gleens"] = 3] = "Gleens";
+    RaceType[RaceType["Taklons"] = 4] = "Taklons";
+    RaceType[RaceType["Ambas"] = 5] = "Ambas";
+    RaceType[RaceType["Nevlas"] = 6] = "Nevlas";
+    RaceType[RaceType["Itars"] = 7] = "Itars";
+    RaceType[RaceType["HadschHallas"] = 8] = "HadschHallas";
+    RaceType[RaceType["Ivits"] = 9] = "Ivits";
+    RaceType[RaceType["Geodens"] = 10] = "Geodens";
+    RaceType[RaceType["Baltaks"] = 11] = "Baltaks";
+    RaceType[RaceType["Firaks"] = 12] = "Firaks";
+    RaceType[RaceType["Bescods"] = 13] = "Bescods";
+})(RaceType = exports.RaceType || (exports.RaceType = {}));
 var Player = /** @class */ (function (_super) {
     __extends(Player, _super);
     function Player(name, raceType) {
         if (raceType === void 0) { raceType = null; }
-        var _this = _super.call(this, raceType) || this;
+        var _this = _super.call(this) || this;
         _this.gaiaFormingCost = 6;
         _this.digCost = 3;
         _this.initializeSpecialPowers();

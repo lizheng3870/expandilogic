@@ -75,8 +75,8 @@ var Exchange = /** @class */ (function () {
             player.gold += totalGet;
         if (get === Benefit_1.Material.Science)
             player.science += totalGet;
-        if (get === Benefit_1.Material.Power)
-            player.power1 += totalGet;
+        // TODO: is this the right way to handle this? VVV
+        // if(get === Material.Power) player.power1 += totalGet;
     };
     /**
      * check if the player has enough resources to buy something
@@ -85,8 +85,8 @@ var Exchange = /** @class */ (function () {
      * @param quantity the total number of resource needed
      */
     Exchange.prototype.checkResources = function (player, give, quantity) {
-        if (give === Benefit_1.Material.Power)
-            return player.power3 >= quantity;
+        // TODO : uncomment and fix
+        // if(give === Material.Power) return player.power3 >= quantity;
         if (give === Benefit_1.Material.Ore)
             return player.ore >= quantity;
         if (give === Benefit_1.Material.QIC)
