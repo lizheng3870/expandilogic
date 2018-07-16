@@ -88,6 +88,10 @@ export class Race {
 
   }
 
+  public addPower(extra : number){
+    this.power.bowl1 += extra
+  }
+
   /*
   * spend the power to get something
   * this function only consume power

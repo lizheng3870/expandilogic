@@ -50,6 +50,9 @@ var Race = /** @class */ (function () {
         this.power.bowl2 -= amount;
         charge -= amount;
     };
+    Race.prototype.addPower = function (extra) {
+        this.power.bowl1 += extra;
+    };
     /*
     * spend the power to get something
     * this function only consume power

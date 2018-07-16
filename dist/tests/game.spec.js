@@ -129,4 +129,8 @@ describe('Power tests', function () {
         setPower(p, 1, 0, 0);
         powerTest(p, 4, 0, 0, 1);
     });
+    it('adds power', function () {
+        p.addPower(2);
+        code_1.expect(p.power.bowl1).to.equal(4);
+    });
 });

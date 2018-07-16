@@ -140,4 +140,9 @@ describe('Power tests', () => {
         setPower(p, 1, 0, 0)
         powerTest(p, 4, 0, 0, 1)
     })
+
+    it('adds power', ()=>{
+        p.addPower(2)
+        expect(p.power.bowl1).to.equal(4)
+    })
 })
