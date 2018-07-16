@@ -1,5 +1,5 @@
 import {Race} from './Race'
-import {PlanetType} from './Planet'
+import {Planet} from './Planet'
 import TechTiles from './TechTiles'
 import {Benefit, Trigger} from './Benefit'
 import {Federation} from './Federation'
@@ -23,7 +23,7 @@ export enum RaceType {
 
 class Player extends Race {
   public name: string
-  public planets: PlanetType[]
+  public planets: Planet[]
   public numGaia: number
   public techs: number[]
   public techTiles: TechTiles[]

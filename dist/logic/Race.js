@@ -3,6 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Race base class. Every race shares similar base
  * initialization aspects which are included here
+ * race will have income from many places, including
+ * build board
+ * permanent income from build board
+ * tech tiles
+ * round boosters
+ * tech tracks
+ *
  */
 var Race = /** @class */ (function () {
     function Race() {
@@ -12,19 +19,27 @@ var Race = /** @class */ (function () {
             bowl3: 0,
             gaia: 0
         };
+        // this buildBoard holds the benefits that are unlocked at each step
+        this.buildBoard = {
+            mines: [],
+            stations: [],
+            institutes: [],
+            labs: [],
+            academies: []
+        };
         this.vp = 10;
         this.gold = 15;
         this.ore = 4;
         this.science = 3;
         this.qic = 1;
-        this.mine = 0;
-        this.station = 0;
-        this.institute = 0;
-        this.lab = 0;
-        this.academies = 0;
         this.gaiaformer = 0;
+        // set up the buildboard
+        this.setUpBuildBoard();
         this.range = 1; // how far you can jump
     }
+    Race.prototype.setUpBuildBoard = function () {
+        // this.buildBoard.mines.push()
+    };
     /*
         use the "charge power" mechanic to push
         power aka energy around the bowl system

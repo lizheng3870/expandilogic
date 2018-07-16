@@ -1,9 +1,29 @@
-import {PlanetType} from './Planet'
+import {PlanetType, Planet} from './Planet'
 import Tech from './Tech'
+import { Benefit } from './Benefit';
 
+interface BuildBenefit{
+    built : boolean
+    benefit: Benefit
+}
+
+interface BuildBoard {
+    mines : BuildBenefit[],
+    stations : BuildBenefit[],
+    institutes : BuildBenefit[],
+    labs : BuildBenefit[],
+    academies : BuildBenefit[]
+}
 /**
  * Race base class. Every race shares similar base
  * initialization aspects which are included here
+ * race will have income from many places, including
+ * build board
+ * permanent income from build board
+ * tech tiles
+ * round boosters
+ * tech tracks
+ * 
  */
 export class Race {
     public vp: number;
@@ -22,12 +42,19 @@ export class Race {
         bowl3: 0,
         gaia: 0
     }
+    // which planets are my buildings on?
+    public planets: Planet[]
+    // this buildBoard holds the benefits that are unlocked at each step
+    public buildBoard : BuildBoard = {
+        mines : [],
+        stations : [],
+        institutes : [],
+        labs : [],
+        academies : []
+    }
+    // the permanent board incomes
+    public income : Benefit[]
 
-    public mine: number;
-    public station: number;
-    public institute: number;
-    public lab: number;
-    public academies: number;
     public gaiaformer: number;
 
     public planetType: PlanetType;
@@ -47,16 +74,16 @@ export class Race {
     this.science = 3;
     this.qic = 1;
 
-    this.mine = 0;
-    this.station = 0;
-    this.institute = 0;
-    this.lab = 0;
-    this.academies = 0;
     this.gaiaformer = 0;
 
+    // set up the buildboard
+    this.setUpBuildBoard()
     this.range = 1; // how far you can jump
 }
 
+private setUpBuildBoard(){
+    // this.buildBoard.mines.push()
+}
 /*
     use the "charge power" mechanic to push
     power aka energy around the bowl system
