@@ -44,6 +44,8 @@ var Player = /** @class */ (function (_super) {
         _this.techTiles = [];
         _this.federations = [];
         _this.pid = -1; // pid is player id for example 0 1 2 3
+        _this.nowBenefits = [];
+        _this.incomeBenefits = [];
         return _this;
     }
     /**

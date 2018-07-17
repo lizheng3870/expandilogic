@@ -46,6 +46,8 @@ class Player extends Race {
     this.techTiles = [];
     this.federations = [];
     this.pid =  -1;  // pid is player id for example 0 1 2 3
+    this.nowBenefits = [];
+    this.incomeBenefits = [];
   }
 
   /**
