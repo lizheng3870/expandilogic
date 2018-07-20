@@ -5,7 +5,10 @@ enum Material {
     QIC,
     Power, // charge power
     ExtraPower,
-    VP
+    VP,
+    SpecialRange,
+    Dig
+
 }
 
 const enum Trigger {
@@ -42,7 +45,7 @@ enum Structure {
     // there is a techtile which is get 3 VP when you build a mine on gaia;
     // and there is a techtile which is get 3 VP when you build a mine;
     // so we need a new type MineOnGaia to distinguish them;
-    MineOnGaia, 
+    MineOnGaia,
     TradingStation,
     Lab,
     Academy,

@@ -66,7 +66,7 @@ describe('Basic Game Tests', () => {
         g.addPlayer(p)
         expect(g.players.length).to.equal(1)
     })
-    
+
     it(`doesn't allow adding five Players to game`, () => {
         g.addPlayer(new Player('yousong'))
         g.addPlayer(new Player('nina'))
@@ -79,7 +79,7 @@ describe('Basic Game Tests', () => {
         }
         expect(g.players.length).to.equal(4)
     })
-    
+
     it(`doesn't allow adding two Players of the same race`, () => {
         g.addPlayer(new Player('yousong', RaceType.Terrans))
         try{
@@ -102,7 +102,7 @@ describe('Power tests', () => {
     })
     it('properly charges power', ()=>{
         powerTest(p, 2, 0, 6, 0)
-       
+
     })
     it('properly charges power with overflow', ()=>{
         setPower(p, 0, 1, 0)

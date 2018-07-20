@@ -3,6 +3,7 @@ import {Planet} from './Planet'
 import TechTiles from './TechTiles'
 import {Benefit, Trigger} from './Benefit'
 import {Federation} from './Federation'
+import RoundBooster  from './RoundBooster'
 
 export enum RaceType {
   Terrans,
@@ -34,6 +35,7 @@ class Player extends Race {
   public digCost: number = 3
   public race: RaceType|null
   public pid: number
+  public roundBooster:RoundBooster
 
   constructor(name: string, raceType: RaceType|null = null){
     super();
@@ -78,7 +80,7 @@ class Player extends Race {
 
   /**
    * activate the special power which has this benefit
-   * @param benefit 
+   * @param benefit
    */
   public activateSpecialPower(benefit: Benefit){
 

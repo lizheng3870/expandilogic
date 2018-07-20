@@ -23,7 +23,7 @@ interface BuildBoard {
  * tech tiles
  * round boosters
  * tech tracks
- * 
+ *
  */
 export class Race {
     public vp: number;
@@ -102,7 +102,7 @@ private setUpBuildBoard(){
     this.power.bowl2 += amount
     this.power.bowl1 -= amount
     charge -= amount
-    
+
     // now do bowl2 -> bowl3
     amount = charge
 
@@ -130,6 +130,11 @@ private setUpBuildBoard(){
     }
     this.power.bowl3 -= charge
     this.power.bowl1 += charge
+  }
+
+  // todo reseachArea
+  public reseachArea(){
+
   }
 
 }
