@@ -81,6 +81,27 @@ describe('Basic Game Tests', function () {
         }
         code_1.expect(g.players.length).to.equal(1);
     });
+    it('can go to the next turn', function () {
+        g.addPlayer(new Player_1.Player('yousong', Player_1.RaceType.Terrans));
+        g.addPlayer(new Player_1.Player('rong', Player_1.RaceType.Ambas));
+        g.addPlayer(new Player_1.Player('yalei', Player_1.RaceType.Baltaks));
+        g.nextTurn;
+        code_1.expect(g.turn).to.equal(1);
+    });
+    it('can go back to the turn 0', function () {
+        g.addPlayer(new Player_1.Player('yousong', Player_1.RaceType.Terrans));
+        g.addPlayer(new Player_1.Player('rong', Player_1.RaceType.Ambas));
+        g.addPlayer(new Player_1.Player('yalei', Player_1.RaceType.Baltaks));
+        g.nextTurn;
+        g.nextTurn;
+        g.nextTurn;
+        code_1.expect(g.turn).to.equal(0);
+    });
+    it('can go to the next round when all the player pass', function () {
+        g.nextTurn;
+        code_1.expect(g.turn).to.equal(0);
+        code_1.expect(g.round).to.equal(1);
+    });
 });
 describe('Power tests', function () {
     var p;
