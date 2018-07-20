@@ -6,8 +6,9 @@ enum Material {
     Power, // charge power
     ExtraPower,
     VP,
-    SpecialRange,
-    Dig
+    Dig, // you can buy the dig chance from the store
+    SpecialRange, // some special power or round booster can give you temporary range
+    GaiaFormer, // the tech of Gaia will give the player new gaia former
 
 }
 

@@ -65,7 +65,8 @@ export class Race {
     public gaia: number;
     public resources: number;
     public knowledge: number;
-    public range: number;
+    public range: number; // basic range, can be increased by upgrading the tech of range and will not decrease;
+    public specialRange: number; // temporary range, increased by spend QIC or special power, will go back to 0 every new turn;
 
   constructor(){
     this.vp = 10;
@@ -79,6 +80,7 @@ export class Race {
     // set up the buildboard
     this.setUpBuildBoard()
     this.range = 1; // how far you can jump
+    this.specialRange = 0; // temporary range is 0 at beginning
 }
 
 private setUpBuildBoard(){

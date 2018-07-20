@@ -90,6 +90,30 @@ describe('Basic Game Tests', () => {
         expect(g.players.length).to.equal(1)
     })
 
+    it('can go to the next turn', () => {
+        g.addPlayer(new Player('yousong', RaceType.Terrans));
+        g.addPlayer(new Player('rong', RaceType.Ambas));
+        g.addPlayer(new Player('yalei', RaceType.Baltaks));
+        g.nextTurn();
+        expect(g.turn).to.equal(1);
+        })
+        
+    it('can go back to the turn 0', () => {
+        g.addPlayer(new Player('yousong', RaceType.Terrans));
+        g.addPlayer(new Player('rong', RaceType.Ambas));
+        g.addPlayer(new Player('yalei', RaceType.Baltaks));
+        g.nextTurn();
+        g.nextTurn();
+        g.nextTurn();
+        expect(g.turn).to.equal(0);
+    })
+    
+    it('can go to the next round when all the player pass', () => {
+        g.nextTurn();
+        expect(g.turn).to.equal(0);
+        expect(g.round).to.equal(2); //turn starts at 0, round at 1
+    })
+
 });
 
 describe('Power tests', () => {
