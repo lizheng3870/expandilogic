@@ -1,7 +1,7 @@
 import {Race} from './Race'
 import {Planet} from './Planet'
 import TechTiles from './TechTiles'
-import {Benefit, Trigger} from './Benefit'
+import {Benefit, Trigger, Material} from './Benefit'
 import {Federation} from './Federation'
 
 export enum RaceType {
@@ -71,11 +71,44 @@ class Player extends Race {
     if(benefit.trigger === Trigger.Now){
       this.nowBenefits.push(benefit);
       // since it is now, so we call the onBenefit at once;
-      // super.onBenefit(benefit);
+      this.onBenefit(benefit);
     }
     if(benefit.trigger === Trigger.Special){
       this.activateSpecialPower(benefit);
     }
+  }
+
+  /**
+   * the function which will add the amount of resource into players class
+   * @param benefit 
+   */
+  public onBenefit(benefit: Benefit){
+    const values = benefit.benefits;
+    let i = 0;
+    let value;
+    for(; i < values.length; i++){
+      value = values[i];
+      if(value.material === Material.Gold){ 
+        this.gold += value.quantity; 
+      }
+      if(value.material === Material.Ore){ 
+        this.ore += value.quantity;
+      }
+      if(value.material === Material.Science){
+        this.science += value.quantity;
+      }
+      if(value.material === Material.QIC){ this.qic += value.quantity; }
+      if(value.material === Material.ExtraPower){ this.power.bowl1 += value.quantity; }
+      if(value.material === Material.Power){
+        this.chargePower(value.quantity); 
+      }
+      if(value.material === Material.Dig){ /*lets discuss this part later --- by yalei*/ }
+      if(value.material === Material.VP){ this.vp += value.quantity; }
+      // if(value.material === Material.SpecialDig){ /*what is the special dig? ---by yalei*/ }
+      if(value.material === Material.SpecialRange){ this.specialRange += value.quantity; }
+      if(value.material === Material.GaiaFormer){this.gaiaformer += value.quantity;}
+    }
+    if(this.gold > 30) this.gold = 30; 
   }
 
   /**
