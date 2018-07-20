@@ -111,7 +111,7 @@ describe('Basic Game Tests', () => {
     it('can go to the next round when all the player pass', () => {
         g.nextTurn();
         expect(g.turn).to.equal(0);
-        expect(g.round).to.equal(1);
+        expect(g.round).to.equal(2); //turn starts at 0, round at 1
     })
 
 });
