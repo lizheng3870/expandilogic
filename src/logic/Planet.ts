@@ -1,5 +1,6 @@
 import {StructureType} from "./Structure"
 import {Player} from "./Player"
+import {Hex as Location} from "./Hex"
 
 enum PlanetType{
   Red,

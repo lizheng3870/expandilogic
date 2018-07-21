@@ -82,8 +82,6 @@ class RoundBooster{
       const benefit2 = new Benefit(Trigger.Pass, Count.Mines, null,
           [new Value(1, Material.VP)])
       this.benefit.push(benefit2)
-
-
     }
 
     /**

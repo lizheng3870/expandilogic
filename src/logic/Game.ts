@@ -6,22 +6,26 @@ import RoundBooster  from './RoundBooster'
 import {Player} from './Player'
 import {Benefit} from './Benefit'
 import {Request, RequestType} from './Request'
+import {TypeState} from 'TypeState'
 
-enum Phase {
-  Income,
-  Gaiaforming,
-  Actions
-}
+
+
+
 
 enum GameStatus{
   Open,
   Setup,
   Playing,
+  Income,
+  Gaiaforming,
+  Actions,
   Scoring,
   Over
 }
 
-enum Config{
+
+
+export enum Config{
   PlayerLimit = 4
 }
 
@@ -30,27 +34,56 @@ class Game {
     public players: Player[] = []
     public nextRound: Player[] = []
     public turn: number   // turn is ID of player who will make action currently
-    public phase: Phase
-    public status: GameStatus
+  //  public status: GameStatus
     public board: MapBoard
     public techBoard: TechBoard
     public scoringBoard:ScoringBoard
     public benefits: Benefit[] = []
     public exchange: Exchange
-    public roundBoosters:RoundBooster[];
+    public roundBoosters:RoundBooster[]
+    public stateMachine:TypeState.FiniteStateMachine<GameStatus>
 
     constructor(gid: number){
       // console.log(`creating game ${gid}`)
      this.round = 1;
      this.turn = 0;  // start from 0;
-     this.phase = Phase.Income;
-     this.status = GameStatus.Open
+//     this.status = GameStatus.Open
      this.board = new MapBoard()
      this.techBoard = new TechBoard();
      this.exchange = new Exchange();
      this.scoringBoard = new ScoringBoard();
      this.roundBoosters = [];
      this.loadRoundBooster();
+     this.stateMachine = new TypeState.FiniteStateMachine<GameStatus>(GameStatus.Open);
+     this.stateMachine.from(GameStatus.Open).to(GameStatus.Setup)
+     this.stateMachine.from(GameStatus.Setup).to(GameStatus.Playing)
+     this.stateMachine.from(GameStatus.Playing).to(GameStatus.Income)
+     this.stateMachine.from(GameStatus.Income).to(GameStatus.Gaiaforming)
+     this.stateMachine.from(GameStatus.Gaiaforming).to(GameStatus.Actions)
+     this.stateMachine.from(GameStatus.Actions).to(GameStatus.Actions)
+     this.stateMachine.from(GameStatus.Actions).to(GameStatus.Scoring)
+     this.stateMachine.from(GameStatus.Scoring).to(GameStatus.Playing)
+     this.stateMachine.from(GameStatus.Scoring).to(GameStatus.Over)
+
+     this.stateMachine.on(GameStatus.Setup, (from: GameStatus)=>{
+       this.setup();
+     })
+
+
+     this.stateMachine.on(GameStatus.Income, (from: GameStatus)=>{
+     	 this.IncomePhase()
+       this.stateMachine.go(GameStatus.Gaiaforming)
+     })
+
+     this.stateMachine.on(GameStatus.Gaiaforming, (from: GameStatus)=>{
+       // todo
+      //  this.IncomePhase();
+      this.stateMachine.go(GameStatus.Actions)
+     })
+
+     this.stateMachine.on(GameStatus.Actions, (from: GameStatus)=>{
+      //  this.IncomePhase();
+     })
 
    }
 
@@ -70,8 +103,8 @@ class Game {
 
      if(this.players.length === Config.PlayerLimit){
       // if we have the max number of players, automatically start the game
-      this.status = GameStatus.Setup;
-      this.setup();
+
+      this.stateMachine.go(GameStatus.Setup)
     }
      return true;
    }
@@ -84,6 +117,8 @@ class Game {
      // Take all structures and Gaiaformers of your color on faction board. done when game creates player
      // Take one ore, one knowledge, and two credit markers  QIC.   done when game creates player
      // powder and level 0 on the research board.  done when creates player
+
+
      //   faction board  level 1 of a research area, calculate
      for(let player of this.players){
         player.reseachArea();
@@ -120,7 +155,7 @@ class Game {
    }
 
    public newRound(){
-     this.IncomePhase();
+     this.stateMachine.go(GameStatus.Income)
    }
 
    public IncomePhase(){
@@ -149,7 +184,7 @@ class Game {
 
    public processRoundRooter(data:Request){
      this.checkTurn(data.pid);
-     if(this.status !== GameStatus.Setup){
+     if(this.stateMachine.currentState !== GameStatus.Setup){
        throw new Error(`processRoundRooter error for status not setup`)
      }
 
@@ -168,19 +203,23 @@ class Game {
      }
      //send to all client;
 
+
+
      this.nextTurn();
 
-     if(this.turn === 0 ){
-        this.status = GameStatus.Playing;
+     if(this.turn === 0 ){  // one round finished
+        this.stateMachine.go(GameStatus.Playing)
         this.round = 1;
         this.newRound();  // round
      }
-
-
    }
+
+    public processPlayerRequest(data:Request){
+      this.checkTurn(data.pid);
+    }
 
 
 }
 
 
-export {Game, GameStatus, Phase}
+export {Game, GameStatus}
