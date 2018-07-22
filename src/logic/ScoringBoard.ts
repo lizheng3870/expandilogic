@@ -2,7 +2,7 @@ import Tech from './Tech'
 import TechTile from './TechTiles';
 import { Player } from './Player';
 
-class TechBoard {
+class ScoringBoard {
   public table: Tech[][];
   public normal6Id: number[];
   public normal6TechTiles: TechTile[];
@@ -12,13 +12,6 @@ class TechBoard {
   public advanceTechTiles: TechTile[];
 
   constructor() {
-    this.table = []
-    this.normal6Id = []
-    this.normal6TechTiles = []
-    this.normal3Id = []
-    this.normal3TechTiles =[]
-    this.advanceId = []
-    this.advanceTechTiles = []
     this.loadTechs();
   }
 
@@ -67,36 +60,11 @@ class TechBoard {
    }
 
    public loadTechs(){
-    var i = 0;
-    var j = 0;
 
-    for(; i < 6; i++){
-      this.table[i] = [];
-     for(; j< 6; j++){
-       this.table[i][j] = new Tech(i, j);
-     }
-    }
-
-    var arr = [0,1,2,3,4,5,6,7,8];
-    arr.sort(function(){ return 0.5 - Math.random() });
-    for(i = 0; i < 6; i++){
-      this.normal6Id[i] = arr[i];
-      this.normal6TechTiles[i] = new TechTile(arr[i]);
-    }
-    for(i = 0; i < 3; i++){
-      this.normal3Id[i] = arr[i + 6];
-      this.normal3TechTiles[i] = new TechTile(arr[i + 6]);
-    }
-    arr = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14];
-    arr.sort(function(){ return 0.5 - Math.random() });
-    for(i = 0; i < 6; i++){
-      this.advanceId[i] = arr[i];
-      this.advanceTechTiles[i] = new TechTile(arr[i]);
-    }
    }
 
 
 }
 
 
-export default TechBoard;
+export default ScoringBoard;

@@ -24,7 +24,7 @@ interface BuildBoard {
  * tech tiles
  * round boosters
  * tech tracks
- * 
+ *
  */
 export class Race {
 
@@ -72,9 +72,9 @@ export class Race {
     // public digCost: Cost;
     // public gaiaFormingCost: Cost;
     // public gaiaColonize: Cost;
-    public range: number;
+    public range: number; // basic range, can be increased by upgrading the tech of range and will not decrease;
     public specialDig: number;
-    public specialRange: number;
+    public specialRange: number; // temporary range, increased by spend QIC or special power, will go back to 0 every new turn;
     public playerId: number;
 
     // The permanent board incomes
@@ -90,7 +90,7 @@ export class Race {
     public gaia: number;
     public resources: number;
     public knowledge: number;
-    
+   
   constructor(){
     
     //Resources  
@@ -100,15 +100,11 @@ export class Race {
     this.science = 3;
     this.qic = 1;
 
-    //Player Status
-    this.range = 1; // how far you can jump
-
     this.gaiaformer = 0;
-
-    // Set up the buildboard
-    this.setUpBuildBoard()
-
     
+    
+    // Set up the buildboard
+    this.setUpBuildBoard();
 }
 
 private setUpBuildBoard(){
@@ -137,7 +133,7 @@ private setUpBuildBoard(){
     this.power.bowl2 += amount
     this.power.bowl1 -= amount
     charge -= amount
-    
+
     // now do bowl2 -> bowl3
     amount = charge
 
@@ -165,6 +161,11 @@ private setUpBuildBoard(){
     }
     this.power.bowl3 -= charge
     this.power.bowl1 += charge
+  }
+
+  // todo reseachArea
+  public reseachArea(){
+
   }
 
 }

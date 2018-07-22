@@ -5,7 +5,11 @@ enum Material {
     QIC,
     Power, // charge power
     ExtraPower,
-    VP
+    VP,
+    Dig, // you can buy the dig chance from the store
+    SpecialRange, // some special power or round booster can give you temporary range
+    GaiaFormer, // the tech of Gaia will give the player new gaia former
+
 }
 
 const enum Trigger {
@@ -37,12 +41,12 @@ class Value {
     constructor(public quantity : number, public material : Material){}
 }
 
-enum Structure {
+enum BuildingType {  // when trigger is build, and buiding same BuildingType will get benefit
     Mine,
     // there is a techtile which is get 3 VP when you build a mine on gaia;
     // and there is a techtile which is get 3 VP when you build a mine;
     // so we need a new type MineOnGaia to distinguish them;
-    MineOnGaia, 
+    MineOnGaia,
     TradingStation,
     Lab,
     Academy,
@@ -56,15 +60,15 @@ class Benefit {
     public count: Count | null
     // an optional Structure component
     // i.e., when you build this, you get something
-    public object: Structure | null
+    public object: BuildingType | null
     // a list of the total benefits here - usually, but not always, one entry
-    public benefits : Value[]
-    constructor( trigger: Trigger, count: Count | null, object: Structure|null, benefits: Value[] ){
+    public values : Value[]
+    constructor( trigger: Trigger, count: Count | null, object: BuildingType|null, values: Value[] ){
         this.trigger = trigger
         this.count = count
         this.object = object
-        this.benefits = benefits
+        this.values = values
     }
 }
 
-export  {Benefit, Value, Material, Count, Structure, Trigger}
+export  {Benefit, Value, Material, Count, BuildingType, Trigger}

@@ -118,6 +118,31 @@ export class Hex
         return results;
     }
 
+    public static ring(center:Hex, radius:number){
+        let results:Hex[] = []
+        // this code doesn't work for radius == 0; can you see why?
+        var cube = center.add( Hex.direction(4).scale(radius))
+
+        for(let i = 0; i < 6 ; i++)
+            for(let j = 0; j < radius; j++){
+              results.push(cube)
+              cube = cube.neighbor(i)
+
+            }
+
+        return results
+
+      }
+
+
+      public static spiral(center:Hex, radius:number){
+        let results:Hex[] = []
+        for(let k = 1 ; k <= radius; k++){
+          results = results.concat(this.ring(center, k))
+        }
+        return results;
+      }
+
 }
 
 export class OffsetCoord
@@ -255,6 +280,4 @@ export class Layout
         return corners;
     }
 
-}
-
-
+  }
