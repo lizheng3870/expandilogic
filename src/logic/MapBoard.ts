@@ -5,10 +5,10 @@ import {Config} from './Game'
 
 class Space {
   public hex:Hex
-  public plant:Planet|null
+  public planet:Planet|null
   constructor(hex:Hex){
     this.hex = hex
-    this.plant = null
+    this.planet = null
   }
 
   public static spiral(center: Hex, radius:number){
@@ -21,7 +21,7 @@ class Space {
   }
 
   public setPlanetType(type: PlanetType){
-    this.plant = new Planet(this.hex, type);
+    this.planet = new Planet(this.hex, type);
   }
 
 
@@ -31,10 +31,12 @@ class Space {
 class MapBoard {
    public spaces : Space[]
    public planets: Planet[]
+   public spacesMap: Map<Hex, Planet|null>
 
   constructor(public size: number = 10){
      this.spaces = []
      this.planets = []
+     this.spacesMap  = new Map<Hex, Planet|null>();
 
     //  generate the tiles
     // place planets on tiles
@@ -43,9 +45,12 @@ class MapBoard {
     this.setup(Config.PlayerLimit)
   }
 
-  public getPlanet(x: number, y:number, z:number): Planet|void {
+  public getPlanet(hex: Hex): Planet|null|undefined {
     // if there's a planet in that spot, return it to the caller
     // otherwise return void or maybe throw an exception
+    return this.spacesMap.get(hex)
+
+
   }
 
   public getHex(q:number, r:number){
@@ -67,7 +72,7 @@ class MapBoard {
         centers[9] = this.getHex(-6, 10);
 
         var spaces0 = Space.spiral(centers[0], 2);
-        spaces0[0].setPlanetType(PlanetType.Green);
+        spaces0[0].setPlanetType(PlanetType.Blue);
         spaces0[5].setPlanetType(PlanetType.Orange);
         spaces0[8].setPlanetType(PlanetType.Red);
         this.randomRotation(spaces0);
@@ -123,7 +128,17 @@ class MapBoard {
         spaces = spaces.concat(spaces8);
         spaces = spaces.concat(spaces9);
         this.spaces = spaces;
+
+        for(let space of spaces){
+          this.spacesMap.set(space.hex, space.planet)
+          if(space.planet != null)
+            this.planets.push(space.planet);
+        }
+
+
         return spaces;
+
+
   }
 
   public randomRotation(spaces: Space[]){
@@ -148,6 +163,13 @@ class MapBoard {
     s.hex = hex;
     return s;
   }
+
+
+  public hasNeighboring(hex: Hex, playerID: number ){
+    //todo
+    return true;
+  }
+
 
 
 }

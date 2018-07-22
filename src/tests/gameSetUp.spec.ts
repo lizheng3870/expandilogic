@@ -32,14 +32,14 @@ describe('Game Before Setup Tests', () => {
     });
 
     it('check game status zero player  ', () => {
-      expect(g.status).to.equal(GameStatus.Open)
+      expect(g.stateMachine.currentState).to.equal(GameStatus.Open)
 
     })
 
     it('check game status two player  ', () => {
       g.addPlayer(new Player('yousong', RaceType.Terrans))
       g.addPlayer(new Player('nina', RaceType.Lantids))
-      expect(g.status).to.equal(GameStatus.Open)
+      expect(g.stateMachine.currentState).to.equal(GameStatus.Open)
 
     })
 
@@ -48,7 +48,7 @@ describe('Game Before Setup Tests', () => {
       g.addPlayer(new Player('nina', RaceType.Lantids))
       g.addPlayer(new Player('yalei', RaceType.Xenos))
       g.addPlayer(new Player('rong', RaceType.Gleens))
-      expect(g.status).to.equal(GameStatus.Setup)
+      expect(g.stateMachine.currentState).to.equal(GameStatus.Setup)
 
     })
 
@@ -68,7 +68,7 @@ describe('Game SetUp finished Tests', () => {
     });
 
     it('check game status (GameStatus.Setup)  ', () => {
-      expect(g.status).to.equal(GameStatus.Setup)
+      expect(g.stateMachine.currentState).to.equal(GameStatus.Setup)
 
     })
 
@@ -137,7 +137,9 @@ describe('Player RoundBooster Request Tests', () => {
       g.processRoundRooter(request)
       expect(g.players[3].roundBooster).to.equal(g.roundBoosters[9]);
 
-      expect(g.status).to.equal(GameStatus.Playing)
+       // jump from Setup to Playing or later stage
+
+      expect(g.stateMachine.currentState).to.equal(GameStatus.Actions)
 
     })
 

@@ -41,7 +41,7 @@ class Value {
     constructor(public quantity : number, public material : Material){}
 }
 
-enum Structure {
+enum BuildingType {
     Mine,
     // there is a techtile which is get 3 VP when you build a mine on gaia;
     // and there is a techtile which is get 3 VP when you build a mine;
@@ -60,10 +60,10 @@ class Benefit {
     public count: Count | null
     // an optional Structure component
     // i.e., when you build this, you get something
-    public object: Structure | null
+    public object: BuildingType | null
     // a list of the total benefits here - usually, but not always, one entry
     public benefits : Value[]
-    constructor( trigger: Trigger, count: Count | null, object: Structure|null, benefits: Value[] ){
+    constructor( trigger: Trigger, count: Count | null, object: BuildingType|null, benefits: Value[] ){
         this.trigger = trigger
         this.count = count
         this.object = object
@@ -71,4 +71,4 @@ class Benefit {
     }
 }
 
-export  {Benefit, Value, Material, Count, Structure, Trigger}
+export  {Benefit, Value, Material, Count, BuildingType, Trigger}
