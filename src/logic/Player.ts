@@ -39,7 +39,7 @@ class Player extends Race {
     super();
     this.initializeSpecialPowers();
     this.name = name;
-    this.race = raceType
+    this.race = raceType;
     this.planets = [];
     this.numGaia = 0;
     this.techs = [0,0,0,0,0,0];

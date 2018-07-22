@@ -1,6 +1,7 @@
 import {PlanetType, Planet} from './Planet'
 import Tech from './Tech'
 import { Benefit } from './Benefit';
+import {Federation} from './Federation';
 
 interface BuildBenefit{
     built : boolean
@@ -26,6 +27,8 @@ interface BuildBoard {
  * 
  */
 export class Race {
+
+    //Player Resources
     public vp: number;
     public gold: number;
     public ore: number;
@@ -42,9 +45,17 @@ export class Race {
         bowl3: 0,
         gaia: 0
     }
-    // which planets are my buildings on?
-    public planets: Planet[]
-    // this buildBoard holds the benefits that are unlocked at each step
+
+    //Player Milestones
+    public planets: Planet[] // Which planets are my buildings on
+    public gaiaformer: number;  // How many gaiaformers do I have
+    public federations: Federation[]; // My Federations
+    public nowBenefits: Benefit[];
+    public incomeBenefits: Benefit[];
+    public specialBenefits: Benefit[];
+    public boughtBenefits: Benefit[];
+
+    // This buildBoard holds the benefits that are unlocked at each step
     public buildBoard : BuildBoard = {
         mines : [],
         stations : [],
@@ -52,38 +63,62 @@ export class Race {
         labs : [],
         academies : []
     }
-    // the permanent board incomes
+   
+    //Player Status
+    public planetType: PlanetType;
+    public passed: boolean;
+    // public roundBooster: RoundBooster;
+    // public numGaia: number;
+    // public digCost: Cost;
+    // public gaiaFormingCost: Cost;
+    // public gaiaColonize: Cost;
+    public range: number;
+    public specialDig: number;
+    public specialRange: number;
+    public playerId: number;
+
+    // The permanent board incomes
     public income : Benefit[]
 
-    public gaiaformer: number;
-
-    public planetType: PlanetType;
-    public tech: Tech;
-
+    // Tech level of player
+    //Tech level array form - EITHER
+    public techs: Tech[];
+    // Tech level value form - OR
     public dig: number;
     public nav: number;
+    public qicTech: number;
     public gaia: number;
     public resources: number;
     public knowledge: number;
-    public range: number;
-
+    
   constructor(){
+    
+    //Resources  
     this.vp = 10;
     this.gold = 15;
     this.ore = 4;
     this.science = 3;
     this.qic = 1;
 
+    //Player Status
+    this.range = 1; // how far you can jump
+
     this.gaiaformer = 0;
 
-    // set up the buildboard
+    // Set up the buildboard
     this.setUpBuildBoard()
-    this.range = 1; // how far you can jump
+
+    
 }
 
 private setUpBuildBoard(){
     // this.buildBoard.mines.push()
 }
+
+
+
+
+
 /*
     use the "charge power" mechanic to push
     power aka energy around the bowl system
