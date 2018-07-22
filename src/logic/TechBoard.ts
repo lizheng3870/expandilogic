@@ -12,6 +12,7 @@ class TechBoard {
   public advanceTechTiles: TechTile[];
 
   constructor() {
+    this.table = [];
     this.loadTechs();
   }
 
@@ -54,16 +55,17 @@ class TechBoard {
     * @param offId the one you turn off
     * @param player who will take
     */
-   takeAdvancedTechTiles(lane: number, offId: number, player: Player){
+   public takeAdvancedTechTiles(lane: number, offId: number, player: Player){
       this.advanceTechTiles[lane].onAdvanceTechTile(player, offId);
       this.update(lane, player);
    }
 
-   loadTechs(){
+   public loadTechs(){
     var i = 0;
     var j = 0;
 
     for(; i < 6; i++){
+      this.table[i] = [];
      for(; j< 6; j++){
        this.table[i][j] = new Tech(i, j);
      }
