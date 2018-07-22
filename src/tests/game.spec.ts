@@ -55,7 +55,7 @@ describe('Basic Game Tests', () => {
 
     it('creates Player without Race', () => {
         // a player should have no planets when it's first created
-        const p = new Player('jon')
+        const p = new Player('jon', RaceType.Terrans)
         expect(p.planets.length).to.equal(0)
     })
 
@@ -67,12 +67,12 @@ describe('Basic Game Tests', () => {
     })
 
     it(`doesn't allow adding five Players to game`, () => {
-        g.addPlayer(new Player('yousong'))
-        g.addPlayer(new Player('nina'))
-        g.addPlayer(new Player('yalei'))
-        g.addPlayer(new Player('rong'))
+        g.addPlayer(new Player('yousong', RaceType.Terrans))
+        g.addPlayer(new Player('nina', RaceType.Xenos))
+        g.addPlayer(new Player('yalei', RaceType.Lantids))
+        g.addPlayer(new Player('rong', RaceType.Gleens))
         try{
-            g.addPlayer(new Player('jon'))
+            g.addPlayer(new Player('jon', RaceType.Ambas))
         }catch(e){
             expect(g.players.length).to.equal(4)
         }
@@ -118,7 +118,7 @@ describe('Basic Game Tests', () => {
 describe('Power tests', () => {
     let p: Player
     beforeEach(() => {
-        p = new Player('jon')
+        p = new Player('jon', RaceType.Terrans)
     })
     it('begins each player with the normal default power', ()=>{
         powerTest(p, 0, 2, 4, 0)

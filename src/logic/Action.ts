@@ -3,7 +3,7 @@ import {MapBoard} from "./MapBoard";
 import {Player} from "./Player";
 //import {Hex} from "./Hex";
 import { Request } from './Request'
-import { StructureType } from './Structure'
+import { StructureType} from './Structure'
 
 /**
  * Types of actions that a player can make on his turn
@@ -196,61 +196,60 @@ public doAction(){
    // It is habitable to your faction.
    // If the planet is not habitable, you must pay any costs required to make it habitable
    public buildMineCheck() {
-return true;
 
+return true;
      // if (this.checkMineAvailability() &&
      //     this.checkEmpty() &&
      //     this.checkAccessible() &&
      //     this.checkHabitable() &&
-     //     this.checkResources()) {
+     //     this.checkAffordable()) {
      //   return true;
      // } else {
      //   return false;
      // }
    }
-//
-//    public checkMineAvailability() {
-//      if (this.player.mine === 8) {
-//        return false;
-//      } else {
-//        return true;
-//      }
-//    }
-//
-//    public checkEmpty() {
-//      return this.board.checkPlanetEmpty(this.data.hex);
-//    }
-//
-//    public checkAccessible() {
-//      // Distance from one of the existing planets
-//      this.player.checkPlanetDistance(this.data.hex);
-//
-//    }
+
+   public checkMineAvailability() {
+      if(this.player.getAvalibleMine() == null)return false
+      else return true;
+   }
+
+   public checkEmpty() {
+     return this.board.checkPlanetEmpty(this.request.hex);
+   }
+
+   public checkAccessible() {
+     // Distance from one of the existing planets
+     this.player.checkPlanetDistance(this.request.hex);
+
+   }
+
+   public checkHabitable() {
+     const planet = this.board.getPlanet(this.request.hex);
+     if(planet === null) return false;
+     const terraforming = planet.terraformingCalculate(this.player);
+     const needOres = terraforming * this.player.terraformingCost();
+     if(this.player.ore >= needOres){
+       return true;
+     }else{
+       return false;
+     }
+
+   }
+
+
+   public checkAffordable() {
+     this.player.isHaveAffordableMine()
+
+   }
 //
 //    public pass(){
 //      this.player.passed = true;
 //      this.game.passed++;
 //    }
 //
-//    private checkHabitable() {
-//      const planet = this.board.getPlanet(this.data.hex);
-//      const terraforming = planet.terraformingCalculate(this.player);
-//      const needOres = terraforming * this.player.cost.terraforming.ore;
-//      if(this.player.ore >= needOres){
-//        return true;
-//      }else{
-//        return false;
-//      }
-//
-//    }
-//
-//    private checkResources() {
-//      if(this.gold >= this.cost.mine.gold && this.ore >= this.cost.mine.ore){
-//        return true;
-//      } else {
-//        return false;
-//      }
-//    }
+
+
 }
 
 

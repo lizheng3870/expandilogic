@@ -2,7 +2,7 @@
 import * as Lab from 'lab'
 
 import { expect } from 'code'
-import { Player } from '../logic/Player';
+import { Player , RaceType} from '../logic/Player';
 import { Benefit, Trigger, Value, Material } from '../logic/Benefit';
 
 const lab = Lab.script()
@@ -33,7 +33,7 @@ describe('Benefit Test', () => {
     let b2: Benefit;
     // let b3: Benefit;
     beforeEach(() => {
-        p = new Player('jon');
+        p = new Player('jon', RaceType.Terrans);
         b1 = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Gold)]);
         b2 = new Benefit(Trigger.Now, null, null, [new Value(1, Material.Ore)]);
         // b3 = new Benefit(Trigger.Income, null, null, [new Value(3, Material.QIC)]);
@@ -63,7 +63,7 @@ describe('Benefit Test', () => {
         var o1 = p.ore;
         var s1 = p.science;
         var q1 = p.qic
-        var b3 = new Benefit(Trigger.Now, null, null, [new Value(10, Material.Gold), 
+        var b3 = new Benefit(Trigger.Now, null, null, [new Value(10, Material.Gold),
                                                        new Value(3, Material.Ore),
                                                        new Value(5, Material.Science),
                                                        new Value(7, Material.QIC)]);
@@ -79,11 +79,11 @@ describe('Benefit Test', () => {
         var o1 = p.ore;
         var s1 = p.science;
         var q1 = p.qic
-        var b3 = new Benefit(Trigger.Now, null, null, [new Value(10, Material.Gold), 
+        var b3 = new Benefit(Trigger.Now, null, null, [new Value(10, Material.Gold),
                                                        new Value(3, Material.Ore),
                                                        new Value(5, Material.Science),
                                                        new Value(7, Material.QIC)]);
-        var b4 = new Benefit(Trigger.Now, null, null, [new Value(2, Material.Gold), 
+        var b4 = new Benefit(Trigger.Now, null, null, [new Value(2, Material.Gold),
                                                        new Value(6, Material.Ore),
                                                        new Value(1, Material.Science),
                                                        new Value(9, Material.QIC)]);
@@ -95,5 +95,5 @@ describe('Benefit Test', () => {
         expect(p.qic - q1).to.equal(16);
     })
 
-    
+
 })

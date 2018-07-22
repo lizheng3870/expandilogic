@@ -45,10 +45,12 @@ class MapBoard {
     this.setup(Config.PlayerLimit)
   }
 
-  public getPlanet(hex: Hex): Planet|null|undefined {
+  public getPlanet(hex: Hex): Planet|null {
     // if there's a planet in that spot, return it to the caller
     // otherwise return void or maybe throw an exception
-    return this.spacesMap.get(hex)
+    let plant =  this.spacesMap.get(hex)
+    if(plant === undefined) return null;
+    else return plant;
 
 
   }
@@ -164,10 +166,29 @@ class MapBoard {
     return s;
   }
 
-
+  /*
+   *  todo
+   *  update mind to station, for hasNeighboring for 3 Gold or 6 Gold
+   *  hex is location pid, is playerID
+   */
   public hasNeighboring(hex: Hex, playerID: number ){
-    //todo
-    return true;
+    let neighborsHex = Hex.spiral(hex, 2); // distance = 2 as neighbor
+    for(let h of neighborsHex){
+        const planet = this.getPlanet(h);
+        if(planet !==null && planet.playerID >= 0 && planet.playerID !== playerID){
+          return true;
+        }
+    }
+
+    return false;
+
+  }
+
+
+  public checkPlanetEmpty(hex: Hex){
+    const planet = this.getPlanet(hex);
+    if(planet !==null && planet.playerID === -1 )return true;
+    else return false;
   }
 
 

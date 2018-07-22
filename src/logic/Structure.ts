@@ -39,4 +39,4 @@ class Structure {
 
 }
 
-export {StructureType, Structure}
+export {StructureType,StructureStatus, Structure}
