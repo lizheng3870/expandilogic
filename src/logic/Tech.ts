@@ -1,4 +1,4 @@
-import {Benefit, Value, Material, Count, Structure, Trigger} from './Benefit'
+import {Benefit, Value, Material, Count, Trigger} from './Benefit'
 import {Player} from './Player'
 
 class Tech{
