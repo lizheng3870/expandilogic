@@ -75,9 +75,9 @@ export class Race {
     public raceType: RaceType;
     public planetType: PlanetType;
     public passed: boolean;
-    public roundBooster: Benefit;
-    public digCost: Benefit;
-    public gaiaFormingCost: Benefit;
+    // public roundBooster: Benefit;
+    // public digCost: Benefit;
+    // public gaiaFormingCost: Benefit;
     public gaiaColonize: Benefit;
     public range: number; // basic range, can be increased by upgrading the tech of range and will not decrease;
     public specialDig: number;
@@ -85,7 +85,7 @@ export class Race {
     
     //Tech level of player
     //Tech level array form - EITHER
-    public techs: Tech[];
+    // public techs: Tech[];
     // Tech level value form - OR
     public dig: number;
     public nav: number;
