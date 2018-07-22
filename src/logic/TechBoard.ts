@@ -60,7 +60,31 @@ class TechBoard {
    }
 
    loadTechs(){
- 
+    var i = 0;
+    var j = 0;
+
+    for(; i < 6; i++){
+     for(; j< 6; j++){
+       this.table[i][j] = new Tech(i, j);
+     }
+    }
+
+    var arr = [0,1,2,3,4,5,6,7,8];
+    arr.sort(function(){ return 0.5 - Math.random() });
+    for(i = 0; i < 6; i++){
+      this.normal6Id[i] = arr[i];
+      this.normal6TechTiles[i] = new TechTile(arr[i]);
+    }
+    for(i = 0; i < 3; i++){
+      this.normal3Id[i] = arr[i + 6];
+      this.normal3TechTiles[i] = new TechTile(arr[i + 6]);
+    }
+    arr = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14];
+    arr.sort(function(){ return 0.5 - Math.random() });
+    for(i = 0; i < 6; i++){
+      this.advanceId[i] = arr[i];
+      this.advanceTechTiles[i] = new TechTile(arr[i]);
+    }
    }
 
 
