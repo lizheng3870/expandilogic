@@ -12,6 +12,7 @@ export { lab }
 
 function testExchange(exchangeType: Merchandise, player:Player, times: number, exchange: Exchange){
 
+
     var give = exchangeType.give
     var get = exchangeType.get
 
@@ -65,11 +66,39 @@ function testExchange(exchangeType: Merchandise, player:Player, times: number, e
         expect(oldScience).to.equal(exchangeType.numGive*times + player.science)
         expect(exchangeType.numGet*times + oldGold).to.equal(player.gold)
     }
-    
- 
-
-    
-    
 
 }
 
+
+describe('Exchange Test', () => {
+    let p: Player
+    let exchange: Exchange
+    
+    beforeEach(() => {
+        p = new Player('jon')
+        exchange = new Exchange()
+    })
+
+    it('try to trade an invalid merchandise', ()=>{
+        try{
+            testExchange(new Merchandise(Material.Power, Material.SpecialRange, 4, 1), p, 3, exchange)
+        }catch(e){
+            expect('merchandise not found')
+        }
+    })
+
+    it('try to trade with not enough resources', ()=>{
+        p.power.bowl3 = 1
+        try{
+            testExchange(exchange.powerToGold, p, 6, exchange)
+        }catch(e){
+            expect('not enough resources')
+        }
+        expect(p.power.bowl3).to.equal(1)
+    })
+
+    it('single time trade success', ()=>{
+        testExchange(exchange.powerToGold, p, 1, exchange)
+    })
+    
+})
