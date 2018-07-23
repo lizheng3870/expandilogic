@@ -27,7 +27,7 @@ describe('Benefit Test', function () {
     var b2;
     // let b3: Benefit;
     beforeEach(function () {
-        p = new Player_1.Player('jon');
+        p = new Player_1.Player('jon', Player_1.RaceType.Terrans);
         b1 = new Benefit_1.Benefit(4 /* Income */, null, null, [new Benefit_1.Value(1, Benefit_1.Material.Gold)]);
         b2 = new Benefit_1.Benefit(0 /* Now */, null, null, [new Benefit_1.Value(1, Benefit_1.Material.Ore)]);
         // b3 = new Benefit(Trigger.Income, null, null, [new Value(3, Material.QIC)]);
@@ -40,5 +40,46 @@ describe('Benefit Test', function () {
     });
     it('add one income benefit and one now benefit, to see if the income benefit is added into the right place', function () {
         testAddIncomeBenefit(p, [b1, b2], 1);
+    });
+    it('can add the resource of now benefit into player class', function () {
+        var oldOre = p.ore;
+        p.getBenefit(b2);
+        var nowOre = p.ore;
+        code_1.expect(nowOre - oldOre).to.equal(1);
+    });
+    it('can add mutiple resources', function () {
+        var g1 = p.gold;
+        var o1 = p.ore;
+        var s1 = p.science;
+        var q1 = p.qic;
+        var b3 = new Benefit_1.Benefit(0 /* Now */, null, null, [new Benefit_1.Value(10, Benefit_1.Material.Gold),
+            new Benefit_1.Value(3, Benefit_1.Material.Ore),
+            new Benefit_1.Value(5, Benefit_1.Material.Science),
+            new Benefit_1.Value(7, Benefit_1.Material.QIC)]);
+        p.getBenefit(b3);
+        code_1.expect(p.gold - g1).to.equal(10);
+        code_1.expect(p.ore - o1).to.equal(3);
+        code_1.expect(p.science - s1).to.equal(5);
+        code_1.expect(p.qic - q1).to.equal(7);
+    });
+    it('can add mutiple resources from multiple benefits', function () {
+        var g1 = p.gold;
+        var o1 = p.ore;
+        var s1 = p.science;
+        var q1 = p.qic;
+        var b3 = new Benefit_1.Benefit(0 /* Now */, null, null, [new Benefit_1.Value(10, Benefit_1.Material.Gold),
+            new Benefit_1.Value(3, Benefit_1.Material.Ore),
+            new Benefit_1.Value(5, Benefit_1.Material.Science),
+            new Benefit_1.Value(7, Benefit_1.Material.QIC)]);
+        var b4 = new Benefit_1.Benefit(0 /* Now */, null, null, [new Benefit_1.Value(2, Benefit_1.Material.Gold),
+            new Benefit_1.Value(6, Benefit_1.Material.Ore),
+            new Benefit_1.Value(1, Benefit_1.Material.Science),
+            new Benefit_1.Value(9, Benefit_1.Material.QIC)]);
+        p.getBenefit(b3);
+        p.getBenefit(b4);
+        code_1.expect(p.gold - g1).to.equal(12);
+        code_1.expect(p.ore - o1).to.equal(9);
+        code_1.expect(p.science - s1).to.equal(6);
+        code_1.expect(p.qic - q1).to.equal(16);
     });
 });

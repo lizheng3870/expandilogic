@@ -53,11 +53,11 @@ export class Race {
     public federations: Federation[]; // My Federations
     public numGaia: number; // How many gaia planets have a conquered
 
-    //Benefits not from the buildBoard 
+    //Benefits not from the buildBoard
     public nowBenefits: Benefit[];
     public incomeBenefits: Benefit[];
     public specialBenefits: Benefit[];
-    
+
     // This buildBoard holds the benefits that are unlocked at each step
     public buildBoard : BuildBoard = {
         mines : [],
@@ -66,7 +66,7 @@ export class Race {
         labs : [],
         academies : []
     }
-   
+
     // The permanent board incomes
     public income : Benefit[]
 
@@ -82,7 +82,7 @@ export class Race {
     public range: number; // basic range, can be increased by upgrading the tech of range and will not decrease;
     public specialDig: number;
     public specialRange: number; // temporary range, increased by spend QIC or special power, will go back to 0 every new turn;
-    
+
     //Tech level of player
     //Tech level array form - EITHER
     // public techs: Tech[];
@@ -93,10 +93,10 @@ export class Race {
     public gaia: number;
     public resources: number;
     public knowledge: number;
-   
+
   constructor(){
-    
-    //Player Resources  
+
+    //Player Resources
     this.vp = 10;
     this.gold = 15;
     this.ore = 4;
@@ -107,7 +107,7 @@ export class Race {
     this.power.bowl3 = 0;
     this.power.gaia = 0;
     // - todo - some factions have different power bowl starting points
-    
+
     //Player Milestones
     this.gaiaformer = 0;
     this.numGaia = 0;
@@ -115,12 +115,12 @@ export class Race {
     // - todo - initialize number of federations
 
 
-    
+
 }
 
 /**
  * Set player RaceType
- * @param race 
+ * @param race
  */
 public setRaceType(race: RaceType) {
     this.raceType = race;
@@ -148,7 +148,7 @@ private addMines() {
 
     for (let i = 1; i <= 8; i++) {
         if (i === 3) {
-            this.buildBoard.mines.push(mine2);            
+            this.buildBoard.mines.push(mine2);
         }
         this.buildBoard.mines.push(mine1);
     }
@@ -166,7 +166,7 @@ private addStations() {
 /**
  * Adds now benefits collected during game play
  * Note: Not on buildBoard
- * @param nowBenefit 
+ * @param nowBenefit
  */
 public addNowBenefits(nowBenefit: Benefit) {
     this.nowBenefits.push(nowBenefit);
@@ -175,7 +175,7 @@ public addNowBenefits(nowBenefit: Benefit) {
 /**
  * Adds income benefits collected during game play
  * Note: Not on buildBoard
- * @param incomeBenefit 
+ * @param incomeBenefit
  */
 public addIncomeBenefits(incomeBenefit: Benefit) {
     this.incomeBenefits.push(incomeBenefit);
@@ -192,8 +192,8 @@ public addSpecialBenefits(specialBenefit: Benefit) {
 
 
 /**
- * Set player Planet type 
- * @param playerPlanet 
+ * Set player Planet type
+ * @param playerPlanet
  */
 public setPlanetType(playerPlanet: PlanetType) {
     this.planetType = playerPlanet;

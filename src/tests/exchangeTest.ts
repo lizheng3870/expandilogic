@@ -73,9 +73,9 @@ function testExchange(exchangeType: Merchandise, player:Player, times: number, e
 describe('Exchange Test', () => {
     let p: Player
     let exchange: Exchange
-    
+
     beforeEach(() => {
-        p = new Player('jon')
+        p = new Player('jon', RaceType.Terrans)
         exchange = new Exchange()
     })
 
@@ -100,5 +100,5 @@ describe('Exchange Test', () => {
     it('single time trade success', ()=>{
         testExchange(exchange.powerToGold, p, 1, exchange)
     })
-    
+
 })

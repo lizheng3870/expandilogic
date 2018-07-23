@@ -99,57 +99,57 @@ class BuildingLib {
                                 new Benefit(Trigger.Special, null, null, [new Value(4, Material.Gold)]));
 
 
-        //      /**
-        //       * Adds Mines
-        //       */
-        //     for (let i = 1; i <= 8; i++) {
-        //         if (i === 3) {
-        //             this.mines.push(mine2);
-        //         } else {
-        //             this.mines.push(mine1);
-        //         }
-        //     }
-        //     /**
-        //      * Adds Trading stations
-        //      */
-        //     if (this.race === RaceType.Bescods) {
-        //         this.station.push(lab);
-        //         this.station.push(lab);
-        //         this.station.push(lab);
-        //         this.station.push(lab);
-        //     } else {
-        //         this.station.push(station1);
-        //         this.station.push(station2);
-        //         this.station.push(station2);
-        //         this.station.push(station3);
-        //    }
+             /**
+              * Adds Mines
+              */
+            for (let i = 1; i <= 8; i++) {
+                if (i === 3) {
+                    this.mines.push(mine2);
+                } else {
+                    this.mines.push(mine1);
+                }
+            }
+            /**
+             * Adds Trading stations
+             */
+            if (this.race === RaceType.Bescods) {
+                this.station.push(lab);
+                this.station.push(lab);
+                this.station.push(lab);
+                this.station.push(lab);
+            } else {
+                this.station.push(station1);
+                this.station.push(station2);
+                this.station.push(station2);
+                this.station.push(station3);
+           }
 
-        //     /**
-        //      * Adds Labs
-        //      */
-        //     if (this.race === RaceType.Bescods) {
-        //         this.lab.push(station1);
-        //         this.lab.push(station2);
-        //         this.lab.push(station3);
-        //     } else {
-        //         for (let i = 1; i <= 3; i++) {
-        //             this.lab.push(lab);
-        //         }
-        //     }
+            /**
+             * Adds Labs
+             */
+            if (this.race === RaceType.Bescods) {
+                this.lab.push(station1);
+                this.lab.push(station2);
+                this.lab.push(station3);
+            } else {
+                for (let i = 1; i <= 3; i++) {
+                    this.lab.push(lab);
+                }
+            }
 
-        //     /**
-        //      * Adds Academies
-        //      */
-        //     if (this.race === RaceType.Itars) {
-        //         this.academies.push(academy1a);
-        //         this.academies.push(academy2);
-        //     } else if (this.race === RaceType.Baltaks) {
-        //         this.academies.push(academy1);
-        //         this.academies.push(academy2a);
-        //     } else {
-        //         this.academies.push(academy1);
-        //         this.academies.push(academy2);
-        //     }
+            /**
+             * Adds Academies
+             */
+            if (this.race === RaceType.Itars) {
+                this.academies.push(academy1a);
+                this.academies.push(academy2);
+            } else if (this.race === RaceType.Baltaks) {
+                this.academies.push(academy1);
+                this.academies.push(academy2a);
+            } else {
+                this.academies.push(academy1);
+                this.academies.push(academy2);
+            }
 
             /**
              * Adds Institute
