@@ -20,10 +20,12 @@ class Planet{
   public building: StructureType[]
   public type : PlanetType
   public loc : Location
+  public playerID: number
 //  public type : PlanetType
   constructor(loc: Location, type : PlanetType){
     this.type = type
     this.loc = loc
+    this.playerID = -1;  // not building on it 
   }
 
   public terraformingCalculate(player: Player){

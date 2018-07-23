@@ -5,10 +5,10 @@ import {Config} from './Game'
 
 class Space {
   public hex:Hex
-  public plant:Planet|null
+  public planet:Planet|null
   constructor(hex:Hex){
     this.hex = hex
-    this.plant = null
+    this.planet = null
   }
 
   public static spiral(center: Hex, radius:number){
@@ -21,7 +21,7 @@ class Space {
   }
 
   public setPlanetType(type: PlanetType){
-    this.plant = new Planet(this.hex, type);
+    this.planet = new Planet(this.hex, type);
   }
 
 
@@ -31,10 +31,12 @@ class Space {
 class MapBoard {
    public spaces : Space[]
    public planets: Planet[]
+   public spacesMap: Map<Hex, Planet|null>
 
   constructor(public size: number = 10){
      this.spaces = []
      this.planets = []
+     this.spacesMap  = new Map<Hex, Planet|null>();
 
     //  generate the tiles
     // place planets on tiles
@@ -43,9 +45,14 @@ class MapBoard {
     this.setup(Config.PlayerLimit)
   }
 
-  public getPlanet(x: number, y:number, z:number): Planet|void {
+  public getPlanet(hex: Hex): Planet|null {
     // if there's a planet in that spot, return it to the caller
     // otherwise return void or maybe throw an exception
+    let plant =  this.spacesMap.get(hex)
+    if(plant === undefined) return null;
+    else return plant;
+
+
   }
 
   public getHex(q:number, r:number){
@@ -67,7 +74,7 @@ class MapBoard {
         centers[9] = this.getHex(-6, 10);
 
         var spaces0 = Space.spiral(centers[0], 2);
-        spaces0[0].setPlanetType(PlanetType.Green);
+        spaces0[0].setPlanetType(PlanetType.Blue);
         spaces0[5].setPlanetType(PlanetType.Orange);
         spaces0[8].setPlanetType(PlanetType.Red);
         this.randomRotation(spaces0);
@@ -123,7 +130,17 @@ class MapBoard {
         spaces = spaces.concat(spaces8);
         spaces = spaces.concat(spaces9);
         this.spaces = spaces;
+
+        for(let space of spaces){
+          this.spacesMap.set(space.hex, space.planet)
+          if(space.planet != null)
+            this.planets.push(space.planet);
+        }
+
+
         return spaces;
+
+
   }
 
   public randomRotation(spaces: Space[]){
@@ -148,6 +165,32 @@ class MapBoard {
     s.hex = hex;
     return s;
   }
+
+  /*
+   *  todo
+   *  update mind to station, for hasNeighboring for 3 Gold or 6 Gold
+   *  hex is location pid, is playerID
+   */
+  public hasNeighboring(hex: Hex, playerID: number ){
+    let neighborsHex = Hex.spiral(hex, 2); // distance = 2 as neighbor
+    for(let h of neighborsHex){
+        const planet = this.getPlanet(h);
+        if(planet !==null && planet.playerID >= 0 && planet.playerID !== playerID){
+          return true;
+        }
+    }
+
+    return false;
+
+  }
+
+
+  public checkPlanetEmpty(hex: Hex){
+    const planet = this.getPlanet(hex);
+    if(planet !==null && planet.playerID === -1 )return true;
+    else return false;
+  }
+
 
 
 }

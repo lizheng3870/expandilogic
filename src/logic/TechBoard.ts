@@ -12,14 +12,20 @@ class TechBoard {
   public advanceTechTiles: TechTile[];
 
   constructor() {
-    this.table = [];
+    this.table = []
+    this.normal6Id = []
+    this.normal6TechTiles = []
+    this.normal3Id = []
+    this.normal3TechTiles =[]
+    this.advanceId = []
+    this.advanceTechTiles = []
     this.loadTechs();
   }
 
    /**
     * update the technology
     * @param lane update the lane of tech
-    * @param player 
+    * @param player
     */
    public update(lane: number, player: Player){  // 0 - 5  lane 0 -5
       // var level = player.techs[lane];
@@ -28,7 +34,7 @@ class TechBoard {
    }
 
    /**
-    * 
+    *
     * @param lane which lane of techtile you want to take
     * @param player which player take
     */

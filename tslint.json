@@ -13,7 +13,13 @@
    "no-var-keyword": false,
    "curly": false,
    "prefer-const": false,
-   "prefer-for-of": false
+   "prefer-for-of": false,
+   "no-shadowed-variable": false,
+   "noUnusedLocals": false,
+   "no-unused-variable": false,
+   "no-Unused-Parameters": false,
+   "no-unused-expression": false,
+   "strictNullChecks":false
  },
   "object-literal-sort-keys": false,
   "ordered-imports" : false,
