@@ -1,14 +1,17 @@
 import {Hex} from './Hex'
 import {Planet, PlanetType} from './Planet'
 import {Config} from './Game'
+import {StructureType} from './Structure'
 
 
 class Space {
   public hex:Hex
   public planet:Planet|null
+  public feded: boolean// federation path occupy
   constructor(hex:Hex){
     this.hex = hex
     this.planet = null
+    this.feded = false
   }
 
   public static spiral(center: Hex, radius:number){
@@ -31,12 +34,14 @@ class Space {
 class MapBoard {
    public spaces : Space[]
    public planets: Planet[]
-   public spacesMap: Map<Hex, Planet|null>
+   public planetsMap: Map<Hex, Planet|null>
+   public spacesMap: Map<Hex, Space>
 
   constructor(public size: number = 10){
      this.spaces = []
      this.planets = []
-     this.spacesMap  = new Map<Hex, Planet|null>();
+     this.planetsMap  = new Map<Hex, Planet|null>();
+     this.spacesMap  = new Map<Hex, Space>();
 
     //  generate the tiles
     // place planets on tiles
@@ -45,12 +50,14 @@ class MapBoard {
     this.setup(Config.PlayerLimit)
   }
 
-  public getPlanet(hex: Hex): Planet|null {
+  public getPlanet(hex: Hex): Planet{
     // if there's a planet in that spot, return it to the caller
     // otherwise return void or maybe throw an exception
-    let plant =  this.spacesMap.get(hex)
-    if(plant === undefined) return null;
-    else return plant;
+    let planet =  this.planetsMap.get(hex)
+    if(planet === undefined || planet === null) {
+      throw new Error("getPlanet error not planet at hex " + hex.toString())
+    }
+    else return planet;
 
 
   }
@@ -132,7 +139,8 @@ class MapBoard {
         this.spaces = spaces;
 
         for(let space of spaces){
-          this.spacesMap.set(space.hex, space.planet)
+          this.planetsMap.set(space.hex, space.planet)
+          this.spacesMap.set(space.hex, space)
           if(space.planet != null)
             this.planets.push(space.planet);
         }
@@ -189,6 +197,47 @@ class MapBoard {
     const planet = this.getPlanet(hex);
     if(planet !==null && planet.playerID === -1 )return true;
     else return false;
+  }
+
+
+  public buildMine(hex: Hex, playerID : number){
+    let planet = this.getPlanet(hex)
+    if(planet === null)return;
+    planet.playerID = playerID
+    planet.building = StructureType.Mine
+
+
+  }
+
+
+  public hasPlanet(hex: Hex): boolean{
+    // if there's a planet in that spot, return it to the caller
+    // otherwise return void or maybe throw an exception
+    let planet =  this.planetsMap.get(hex)
+    if(planet === undefined || planet === null) {
+      return false
+    }
+    else return true;
+
+
+  }
+
+
+  public checkSpaceFeded(hexs:Hex[]): boolean{ // check federation ocuppied before or not
+      for(const hex of hexs){
+        let space = this.spacesMap.get(hex);
+        if(space == null)return false;
+        if(space.feded === true)return false;
+      }
+      return true;
+  }
+
+  public markSpaceFeded(hexs:Hex[]){ // federation ocuppy space, can not use anymore
+    for(const hex of hexs){
+      let space = this.spacesMap.get(hex);
+      if(space == null)return;
+      space.feded = true;
+    }
   }
 
 

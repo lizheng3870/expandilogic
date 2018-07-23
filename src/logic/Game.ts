@@ -32,8 +32,10 @@ export enum Config{
 class Game {
     public round: number;  // which round the game in  for example round 1
     public players: Player[] = []
-    public nextRound: Player[] = []
-    public turn: number   // turn is ID of player who will make action currently
+    public nextRound: Player[] = []  // passed player will go here for next round
+    public turn: number   // turn is ID of player who will make action currently,
+    // turn will change for example 4 players 0 1 2 3   when 3 players: 0 1 2
+    // playerid ad turn are not relative.
   //  public status: GameStatus
     public board: MapBoard
     public techBoard: TechBoard
@@ -217,6 +219,33 @@ class Game {
     public processPlayerRequest(data:Request){
       this.checkTurn(data.pid);
     }
+
+    public currentPlayerPass(request: Request){
+      const player = this.players[request.pid];
+      const prevRoundBoosterId =  player.roundBooster.id;
+      player.onPassBenefit();
+
+      var roundBoosterId =  request.roundBoosterID;
+      if(this.roundBoosters[roundBoosterId].valid === true)
+      {
+        player.roundBooster = this.roundBoosters[roundBoosterId];
+        this.roundBoosters[roundBoosterId].valid = false;
+        this.roundBoosters[prevRoundBoosterId].valid = true;
+      }else{
+        throw new Error(`RoundRooter used by other user`)
+      }
+
+
+      // remove player from players to nextTurn
+      this.players.splice(this.turn - 1, 1);
+      this.nextRound.push(player);
+
+    }
+
+
+
+
+
 
 
 }

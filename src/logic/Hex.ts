@@ -8,7 +8,11 @@ export class Point
 export class Hex
 {
     constructor (public q:number, public r:number, public s:number) {
-        if (Math.round(q + r + s) !== 0) throw "q + r + s must be 0";
+        if (Math.round(q + r + s) !== 0) throw new Error("q + r + s must be 0");
+    }
+
+    public toString():string{
+      return " Hex ( q : ${a}, r : ${r}, s ${s} )"
     }
 
     public add(b:Hex):Hex

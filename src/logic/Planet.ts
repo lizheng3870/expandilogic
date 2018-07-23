@@ -6,9 +6,9 @@ enum PlanetType{
   Red,
   Orange,
   Yellow,
-  Green,
+  Gaia,  // green
+  Transdim, // purple
   Blue,
-  Purple,
   Brown,
   White,
   Black,
@@ -17,7 +17,7 @@ enum PlanetType{
 }
 
 class Planet{
-  public building: StructureType[]
+  public building: StructureType // change from StructureType[] to StructureType without concern specail race.
   public type : PlanetType
   public loc : Location
   public playerID: number
@@ -25,26 +25,27 @@ class Planet{
   constructor(loc: Location, type : PlanetType){
     this.type = type
     this.loc = loc
-    this.playerID = -1;  // not building on it 
+    this.playerID = -1;  // not building on it
   }
 
-  public terraformingCalculate(player: Player){
-    if(this.type === PlanetType.Purple){
+ // PlanetType of race vs PlanetType of planet
+  public terraformingCalculate(type: PlanetType){
+    if(type === PlanetType.Transdim){
       console.log("Transdim, need  gaia project ");
       return 1000000;
     }
 
-    if(this.type === PlanetType.Green){
+    if(type === PlanetType.Gaia){
       console.log("Gaia planet need one QIC");
       return 0;
     }
 
-    if(this.type === PlanetType.Gaiaformer){  // Gaiaformer
+    if(type === PlanetType.Gaiaformer){  // Gaiaformer
       console.log("nice Gaiaformer, no terraforming cost");
       return 0;
     }
 
-     let distance = Math.abs(this.type - player.planetType);
+     let distance = Math.abs(this.type - type);
      if(distance > 3) {
         distance = 3 - (distance -4)
      }

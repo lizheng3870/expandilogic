@@ -61,7 +61,7 @@ class Player extends Race {
   // map race type to plant types
   public getPlantType(raceType: RaceType):PlanetType{
   //todo
-    return PlanetType.Green;
+    return PlanetType.Blue;
   }
 
   /**
@@ -158,6 +158,7 @@ class Player extends Race {
     return false;
 }
 
+// terraforming will cost ore according tech level
 public terraformingCost(){
   //// TODO:
   return 3;
@@ -172,7 +173,77 @@ public getAvalibleMine(){
 
 }
 
-public isHaveAffordableMine(){
+public getAvalibleStation(){
+  for(let s of this.buildings.station){
+    if(s.status === StructureStatus.Unbuilt)
+       return s;
+  }
+     return null;
+
+}
+
+public getAvalibleLab(){
+  for(let l of this.buildings.lab){
+    if(l.status === StructureStatus.Unbuilt)
+       return l;
+  }
+     return null;
+
+}
+
+public getAvalibleInstitute(){
+  for(let i of this.buildings.institute){
+    if(i.status === StructureStatus.Unbuilt)
+       return i;
+  }
+     return null;
+
+}
+
+public getAvalibleAcademies(){
+  for(let a of this.buildings.academies){
+    if(a.status === StructureStatus.Unbuilt)
+       return a;
+  }
+     return null;
+
+}
+
+public getLastBuiltMine(){
+  let last = null;
+  for(let mine of this.buildings.mines){
+    if(mine.status === StructureStatus.Built)
+       last =  mine;
+  }
+     return last;
+
+}
+
+public getLastBuiltStation(){
+  let last = null;
+  for(let s of this.buildings.station){
+    if(s.status === StructureStatus.Unbuilt)
+       last = s;
+  }
+     return last;
+
+}
+
+public getLastBuiltLab(){
+  let last = null;
+  for(let l of this.buildings.lab){
+    if(l.status === StructureStatus.Unbuilt)
+       last = l;
+  }
+     return last;
+
+}
+
+
+
+
+
+public AffordMine(){
   const mine = this.getAvalibleMine();
   if(mine == null)return false;
   return this.haveResouces(mine.cost);
@@ -181,6 +252,11 @@ public isHaveAffordableMine(){
   //
   // }
 }
+
+
+
+
+
 /*
 Gold,
 Ore,
@@ -223,7 +299,37 @@ public haveResouce(value:Value){
 }
 
 public payResouce(value:Value){
-  //todo
+  if(value.material === Material.Gold){
+    this.gold -= value.quantity;
+    return true;
+  }
+
+  if(value.material === Material.Ore){
+    this.ore -= value.quantity;
+    return true;
+  }
+
+  if(value.material === Material.Science){
+    this.science -= value.quantity;
+    return true;
+  }
+
+  if(value.material === Material.QIC){
+    this.qic -= value.quantity;
+    return true;
+  }
+
+  if(value.material === Material.VP){
+    this.vp -= value.quantity;
+    return true;
+  }
+
+  if(value.material === Material.GaiaFormer){
+    this.gaiaformer -= value.quantity;
+    return true;
+  }
+
+  return false;
 
 }
 public haveResouces(values:Value[]){
@@ -234,8 +340,105 @@ public haveResouces(values:Value[]){
 }
 
 public payResouces(values:Value[]){
-    //todo
+  for(const value of values){
+    if(this.payResouce(value) === false)return false;
+  }
+  return true;
 }
+
+
+
+// terraforming will cost ore according tech level
+public startGaiaProjectCost():number{
+  //// TODO:
+  return 6;
+}
+
+public checkPowerForGaiaProject(){
+  if(this.power.bowl1 + this.power.bowl2 + this.power.bowl3 >= this.startGaiaProjectCost()){
+    return true;
+  }else{
+    return false;
+  }
+
+}
+
+public checkPowerForFederation(satellite:number){
+  if(this.power.bowl1 + this.power.bowl2 + this.power.bowl3 >= satellite){
+    return true;
+  }else{
+    return false;
+  }
+
+}
+
+public transferGaiaPower(){
+   let cost = this.startGaiaProjectCost();
+   this.takePowersAwayFromBowl(cost);
+
+ }
+
+// used in Federation
+ public discardPowersToBuildSatellites(satellite:number){
+    this.takePowersAwayFromBowl(satellite);
+ }
+
+  public takePowersAwayFromBowl(cost: number){
+    let amount = cost
+
+    if (cost > this.power.bowl1){
+        amount = this.power.bowl1
+    }
+
+    this.power.bowl1 -= amount
+    cost -= amount
+
+    // now do bowl2 -> bowl3
+    amount = cost
+
+    if (cost > this.power.bowl2){
+        amount = this.power.bowl2
+    }
+
+    this.power.bowl2 -= amount
+    cost -= amount
+
+    if(cost > 0){  // previous check is true, so defintely have enough power to take away
+      this.power.bowl2 -= cost
+    }
+  }
+
+
+  /*
+  * Add the benefit into the benefit array by the trigger,
+  * notice: this is only add them into the array, the benefit has not been used yet
+  * input: benefit
+  * output: add the benefit into the array
+  * @yalei
+  */
+  public getTrigerBenefit(trigger: Trigger){
+    let result : Benefit[] = [];
+    if(trigger === Trigger.Pass){
+      const benefits = this.roundBooster.benefit;
+      for(const benefit of benefits){
+        if(benefit.trigger === Trigger.Pass){
+          result.push(benefit)
+        }
+      }
+
+
+    }
+
+    return result;
+
+  }
+
+  public onPassBenefit(){
+    let benefits = this.getTrigerBenefit(Trigger.Pass);
+    for(const benefit of benefits){
+      this.onBenefit(benefit);
+    }
+  }
 
 
 
