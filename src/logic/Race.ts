@@ -102,10 +102,7 @@ export class Race {
     this.ore = 4;
     this.science = 3;
     this.qic = 1;
-    this.power.bowl1 = 4;
-    this.power.bowl2 = 2;
-    this.power.bowl3 = 0;
-    this.power.gaia = 0;
+
     // - todo - some factions have different power bowl starting points
 
     //Player Milestones

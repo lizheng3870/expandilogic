@@ -42,6 +42,8 @@ class Exchange{
   public exchanges: Merchandise[];
 
   constructor(){
+    // todo
+    //this.powerToGold = new Merchandise(Material.Power, Material.Gold, ?, ?);
 
   }
 
@@ -95,7 +97,7 @@ class Exchange{
 
   /**
    * check if the player has enough resources to buy something
-   * @param player 
+   * @param player
    * @param give the material given out
    * @param quantity the total number of resource needed
    */

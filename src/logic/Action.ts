@@ -196,8 +196,6 @@ public doAction(){
    // It is habitable to your faction.
    // If the planet is not habitable, you must pay any costs required to make it habitable
    public buildMineCheck() {
-
-return true;
      // if (this.checkMineAvailability() &&
      //     this.checkEmpty() &&
      //     this.checkAccessible() &&
@@ -207,6 +205,7 @@ return true;
      // } else {
      //   return false;
      // }
+     return true;
    }
 
    public checkMineAvailability() {

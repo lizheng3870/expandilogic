@@ -87,18 +87,18 @@ describe('Exchange Test', () => {
         }
     })
 
-    it('try to trade with not enough resources', ()=>{
-        p.power.bowl3 = 1
-        try{
-            testExchange(exchange.powerToGold, p, 6, exchange)
-        }catch(e){
-            expect('not enough resources')
-        }
-        expect(p.power.bowl3).to.equal(1)
-    })
-
-    it('single time trade success', ()=>{
-        testExchange(exchange.powerToGold, p, 1, exchange)
-    })
+    // it('try to trade with not enough resources', ()=>{
+    //     p.power.bowl3 = 1
+    //     try{
+    //         testExchange(exchange.powerToGold, p, 6, exchange)
+    //     }catch(e){
+    //         expect('not enough resources')
+    //     }
+    //     expect(p.power.bowl3).to.equal(1)
+    // })
+    //
+    // it('single time trade success', ()=>{
+    //     testExchange(exchange.powerToGold, p, 1, exchange)
+    // })
 
 })
