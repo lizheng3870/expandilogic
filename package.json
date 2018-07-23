@@ -24,10 +24,11 @@
     "@types/code": "^4.0.4",
     "code": "^5.2.0",
     "lab": "^15.5.0",
+    "prettier": "^1.13.6",
     "tslint": "^5.10.0",
     "tslint-config-prettier": "^1.13.0",
-    "prettier": "^1.13.6",
-    "typescript": "^2.9.2"
+    "typescript": "^2.9.2",
+    "typestate": "^1.0.6"
   },
   "devDependencies": {}
 }
