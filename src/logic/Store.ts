@@ -82,3 +82,5 @@ class Store{
         if(get === Material.ExtraPower) player.power.bowl1 += totalGet;
     }
 }
+
+export {Merchandise, Exchange}

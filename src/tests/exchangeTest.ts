@@ -82,13 +82,13 @@ describe('Exchange Test', () => {
         exchange = new Exchange()
     })
 
-    // it('try to trade an invalid merchandise', ()=>{
-    //     try{
-    //         testExchange(new Merchandise(Material.Power, Material.SpecialRange, 4, 1), p, 3, exchange)
-    //     }catch(e){
-    //         expect('merchandise not found')
-    //     }
-    // })
+    it('try to trade an invalid merchandise', ()=>{
+        try{
+            exchange.trade(p, Material.Power, Material.SpecialRange, 11);
+        }catch(e){
+            expect('merchandise not found')
+        }
+    })
 
     // it('try to trade with not enough resources', ()=>{
     //     p.power.bowl3 = 1
