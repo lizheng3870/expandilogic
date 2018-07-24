@@ -7,6 +7,8 @@ import {Player} from './Player'
 import {Benefit} from './Benefit'
 import {Request, RequestType} from './Request'
 import {TypeState} from 'TypeState'
+import {Action} from './Action'
+import {StructureStatus} from './Structure'
 
 
 
@@ -33,7 +35,7 @@ class Game {
     public round: number;  // which round the game in  for example round 1
     public players: Player[] = []
     public nextRound: Player[] = []  // passed player will go here for next round
-    public turn: number   // turn is ID of player who will make action currently,
+    public turn: number   // turn is index of players who will make action currently,
     // turn will change for example 4 players 0 1 2 3   when 3 players: 0 1 2
     // playerid ad turn are not relative.
   //  public status: GameStatus
@@ -44,6 +46,11 @@ class Game {
     public exchange: Exchange
     public roundBoosters:RoundBooster[]
     public stateMachine:TypeState.FiniteStateMachine<GameStatus>
+    public firstStructuresRound: number
+    // 0 : not into setup build first Structures
+    // 1 normal:  0 1 2 3
+    // 2 revserse:  3 2 1 0
+    // 3 normal again
 
     constructor(gid: number){
       // console.log(`creating game ${gid}`)
@@ -56,6 +63,7 @@ class Game {
      this.scoringBoard = new ScoringBoard();
      this.roundBoosters = [];
      this.loadRoundBooster();
+     this.firstStructuresRound = 0;
      this.stateMachine = new TypeState.FiniteStateMachine<GameStatus>(GameStatus.Open);
      this.stateMachine.from(GameStatus.Open).to(GameStatus.Setup)
      this.stateMachine.from(GameStatus.Setup).to(GameStatus.Playing)
@@ -179,21 +187,29 @@ class Game {
    }
 
    public checkTurn(playerID: number){
-     if(this.turn !== playerID){
-       throw new Error(`not Player's turn, curren turn : $(this.turn)`)
+     let currentPlayer = this.players[this.turn];
+     if(currentPlayer.pid !== playerID){
+       var stack = new Error().stack
+console.log( stack )
+       console.log(`not Player's turn pid: `+ playerID + `, curren turn : `+ this.turn )
+       return false;
+     }else{
+       return true;
      }
    }
 
-   public processRoundRooter(data:Request){
-     this.checkTurn(data.pid);
+   public processRoundRooter(request:Request){
+     if(this.checkTurn(request.pid) === false)return;
+
      if(this.stateMachine.currentState !== GameStatus.Setup){
        throw new Error(`processRoundRooter error for status not setup`)
      }
 
-     var player = this.players[data.pid];
+     var player = this.getPlayer(request.pid);
+     if(player === null)return;
 
-     if(data.type === RequestType.Roundbooter){
-         var roundBoosterId =  data.roundBoosterID;
+     if(request.type === RequestType.Roundbooter){
+         var roundBoosterId =  request.roundBoosterID;
          if(player.roundBooster == null && this.roundBoosters[roundBoosterId].valid === true)
          {
            player.roundBooster = this.roundBoosters[roundBoosterId];
@@ -202,26 +218,91 @@ class Game {
            throw new Error(`RoundRooter used by other user`)
          }
 
-     }
-     //send to all client;
 
+         //send to all client;
 
+         this.nextTurn();
 
-     this.nextTurn();
+         if(this.turn === 0 ){  // one round finished
+            this.stateMachine.go(GameStatus.Playing)
+            this.round = 1;
+            this.newRound();  // round
+         }
 
-     if(this.turn === 0 ){  // one round finished
-        this.stateMachine.go(GameStatus.Playing)
-        this.round = 1;
-        this.newRound();  // round
-     }
+      }
+
    }
 
-    public processPlayerRequest(data:Request){
-      this.checkTurn(data.pid);
+
+     //send to all client;
+
+     public processSetupFirstStructures(request:Request){
+       if(this.checkTurn(request.pid) === false)return;
+       var player = this.getPlayer(request.pid);
+       if(request.type === RequestType.FirstStructures){
+         // check planet exist
+         if(this.board.hasPlanet(request.hex) === false){
+            console.log("planet is not exist");
+            return ;
+         }
+
+
+         let planet = this.board.getPlanet(request.hex);
+         // put mine on planet
+         if(planet.type === player.planetType ){
+           this.board.buildMine(request.hex, player.pid);
+           let mine = player.getAvalibleMine();
+           if(mine === null)return;
+           mine.status = StructureStatus.Built;
+           player.planets.push(planet);
+         }else{
+           console.log("planetType error");
+           return
+         }
+       }
+
+
+       if(this.firstStructuresRound === 0 )
+          this.firstStructuresRound = 1;
+
+      if(this.firstStructuresRound === 1){
+           this.turn++
+           if (this.turn >= this.players.length){
+             this.turn = 4;  // not pid = 4 , just -- than pid = 3
+             this.firstStructuresRound = 2;
+         }
+      }
+
+
+
+      if(this.firstStructuresRound === 2){
+           this.turn--
+           if (this.turn  < 0){
+             this.turn = 0;
+             this.firstStructuresRound = 3;
+         }
+      }
+    }
+
+
+
+
+    public processPlayerRequest(request:Request){
+
+      this.checkTurn(request.pid);
+      const player = this.players[this.turn];
+      let action = new Action(this, player, request)
+      if(action.checkValid()){
+        action.doAction();
+      }else{
+        console.log("action failed") // send message to client player
+        console.log(action.message);
+      }
+
     }
 
     public currentPlayerPass(request: Request){
-      const player = this.players[request.pid];
+      const player = this.players[this.turn];
       const prevRoundBoosterId =  player.roundBooster.id;
       player.onPassBenefit();
 
@@ -236,9 +317,22 @@ class Game {
       }
 
 
-      // remove player from players to nextTurn
+      // remove player from players to nextRound
       this.players.splice(this.turn - 1, 1);
       this.nextRound.push(player);
+
+    }
+
+
+    public getPlayer(pid:number){
+      for(let player of this.players){
+         if(player.pid === pid)return player;
+      }
+
+      for(let player of this.nextRound){
+          if(player.pid === pid)return player;
+      }
+      throw new Error(`getPlayer error for pid is error`)
 
     }
 

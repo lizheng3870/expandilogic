@@ -32,6 +32,7 @@ class Action {
   public check: boolean;
   public board: MapBoard;
   public player: Player;
+  public message: string;
 
 
   constructor(game: Game, player:Player, request: Request) {
@@ -39,17 +40,18 @@ class Action {
     this.request = request;
     this.board = game.board;
     this.player = player;
-    this.check = true;
+  //  this.check = true;
+    this.message = "undefined"
 
   }
 
 
    public checkValid(){
-     if(this.checkCurrentTurnPlayer() === false)return false;
+     //if(this.checkCurrentTurnPlayer() === false)return false;
 
      if(this.request.actionType === ActionType.BuildMine){
-       this.buildMineCheck()
-       return this.check;
+
+       return this.buildMineCheck()
      }
      if(this.request.actionType === ActionType.Gaia){
        return this.checkGaiaProject()
@@ -248,15 +250,15 @@ public checkPass(){
 
 
 
-public checkCurrentTurnPlayer(){
-  let currentPlayer = this.game.players[this.game.turn];
-  if(currentPlayer.pid === this.player.pid)return true;
-  else return false;
-}
+// public checkCurrentTurnPlayer(){
+//   let currentPlayer = this.game.players[this.game.turn];
+//   if(currentPlayer.pid === this.player.pid)return true;
+//   else return false;
+// }
 
 //
 public doAction(){
-      if(this.checkCurrentTurnPlayer() === false)return
+      //if(this.checkCurrentTurnPlayer() === false)return
 
       if(this.request.actionType === ActionType.BuildMine) {
         this.buildMine();
@@ -289,10 +291,8 @@ public doAction(){
 
 
    public buildMine() {
-
-     if (this.buildMineCheck() === true) {
        const planet = this.board.getPlanet(this.request.hex);
-       if(planet == null)return; // never will happen, just satisfy tsc
+
 
        this.board.buildMine(this.request.hex, this.player.pid);
 
@@ -318,9 +318,10 @@ public doAction(){
 
        // player has this plenet
        this.player.planets.push(planet);
+       this.message = "built mine successfully"
 
      }
-   }
+
 
 
   /**
@@ -345,21 +346,38 @@ public doAction(){
    }
 
    public checkMineAvailability() {
-      if(this.player.getAvalibleMine() == null)return false
+
+      if(this.player.getAvalibleMine() == null){
+        this.message = "getAvalibleMine failed ";
+        return false
+      }
       else return true;
    }
 
    public checkEmpty() {
-     return this.board.checkPlanetEmpty(this.request.hex);
+
+     if(this.board.checkPlanetEmpty(this.request.hex)){
+       return true;
+     }else{
+       this.message = "checkPlanetEmpty failed ";
+       return false;
+     }
    }
 
    public checkAccessible() {
+
      // Distance from one of the existing planets
-     this.player.checkPlanetDistance(this.request.hex);
+     if(this.player.checkPlanetDistance(this.request.hex)){
+      return true;
+     }else{
+       this.message = "checkAccessible failed ";
+       return false;
+     }
 
    }
 
    public checkHabitable() {
+
      const planet = this.board.getPlanet(this.request.hex);
      if(planet === null) return false;
      const terraforming = planet.terraformingCalculate(this.player.planetType);
@@ -367,6 +385,7 @@ public doAction(){
      if(this.player.ore >= needOres){
        return true;
      }else{
+       this.message = "checkHabitable failed ";
        return false;
      }
 
@@ -480,6 +499,7 @@ public doAction(){
   }
 
   public pass(){
+    this.game.currentPlayerPass(this.request);
 
 
   }
@@ -492,6 +512,10 @@ public doAction(){
 //      this.game.passed++;
 //    }
 //
+
+public chargePower(){
+
+}
 
 
 }

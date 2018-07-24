@@ -16,10 +16,12 @@ class Space {
 
   public static spiral(center: Hex, radius:number){
     const hexs = Hex.spiral(center, radius);
+    //console.log("center" + center.toString())
     let spaces:Space[] = [];
     for(let hex of hexs){
         spaces.push(new Space(hex))
     }
+    //console.log(spaces)
     return spaces;
   }
 
@@ -34,14 +36,14 @@ class Space {
 class MapBoard {
    public spaces : Space[]
    public planets: Planet[]
-   public planetsMap: Map<Hex, Planet|null>
-   public spacesMap: Map<Hex, Space>
+   public planetsMap: Map<string, Planet|null>
+   public spacesMap: Map<string, Space>
 
   constructor(public size: number = 10){
      this.spaces = []
      this.planets = []
-     this.planetsMap  = new Map<Hex, Planet|null>();
-     this.spacesMap  = new Map<Hex, Space>();
+     this.planetsMap  = new Map<string, Planet|null>();
+     this.spacesMap  = new Map<string, Space>();
 
     //  generate the tiles
     // place planets on tiles
@@ -53,7 +55,8 @@ class MapBoard {
   public getPlanet(hex: Hex): Planet{
     // if there's a planet in that spot, return it to the caller
     // otherwise return void or maybe throw an exception
-    let planet =  this.planetsMap.get(hex)
+    let key:string = hex.q + '_' + hex.r + '_' + hex.s;
+    let planet =  this.planetsMap.get(key)
     if(planet === undefined || planet === null) {
       throw new Error("getPlanet error not planet at hex " + hex.toString())
     }
@@ -81,70 +84,105 @@ class MapBoard {
         centers[9] = this.getHex(-6, 10);
 
         var spaces0 = Space.spiral(centers[0], 2);
+
+
         spaces0[0].setPlanetType(PlanetType.Blue);
+        spaces0[1].setPlanetType(PlanetType.Blue);
+        spaces0[2].setPlanetType(PlanetType.Blue);
+        spaces0[3].setPlanetType(PlanetType.Blue);
+        spaces0[4].setPlanetType(PlanetType.Blue);
         spaces0[5].setPlanetType(PlanetType.Orange);
         spaces0[8].setPlanetType(PlanetType.Red);
-        this.randomRotation(spaces0);
+        //console.log(spaces0)
+        //this.randomRotation(spaces0);
 
         var spaces1 = Space.spiral(centers[1], 2);
 
-        this.randomRotation(spaces1);
+        spaces1[0].setPlanetType(PlanetType.Yellow);
+        spaces1[1].setPlanetType(PlanetType.Yellow);
+        spaces1[2].setPlanetType(PlanetType.Yellow);
+        spaces1[3].setPlanetType(PlanetType.Yellow);
+        spaces1[4].setPlanetType(PlanetType.Yellow);
+        spaces1[5].setPlanetType(PlanetType.Orange);
+        // spaces1[8].setPlanetType(PlanetType.Red);
 
+
+        // this.randomRotation(spaces1);
+        //
         var spaces2 = Space.spiral(centers[2], 2);
 
-        this.randomRotation(spaces2);
+        spaces2[0].setPlanetType(PlanetType.Red);
+        spaces2[1].setPlanetType(PlanetType.Red);
+        spaces2[2].setPlanetType(PlanetType.Red);
+        spaces2[3].setPlanetType(PlanetType.Red);
+        spaces2[4].setPlanetType(PlanetType.Red);
+        spaces2[5].setPlanetType(PlanetType.Orange);
+        spaces2[8].setPlanetType(PlanetType.Red);
+        //
+        //
+        // this.randomRotation(spaces2);
 
         var spaces3 = Space.spiral(centers[3], 2);
+      //  console.log(spaces3)
+        spaces3[0].setPlanetType(PlanetType.White);
+        spaces3[1].setPlanetType(PlanetType.White);
+        spaces3[2].setPlanetType(PlanetType.White);
+        spaces3[3].setPlanetType(PlanetType.White);
+        spaces3[4].setPlanetType(PlanetType.White);
+        spaces3[5].setPlanetType(PlanetType.White);
+        spaces3[8].setPlanetType(PlanetType.White);
 
-        this.randomRotation(spaces3)
+        //
+        // this.randomRotation(spaces3)
+        //
+        //
+        // var spaces4 = Space.spiral(centers[4], 2);
+        //
+        // this.randomRotation(spaces4)
+        //
+        // var spaces5 = Space.spiral(centers[5], 2);
+        //
+        // this.randomRotation(spaces5);
+        //
+        //
+        // var spaces6 = Space.spiral(centers[6], 2);
+        //
+        // this.randomRotation(spaces6);
+        //
+        //
+        // var spaces7 = Space.spiral(centers[7], 2);
+        //
+        // this.randomRotation(spaces7)
+        //
+        //
+        // var spaces8 = Space.spiral(centers[8], 2);
+        //
+        // this.randomRotation(spaces8)
+        //
+        // var spaces9 = Space.spiral(centers[9], 2);
+        //
+        // this.randomRotation(spaces9)
+        //
 
-
-        var spaces4 = Space.spiral(centers[4], 2);
-
-        this.randomRotation(spaces4)
-
-        var spaces5 = Space.spiral(centers[5], 2);
-
-        this.randomRotation(spaces5);
-
-
-        var spaces6 = Space.spiral(centers[6], 2);
-
-        this.randomRotation(spaces6);
-
-
-        var spaces7 = Space.spiral(centers[7], 2);
-
-        this.randomRotation(spaces7)
-
-
-        var spaces8 = Space.spiral(centers[8], 2);
-
-        this.randomRotation(spaces8)
-
-        var spaces9 = Space.spiral(centers[9], 2);
-
-        this.randomRotation(spaces9)
-
-
-        var spaces = spaces0.concat(spaces1);
-        spaces = spaces.concat(spaces2);
-        spaces = spaces.concat(spaces3);
-        spaces = spaces.concat(spaces4);
-        spaces = spaces.concat(spaces5);
-        spaces = spaces.concat(spaces6);
-        spaces = spaces.concat(spaces7);
-        spaces = spaces.concat(spaces8);
-        spaces = spaces.concat(spaces9);
+         var spaces = spaces0.concat(spaces1);
+         spaces = spaces.concat(spaces2);
+         spaces = spaces.concat(spaces3);
+        // spaces = spaces.concat(spaces4);
+        // spaces = spaces.concat(spaces5);
+        // spaces = spaces.concat(spaces6);
+        // spaces = spaces.concat(spaces7);
+        // spaces = spaces.concat(spaces8);
+        // spaces = spaces.concat(spaces9);
         this.spaces = spaces;
 
         for(let space of spaces){
-          this.planetsMap.set(space.hex, space.planet)
-          this.spacesMap.set(space.hex, space)
+          let hex = space.hex
+          let key:string = hex.q + '_' + hex.r + '_' + hex.s
+          this.planetsMap.set(key, space.planet)
+          this.spacesMap.set(key, space)
           if(space.planet != null)
             this.planets.push(space.planet);
         }
-
 
         return spaces;
 
@@ -213,7 +251,8 @@ class MapBoard {
   public hasPlanet(hex: Hex): boolean{
     // if there's a planet in that spot, return it to the caller
     // otherwise return void or maybe throw an exception
-    let planet =  this.planetsMap.get(hex)
+    let key:string = hex.q + '_' + hex.r + '_' + hex.s;
+    let planet =  this.planetsMap.get(key)
     if(planet === undefined || planet === null) {
       return false
     }
@@ -225,7 +264,8 @@ class MapBoard {
 
   public checkSpaceFeded(hexs:Hex[]): boolean{ // check federation ocuppied before or not
       for(const hex of hexs){
-        let space = this.spacesMap.get(hex);
+        let key:string = hex.q + '_' + hex.r + '_' + hex.s;
+        let space = this.spacesMap.get(key);
         if(space == null)return false;
         if(space.feded === true)return false;
       }
@@ -234,7 +274,8 @@ class MapBoard {
 
   public markSpaceFeded(hexs:Hex[]){ // federation ocuppy space, can not use anymore
     for(const hex of hexs){
-      let space = this.spacesMap.get(hex);
+      let key:string = hex.q + '_' + hex.r + '_' + hex.s;
+      let space = this.spacesMap.get(key);
       if(space == null)return;
       space.feded = true;
     }

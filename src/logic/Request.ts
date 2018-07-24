@@ -8,6 +8,7 @@ import {Merchandise} from './Exchange'
 enum RequestType{
     Action,
     Roundbooter,
+    FirstStructures,  // Placing Your First Structures
 }
 
 enum UpgradeType{

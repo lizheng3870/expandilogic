@@ -4,6 +4,9 @@ import { expect } from 'code'
 import {Game, GameStatus} from '../logic/Game'
 import {Player, RaceType} from '../logic/Player'
 import {Request, RequestType} from '../logic/Request'
+import {Hex} from '../logic/Hex'
+import { StructureType, StructureStatus} from '../logic/Structure'
+import {PlanetType} from '../logic/Planet'
 
 const lab = Lab.script()
 const { describe, it, beforeEach } = lab
@@ -56,14 +59,16 @@ describe('Game Before Setup Tests', () => {
 });
 
 
-describe('Game SetUp finished Tests', () => {
+
+
+describe('Game SetUp Before Build First Structures Tests', () => {
     let g: Game
     beforeEach(() => {
         g = new Game(1)
-        g.addPlayer(new Player('yousong', RaceType.Terrans))
-        g.addPlayer(new Player('nina', RaceType.Lantids))
-        g.addPlayer(new Player('yalei', RaceType.Xenos))
-        g.addPlayer(new Player('rong', RaceType.Gleens))
+        g.addPlayer(new Player('yousong', RaceType.Terrans))//blue
+        g.addPlayer(new Player('nina', RaceType.Xenos))//Yellow
+        g.addPlayer(new Player('yalei', RaceType.Taklons)) //brown
+        g.addPlayer(new Player('rong', RaceType.HadschHallas)) //red
 
     });
 
@@ -72,10 +77,231 @@ describe('Game SetUp finished Tests', () => {
 
     })
 
+    it('check player planetType  ', () => {
+      let player  = g.getPlayer(0);
+      expect(player.planetType).to.equal(PlanetType.Blue)
+      // player  = g.getPlayer(1);
+      // expect(player.planetType).to.equal(PlanetType.Yellow)
+      // player  = g.getPlayer(2);
+      // expect(player.planetType).to.equal(PlanetType.Brown)
+      // player  = g.getPlayer(3);
+      // expect(player.planetType).to.equal(PlanetType.Red)
+
+    })
+
+
     it(`setup player's  ore, knowledge, gold`, () => {
       for(let player of g.players){
         playerTest(player);
       }
+    })
+
+});
+
+
+describe('Game SetUp Build First Structures Tests', () => {
+    let g: Game
+    beforeEach(() => {
+        g = new Game(1)
+        g.addPlayer(new Player('yousong', RaceType.Terrans)) // blue
+        g.addPlayer(new Player('nina', RaceType.Xenos))  //yellow
+        g.addPlayer(new Player('yalei', RaceType.HadschHallas))  //red
+        g.addPlayer(new Player('rong', RaceType.Nevlas))   //while
+
+
+    });
+
+    it('player(pid:0->1->2->3) build mine', () => {
+      let request = new Request()
+      let hex = new Hex(0, 0, 0);
+      request.type = RequestType.FirstStructures
+      request.pid = 0;
+      request.hex = hex;
+      g.processSetupFirstStructures(request)
+
+      expect(g.board.hasPlanet(hex)).to.equal(true);
+      let planet = g.board.getPlanet(hex);
+
+      expect(planet.building).to.equal(StructureType.Mine);
+      expect(planet.type).to.equal(PlanetType.Blue);
+      expect(planet.playerID).to.equal(0);
+
+      let player = g.getPlayer(0);
+      let mine = player.buildings.mines[0];
+      expect(mine.status).to.equal(StructureStatus.Built);
+      {
+        let request = new Request()
+        let hex = new Hex(2, 3, -5);
+        //console.log(hex)
+        request.type = RequestType.FirstStructures
+        request.pid = 1;
+        request.hex = hex;
+        g.processSetupFirstStructures(request)
+
+        expect(g.board.hasPlanet(hex)).to.equal(true);
+        let planet = g.board.getPlanet(hex);
+        expect(planet.building).to.equal(StructureType.Mine);
+        expect(planet.type).to.equal(PlanetType.Yellow);
+        expect(planet.playerID).to.equal(1);
+
+        let player = g.getPlayer(1);
+        let mine = player.buildings.mines[0];
+        expect(mine.status).to.equal(StructureStatus.Built);
+
+
+      }
+
+      {
+        let request = new Request()
+        let hex = new Hex(5, -2, -3);
+        //console.log(hex)
+        request.type = RequestType.FirstStructures
+        request.pid = 2;
+        request.hex = hex;
+        g.processSetupFirstStructures(request)
+
+        expect(g.board.hasPlanet(hex)).to.equal(true);
+        let planet = g.board.getPlanet(hex);
+        expect(planet.building).to.equal(StructureType.Mine);
+        expect(planet.type).to.equal(PlanetType.Red);
+        expect(planet.playerID).to.equal(2);
+
+        let player = g.getPlayer(2);
+        let mine = player.buildings.mines[0];
+        expect(mine.status).to.equal(StructureStatus.Built);
+
+      }
+
+      {
+        let request = new Request()
+        let hex = new Hex(-5, 2, 3);
+        //console.log(hex)
+        request.type = RequestType.FirstStructures
+        request.pid = 3;
+        request.hex = hex;
+        let player3 = g.getPlayer(3);
+
+         g.processSetupFirstStructures(request)
+         player3 = g.getPlayer(3);
+
+
+        expect(g.board.hasPlanet(hex)).to.equal(true);
+        let planet = g.board.getPlanet(hex);
+        expect(planet.building).to.equal(StructureType.Mine);
+        expect(planet.type).to.equal(PlanetType.White);
+        expect(planet.playerID).to.equal(3);
+
+        let player = g.getPlayer(3);
+
+        let mine = player.buildings.mines[0];
+        expect(mine.status).to.equal(StructureStatus.Built);
+
+      }
+
+      //reverse
+      {
+        let request = new Request()
+        let hex = new Hex(-4, 2, 2);
+        //console.log(hex)
+        request.type = RequestType.FirstStructures
+        request.pid = 3;
+        request.hex = hex;
+
+
+        g.processSetupFirstStructures(request)
+
+        expect(g.board.hasPlanet(hex)).to.equal(true);
+        let planet = g.board.getPlanet(hex);
+
+        expect(planet.building).to.equal(StructureType.Mine);
+        expect(planet.type).to.equal(PlanetType.White);
+        expect(planet.playerID).to.equal(3);
+
+        let player = g.getPlayer(3);
+
+        expect(player.buildings.mines[0].status).to.equal(StructureStatus.Built);
+        expect(player.buildings.mines[1].status).to.equal(StructureStatus.Built);
+        expect(player.buildings.mines[2].status).to.equal(StructureStatus.Unbuilt);
+      }
+
+      {
+        let request = new Request()
+        let hex = new Hex(6, -2, -4);
+        //console.log(hex)
+        request.type = RequestType.FirstStructures
+        request.pid = 2;
+        request.hex = hex;
+
+
+        g.processSetupFirstStructures(request)
+
+        expect(g.board.hasPlanet(hex)).to.equal(true);
+        let planet = g.board.getPlanet(hex);
+
+        expect(planet.building).to.equal(StructureType.Mine);
+        expect(planet.type).to.equal(PlanetType.Red);
+        expect(planet.playerID).to.equal(2);
+
+        let player = g.getPlayer(2);
+
+        expect(player.buildings.mines[0].status).to.equal(StructureStatus.Built);
+        expect(player.buildings.mines[1].status).to.equal(StructureStatus.Built);
+        expect(player.buildings.mines[2].status).to.equal(StructureStatus.Unbuilt);
+      }
+
+      {
+        let request = new Request()
+        let hex = new Hex(3, 3, -6);
+        //console.log(hex)
+        request.type = RequestType.FirstStructures
+        request.pid = 1;
+        request.hex = hex;
+
+
+        g.processSetupFirstStructures(request)
+
+        expect(g.board.hasPlanet(hex)).to.equal(true);
+        let planet = g.board.getPlanet(hex);
+
+        expect(planet.building).to.equal(StructureType.Mine);
+        expect(planet.type).to.equal(PlanetType.Yellow);
+        expect(planet.playerID).to.equal(1);
+
+        let player = g.getPlayer(1);
+
+        expect(player.buildings.mines[0].status).to.equal(StructureStatus.Built);
+        expect(player.buildings.mines[1].status).to.equal(StructureStatus.Built);
+        expect(player.buildings.mines[2].status).to.equal(StructureStatus.Unbuilt);
+      }
+
+      {
+        let request = new Request()
+        let hex = new Hex(3, -1, -2);
+        //console.log(hex)
+        request.type = RequestType.FirstStructures
+        request.pid = 0;
+        request.hex = hex;
+
+
+        g.processSetupFirstStructures(request)
+
+
+        expect(g.board.hasPlanet(hex)).to.equal(true);
+        let planet = g.board.getPlanet(hex);
+
+        expect(planet.building).to.equal(StructureType.Mine);
+        expect(planet.type).to.equal(PlanetType.Blue);
+        expect(planet.playerID).to.equal(0);
+
+        let player = g.getPlayer(0);
+
+        expect(player.buildings.mines[0].status).to.equal(StructureStatus.Built);
+        expect(player.buildings.mines[1].status).to.equal(StructureStatus.Built);
+        expect(player.buildings.mines[2].status).to.equal(StructureStatus.Unbuilt);
+        expect(g.firstStructuresRound).to.equal(3);
+      }
+
+
     })
 
 });

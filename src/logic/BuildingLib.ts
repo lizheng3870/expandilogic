@@ -19,31 +19,23 @@ class BuildingLib {
 
     constructor(race: RaceType) {
         this.race = race;
+        this.mines = [];
+        this.station = [];
+        this.institute = [];
+        this.lab = [];
+        this.academies = [];
+        this.gaiaformer = [];
 
-            /**
-             * Mine types on Faction Board
-             */
-            //Mine 1
-            const mine1 = new Structure(StructureType.Mine,
-                                [new Value(Material.Gold, 2),
-                                    new Value(Material.Ore, 1)],
-                                1,
-                                new Benefit(Trigger.Income, null,
-                                    null, [new Value(1, Material.Ore)]));
-            //Mine 2
-            const mine2 = new Structure(StructureType.Mine,
-                                [new Value(Material.Gold, 2),
-                                    new Value(Material.Ore, 1)],
-                                1,
-                                new Benefit(Trigger.Income, null,
-                                    null, [new Value(0, Material.Ore)]));
+
+
+
 
             /**
              * Trading Station types on Faction Board
              */
             const station1 = new Structure(StructureType.Station,
-                                [new Value(Material.Gold, 3),
-                                    new Value(Material.Ore, 1)],
+                                [new Value(3, Material.Gold),
+                                    new Value(1, Material.Ore)],
                                 2,
                                 new Benefit(Trigger.Income, null,
                                     null, [new Value(3, Material.Gold)]));
@@ -62,13 +54,6 @@ class BuildingLib {
                                 new Benefit(Trigger.Income, null,
                                     null, [new Value(5, Material.Gold)]))
 
-            /**
-             * Lab types on Faction Board
-             */
-            const lab = new Structure(StructureType.Lab,
-                            [new Value(Material.Gold, 5),
-                                new Value(Material.Ore, 3)],
-                                2, new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]));
 
 
              /**
@@ -104,8 +89,24 @@ class BuildingLib {
               */
             for (let i = 1; i <= 8; i++) {
                 if (i === 3) {
+                  //Mine 2
+                  const mine2 = new Structure(StructureType.Mine,
+                                      [new Value( 2, Material.Gold),
+                                          new Value(1, Material.Ore)],
+                                      1,
+                                      new Benefit(Trigger.Income, null,
+                                          null, [new Value(0, Material.Ore)]));
+
                     this.mines.push(mine2);
                 } else {
+                  //Mine 1
+                  const mine1 = new Structure(StructureType.Mine,
+                                     [new Value(2, Material.Gold),
+                                         new Value(1, Material.Ore)],
+                                     1,
+                                     new Benefit(Trigger.Income, null,
+                                         null, [new Value(1, Material.Ore)]));
+
                     this.mines.push(mine1);
                 }
             }
@@ -113,10 +114,16 @@ class BuildingLib {
              * Adds Trading stations
              */
             if (this.race === RaceType.Bescods) {
+              /**
+               * Lab types on Faction Board
+               */
+               for (let i = 1; i <= 4; i++) {
+                const lab = new Structure(StructureType.Lab,
+                              [new Value(Material.Gold, 5),
+                                  new Value(Material.Ore, 3)],
+                                  2, new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]));
                 this.station.push(lab);
-                this.station.push(lab);
-                this.station.push(lab);
-                this.station.push(lab);
+              }
             } else {
                 this.station.push(station1);
                 this.station.push(station2);
@@ -133,6 +140,13 @@ class BuildingLib {
                 this.lab.push(station3);
             } else {
                 for (let i = 1; i <= 3; i++) {
+                  /**
+                   * Lab types on Faction Board
+                   */
+                  const lab = new Structure(StructureType.Lab,
+                                  [new Value(Material.Gold, 5),
+                                      new Value(Material.Ore, 3)],
+                                      2, new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]));
                     this.lab.push(lab);
                 }
             }

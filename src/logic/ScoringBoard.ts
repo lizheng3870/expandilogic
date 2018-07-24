@@ -10,7 +10,6 @@ class ScoringBoard {
   public normal3TechTiles: TechTile[];
   public advanceId: number[];
   public advanceTechTiles: TechTile[];
-
   constructor() {
     this.loadTechs();
   }

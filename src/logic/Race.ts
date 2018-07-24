@@ -108,6 +108,7 @@ export class Race {
     //Player Milestones
     this.gaiaformer = 0;
     this.numGaia = 0;
+    this.range = 1;
     // - todo - initialize number of planets
     // - todo - initialize number of federations
 

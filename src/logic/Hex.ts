@@ -7,12 +7,23 @@ export class Point
 
 export class Hex
 {
-    constructor (public q:number, public r:number, public s:number) {
+    public q:number
+    public r:number
+    public s:number
+    constructor (q:number, r:number, s:number) {
+        this.q = q
+        this.r = r
+        this.s = s
+        if(this.q === 0) this.q = 0;
+        if(this.r === 0) this.r = 0;
+        if(this.s === 0) this.s = 0;
+
+
         if (Math.round(q + r + s) !== 0) throw new Error("q + r + s must be 0");
     }
 
     public toString():string{
-      return " Hex ( q : ${a}, r : ${r}, s ${s} )"
+      return " Hex ( q : " + this.q + ", r : " + this.r + ", s " + this.s + " )"
     }
 
     public add(b:Hex):Hex
@@ -125,7 +136,7 @@ export class Hex
     public static ring(center:Hex, radius:number){
         let results:Hex[] = []
         // this code doesn't work for radius == 0; can you see why?
-        var cube = center.add( Hex.direction(4).scale(radius))
+        var cube = center.add( Hex.direction(0).scale(radius))
 
         for(let i = 0; i < 6 ; i++)
             for(let j = 0; j < radius; j++){
@@ -141,6 +152,7 @@ export class Hex
 
       public static spiral(center:Hex, radius:number){
         let results:Hex[] = []
+        results.push(center)
         for(let k = 1 ; k <= radius; k++){
           results = results.concat(this.ring(center, k))
         }

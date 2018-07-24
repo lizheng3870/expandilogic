@@ -56,11 +56,38 @@ class Player extends Race {
     this.nowBenefits = [];
     this.incomeBenefits = [];
     this.planetType = this.getPlantType(raceType);
+    this.buildings = new BuildingLib(raceType);
+
   }
 
   // map race type to plant types
   public getPlantType(raceType: RaceType):PlanetType{
-  //todo
+    if(raceType === RaceType.Terrans || raceType === RaceType.Lantids)
+      return PlanetType.Blue;
+
+    if(raceType === RaceType.Xenos || raceType === RaceType.Gleens)
+        return PlanetType.Yellow;
+
+    if(raceType === RaceType.Taklons || raceType === RaceType.Ambas)
+        return PlanetType.Brown;
+
+    if(raceType === RaceType.HadschHallas || raceType === RaceType.Ivits)
+        return PlanetType.Red;
+
+
+    if(raceType === RaceType.Nevlas || raceType === RaceType.Itars)
+        return PlanetType.White;
+
+    if(raceType === RaceType.Geodens || raceType === RaceType.Baltaks)
+        return PlanetType.Orange;
+
+    if(raceType === RaceType.Firaks || raceType === RaceType.Bescods)
+          return PlanetType.Black;
+
+
+    if(raceType === RaceType.Nevlas || raceType === RaceType.Itars)
+        return PlanetType.White;
+
     return PlanetType.Blue;
   }
 
@@ -246,6 +273,7 @@ public getLastBuiltLab(){
 public AffordMine(){
   const mine = this.getAvalibleMine();
   if(mine == null)return false;
+
   return this.haveResouces(mine.cost);
   // for(const value : mine.values){
   //
@@ -271,27 +299,27 @@ GaiaFormer, /
 */
 public haveResouce(value:Value){
   if(value.material === Material.Gold){
-    return value.quantity >= this.gold;
+    return value.quantity <= this.gold;
   }
 
   if(value.material === Material.Ore){
-    return value.quantity >= this.ore;
+    return value.quantity <= this.ore;
   }
 
   if(value.material === Material.Science){
-    return value.quantity >= this.science;
+    return value.quantity <= this.science;
   }
 
   if(value.material === Material.QIC){
-    return value.quantity >= this.qic;
+    return value.quantity <= this.qic;
   }
 
   if(value.material === Material.VP){
-    return value.quantity >= this.vp;
+    return value.quantity <= this.vp;
   }
 
   if(value.material === Material.GaiaFormer){
-    return value.quantity >= this.gaiaformer;
+    return value.quantity <= this.gaiaformer;
   }
 
   return false;
@@ -334,8 +362,13 @@ public payResouce(value:Value){
 }
 public haveResouces(values:Value[]){
   for(const value of values){
-    if(this.haveResouce(value) === false)return false;
+    if(this.haveResouce(value) === false){
+      console.log("can not afford sources:")
+      console.log(value)
+      return false;
+    }
   }
+
   return true;
 }
 
@@ -438,6 +471,15 @@ public transferGaiaPower(){
     for(const benefit of benefits){
       this.onBenefit(benefit);
     }
+  }
+
+  public accessiblePlanets(){
+    // let hexs : Hex[] = []
+    // for(let planet of this.planets){
+    //   let neighborings = Hex
+    //
+    // }
+
   }
 
 

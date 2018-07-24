@@ -3,16 +3,16 @@ import {Player} from "./Player"
 import {Hex as Location} from "./Hex"
 
 enum PlanetType{
-  Red,
-  Orange,
-  Yellow,
+  Blue   = 0,
+  Red    = 1,
+  Orange = 2,
+  Yellow = 3,
+  Brown  = 4,
+  Black  = 5,
+  White  = 6,
+  Lost,
   Gaia,  // green
   Transdim, // purple
-  Blue,
-  Brown,
-  White,
-  Black,
-  Lost,
   Gaiaformer
 }
 

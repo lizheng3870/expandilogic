@@ -8,8 +8,8 @@ enum StructureType {
   Institute,
 }
 enum StructureStatus{
-  Built,
-  Unbuilt
+  Built = 0,
+  Unbuilt = 1
 }
 
 class Structure {
