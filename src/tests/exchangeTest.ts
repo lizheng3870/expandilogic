@@ -82,7 +82,7 @@ describe('Exchange Test', () => {
         p = new Player('jon', RaceType.Terrans)
         var give = 0
         var get = 0
-        exchange = new Exchange(give, get)
+        exchange = new Exchange()
     })
 
     it('try to trade an invalid merchandise', ()=>{

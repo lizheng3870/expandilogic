@@ -59,7 +59,7 @@ class Game {
 //     this.status = GameStatus.Open
      this.board = new MapBoard()
      this.techBoard = new TechBoard();
-     this.exchange = new Exchange(0, 0);
+     this.exchange = new Exchange();
      this.scoringBoard = new ScoringBoard();
      this.roundBoosters = [];
      this.loadRoundBooster();
