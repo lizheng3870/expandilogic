@@ -3,10 +3,14 @@ import Tech from './Tech'
 import {Federation} from './Federation';
 import { RaceType } from './Player';
 import { Benefit, Trigger, BuildingType, Value, Material } from "./Benefit";
+import TechTiles from './TechTiles';
+import RoundBooster from './RoundBooster';
+import { BuildingLib } from './BuildingLib';
+import { Structure } from './Structure';
 
 export interface BuildBenefit{
     built : boolean
-    benefit: Benefit
+    benefit: Structure
 }
 
 interface BuildBoard {
@@ -52,13 +56,28 @@ export class Race {
     public gaiaformer: number;  // How many gaiaformers do I have
     public federations: Federation[]; // My Federations
     public numGaia: number; // How many gaia planets have a conquered
-
+    public techs: number[];
+    public techTiles: TechTiles[];
+    public buildingLib: BuildingLib;
+    
+    //Player Status
+    public playerId: number;
+    public raceType: RaceType;
+    public planetType: PlanetType;
+    public passed: boolean;
+    public gaiaFormingCost: number = 6;
+    public digCost: number = 3
+    public range: number; // basic range, can be increased by upgrading the tech of range and will not decrease;
+    public specialDig: number;
+    public specialRange: number; // temporary range, increased by spend QIC or special power, will go back to 0 every new turn;
+    public roundBooster: RoundBooster;
+    
     //Benefits not from the buildBoard
-    public nowBenefits: Benefit[];
-    public incomeBenefits: Benefit[];
-    public specialBenefits: Benefit[];
+    // public nowBenefits: Benefit[];
+    // public incomeBenefits: Benefit[];
+    // public specialBenefits: Benefit[];
 
-    // This buildBoard holds the benefits that are unlocked at each step
+    // This buildBoard holds the benefits that are unlocked at build
     public buildBoard : BuildBoard = {
         mines : [],
         stations : [],
@@ -68,31 +87,7 @@ export class Race {
     }
 
     // The permanent board incomes
-    public income : Benefit[]
-
-    //Player Status - should these be set to private????
-    public playerId: number;
-    public raceType: RaceType;
-    public planetType: PlanetType;
-    public passed: boolean;
-    // public roundBooster: Benefit;
-    // public digCost: Benefit;
-    // public gaiaFormingCost: Benefit;
-    public gaiaColonize: Benefit;
-    public range: number; // basic range, can be increased by upgrading the tech of range and will not decrease;
-    public specialDig: number;
-    public specialRange: number; // temporary range, increased by spend QIC or special power, will go back to 0 every new turn;
-
-    //Tech level of player
-    //Tech level array form - EITHER
-    // public techs: Tech[];
-    // Tech level value form - OR
-    public dig: number;
-    public nav: number;
-    public qicTech: number;
-    public gaia: number;
-    public resources: number;
-    public knowledge: number;
+    public income : Benefit[];
 
   constructor(){
 
@@ -102,16 +97,20 @@ export class Race {
     this.ore = 4;
     this.science = 3;
     this.qic = 1;
-
-    // - todo - some factions have different power bowl starting points
+    this.power.bowl1 = 4;
+    this.power.bowl2 = 2;
+    this.power.bowl3 = 0;
+    this.power.gaia = 0;
 
     //Player Milestones
+    this.planets = [];
     this.gaiaformer = 0;
+    this.federations = [];
     this.numGaia = 0;
-    this.range = 1;
-    // - todo - initialize number of planets
-    // - todo - initialize number of federations
-
+    this.techs = [0,0,0,0,0,0];
+    this.techTiles = [];
+    
+    //Player Status
 }
 
 /**
@@ -122,6 +121,14 @@ public setRaceType(race: RaceType) {
     this.raceType = race;
     // Set up the buildboard for that player
     this.setUpBuildBoard();
+}
+
+/**
+ * Set player Planet type
+ * @param playerPlanet
+ */
+public setPlanetType(playerPlanet: PlanetType) {
+    this.planetType = playerPlanet;
 }
 
 /**
@@ -137,6 +144,8 @@ public setUpBuildBoard(){
  */
 private addMines() {
     let item = false;
+    const struct = this.buildingLib.mines
+    
 }
 
 /**
@@ -148,41 +157,33 @@ private addMines() {
 
 
 
-/**
- * Adds now benefits collected during game play
- * Note: Not on buildBoard
- * @param nowBenefit
- */
-public addNowBenefits(nowBenefit: Benefit) {
-    this.nowBenefits.push(nowBenefit);
-}
+// /**
+//  * Adds now benefits collected during game play
+//  * Note: Not on buildBoard
+//  * @param nowBenefit
+//  */
+// public addNowBenefits(nowBenefit: Benefit) {
+//     this.nowBenefits.push(nowBenefit);
+// }
 
-/**
- * Adds income benefits collected during game play
- * Note: Not on buildBoard
- * @param incomeBenefit
- */
-public addIncomeBenefits(incomeBenefit: Benefit) {
-    this.incomeBenefits.push(incomeBenefit);
-}
-
-
-/**
- * Adds special benefits collected during game play
- * Note: Not on buildBoard
- */
-public addSpecialBenefits(specialBenefit: Benefit) {
-    this.specialBenefits.push(specialBenefit);
-}
+// /**
+//  * Adds income benefits collected during game play
+//  * Note: Not on buildBoard
+//  * @param incomeBenefit
+//  */
+// public addIncomeBenefits(incomeBenefit: Benefit) {
+//     this.incomeBenefits.push(incomeBenefit);
+// }
 
 
-/**
- * Set player Planet type
- * @param playerPlanet
- */
-public setPlanetType(playerPlanet: PlanetType) {
-    this.planetType = playerPlanet;
-}
+// /**
+//  * Adds special benefits collected during game play
+//  * Note: Not on buildBoard
+//  */
+// public addSpecialBenefits(specialBenefit: Benefit) {
+//     this.specialBenefits.push(specialBenefit);
+// }
+
 
 /*
     use the "charge power" mechanic to push
