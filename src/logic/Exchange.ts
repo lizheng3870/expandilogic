@@ -53,6 +53,7 @@ class Exchange{
     this.qicToRange = new Merchandise(Material.QIC, Material.SpecialRange, 1, 2);
     this.scienceToGold = new Merchandise(Material.Science, Material.Gold, 1, 1);
     //push them all into an array
+    this.exchanges = [];
     this.exchanges.push(this.powerToGold);
     this.exchanges.push(this.powerToOre);
     this.exchanges.push(this.powerToScience);
