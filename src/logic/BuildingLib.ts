@@ -1,7 +1,7 @@
 import {StructureType, Structure} from "./Structure";
 import {RaceType} from "./Player";
 import {Benefit, Value, Material, Trigger} from "./Benefit";
-
+import { BuildBenefit, Race } from "./Race";
 
 
 /**
@@ -9,27 +9,60 @@ import {Benefit, Value, Material, Trigger} from "./Benefit";
  */
 class BuildingLib {
 
+    // public mines: BuildBenefit[]
+    // public station: BuildBenefit[]
+    // public institute: BuildBenefit[];
+    // public lab: BuildBenefit[];
+    // public academies: BuildBenefit[];
+    // public gaiaformer: BuildBenefit[];
+
     public mines: Structure[]
-    public station: Structure[];
+    public station: Structure[]
     public institute: Structure[];
     public lab: Structure[];
     public academies: Structure[];
     public gaiaformer: Structure[];
-    // public race: RaceType;
 
-    constructor() {
+    constructor(race: RaceType) {
         this.mines = [];
         this.station = [];
         this.institute = [];
         this.lab = [];
         this.academies = [];
         this.gaiaformer = [];
+        
 
-
-
+        /**
+         * Adds Mines
+         */
+            // for (let i = 1; i <= 8; i++) {
+            //     let item = false;
+            //     if (i === 3) {
+            //       //Mine 2
+            //       const mine2 = new Structure(StructureType.Mine,
+            //                           [new Value( 2, Material.Gold),
+            //                               new Value(1, Material.Ore)],
+            //                           1,
+            //                           new Benefit(Trigger.Income, null,
+            //                               null, [new Value(0, Material.Ore)]));
+            //         let struct = {built: item, benefit: mine2};
+            //         this.mines.push(struct);
+            //     } else {
+            //        //Mine 1
+            //       const mine1 = new Structure(StructureType.Mine,
+            //                          [new Value(2, Material.Gold),
+            //                              new Value(1, Material.Ore)],
+            //                          1,
+            //                          new Benefit(Trigger.Income, null,
+            //                              null, [new Value(1, Material.Ore)]));
+            //       let struct = {built: item, benefit: mine1};
+            //       this.mines.push(struct);
+            //     }
+            // }
 
 
             /**
+             * 
              * Trading Station types on Faction Board
              */
             const station1 = new Structure(StructureType.Station,
@@ -39,19 +72,19 @@ class BuildingLib {
                                 new Benefit(Trigger.Income, null,
                                     null, [new Value(3, Material.Gold)]));
 
-            const station2 = new Structure(StructureType.Station,
-                                [new Value(3, Material.Gold),
-                                    new Value(1, Material.Ore)],
-                                2,
-                                new Benefit(Trigger.Income, null,
-                                    null, [new Value(4, Material.Gold)]));
+            // const station2 = new Structure(StructureType.Station,
+            //                     [new Value(3, Material.Gold),
+            //                         new Value(1, Material.Ore)],
+            //                     2,
+            //                     new Benefit(Trigger.Income, null,
+            //                         null, [new Value(4, Material.Gold)]));
 
-            const station3 = new Structure(StructureType.Station,
-                                [new Value(3, Material.Gold),
-                                    new Value(1, Material.Ore)],
-                                2,
-                                new Benefit(Trigger.Income, null,
-                                    null, [new Value(5, Material.Gold)]))
+            // const station3 = new Structure(StructureType.Station,
+            //                     [new Value(3, Material.Gold),
+            //                         new Value(1, Material.Ore)],
+            //                     2,
+            //                     new Benefit(Trigger.Income, null,
+            //                         null, [new Value(5, Material.Gold)]))
 
 
 
@@ -83,32 +116,6 @@ class BuildingLib {
                                 new Benefit(Trigger.Special, null, null, [new Value(4, Material.Gold)]));
 
 
-        //      /**
-        //       * Adds Mines
-        //       */
-        //     for (let i = 1; i <= 8; i++) {
-        //         if (i === 3) {
-        //           //Mine 2
-        //           const mine2 = new Structure(StructureType.Mine,
-        //                               [new Value( 2, Material.Gold),
-        //                                   new Value(1, Material.Ore)],
-        //                               1,
-        //                               new Benefit(Trigger.Income, null,
-        //                                   null, [new Value(0, Material.Ore)]));
-
-        //             this.mines.push(mine2);
-        //         } else {
-        //           //Mine 1
-        //           const mine1 = new Structure(StructureType.Mine,
-        //                              [new Value(2, Material.Gold),
-        //                                  new Value(1, Material.Ore)],
-        //                              1,
-        //                              new Benefit(Trigger.Income, null,
-        //                                  null, [new Value(1, Material.Ore)]));
-
-        //             this.mines.push(mine1);
-        //         }
-        //     }
         //     /**
         //      * Adds Trading stations
         //      */

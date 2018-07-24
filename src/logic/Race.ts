@@ -10,7 +10,7 @@ import { Structure } from './Structure';
 
 export interface BuildBenefit{
     built : boolean
-    benefit: Structure
+    benefit: Benefit
 }
 
 interface BuildBoard {
@@ -66,16 +66,16 @@ export class Race {
     public planetType: PlanetType;
     public passed: boolean;
     public gaiaFormingCost: number = 6;
-    public digCost: number = 3
+    public digCost: number = 3;
     public range: number; // basic range, can be increased by upgrading the tech of range and will not decrease;
     public specialDig: number;
     public specialRange: number; // temporary range, increased by spend QIC or special power, will go back to 0 every new turn;
     public roundBooster: RoundBooster;
     
     //Benefits not from the buildBoard
-    // public nowBenefits: Benefit[];
-    // public incomeBenefits: Benefit[];
-    // public specialBenefits: Benefit[];
+    public nowBenefits: Benefit[];
+    public incomeBenefits: Benefit[];
+    public specialBenefits: Benefit[];
 
     // This buildBoard holds the benefits that are unlocked at build
     public buildBoard : BuildBoard = {
@@ -97,10 +97,10 @@ export class Race {
     this.ore = 4;
     this.science = 3;
     this.qic = 1;
-    this.power.bowl1 = 4;
-    this.power.bowl2 = 2;
-    this.power.bowl3 = 0;
-    this.power.gaia = 0;
+    // this.power.bowl1 = 4;
+    // this.power.bowl2 = 2;
+    // this.power.bowl3 = 0;
+    // this.power.gaia = 0;
 
     //Player Milestones
     this.planets = [];
@@ -111,6 +111,7 @@ export class Race {
     this.techTiles = [];
     
     //Player Status
+    
 }
 
 /**
@@ -135,18 +136,16 @@ public setPlanetType(playerPlanet: PlanetType) {
  * Set player buildBoard
  */
 public setUpBuildBoard(){
-    this.addMines();
+    // this.addMines();
     // this.addStations();
 }
 
 /**
  * AddMines for buildBoard
  */
-private addMines() {
-    let item = false;
-    const struct = this.buildingLib.mines
-    
-}
+// private addMines() {
+//     this.buildBoard.mines = this.buildingLib.mines;
+// }
 
 /**
  * Add Trading Stations for buildboard

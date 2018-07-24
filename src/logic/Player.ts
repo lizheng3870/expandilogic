@@ -27,13 +27,13 @@ export enum RaceType {
 
 class Player extends Race {
   public name: string
-  // public planets: Planet[]
-  // public numGaia: number
-  // public techs: number[]
-  // public techTiles: TechTiles[]
-  // public federations: Federation[]
-  // public nowBenefits: Benefit[]
-  // public incomeBenefits: Benefit[]
+  public planets: Planet[]
+  public numGaia: number
+  public techs: number[]
+  public techTiles: TechTiles[]
+  public federations: Federation[]
+  public nowBenefits: Benefit[]
+  public incomeBenefits: Benefit[]
   public gaiaFormingCost: number = 6
   public digCost: number = 3
   public race: RaceType|null
@@ -49,14 +49,14 @@ class Player extends Race {
     this.race = raceType;
     this.planets = [];
     this.numGaia = 0;
-    // this.techs = [0,0,0,0,0,0];
+    this.techs = [0,0,0,0,0,0];
     this.techTiles = [];
     this.federations = [];
     this.pid =  -1;  // pid is player id for example 0 1 2 3
-    // this.nowBenefits = [];
-    // this.incomeBenefits = [];
+    this.nowBenefits = [];
+    this.incomeBenefits = [];
     this.planetType = this.getPlantType(raceType);
-    // this.buildings = new BuildingLib(raceType);
+    this.buildings = new BuildingLib(raceType);
 
   }
 
@@ -105,19 +105,19 @@ class Player extends Race {
   * output: add the benefit into the array
   * @yalei
   */
-  // public getBenefit(benefit: Benefit){
-  //   if(benefit.trigger === Trigger.Income){
-  //     this.incomeBenefits.push(benefit);
-  //   }
-  //   if(benefit.trigger === Trigger.Now){
-  //     this.nowBenefits.push(benefit);
-  //     // since it is now, so we call the onBenefit at once;
-  //     this.onBenefit(benefit);
-  //   }
-  //   if(benefit.trigger === Trigger.Special){
-  //     this.activateSpecialPower(benefit);
-  //   }
-  // }
+  public getBenefit(benefit: Benefit){
+    if(benefit.trigger === Trigger.Income){
+      this.incomeBenefits.push(benefit);
+    }
+    if(benefit.trigger === Trigger.Now){
+      this.nowBenefits.push(benefit);
+      // since it is now, so we call the onBenefit at once;
+      this.onBenefit(benefit);
+    }
+    if(benefit.trigger === Trigger.Special){
+      this.activateSpecialPower(benefit);
+    }
+  }
 
   /**
    * the function which will add the amount of resource into players class
