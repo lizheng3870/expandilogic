@@ -1,7 +1,7 @@
 import {StructureType, Structure} from "./Structure";
 import {RaceType} from "./Player";
 import {Benefit, Value, Material, Trigger} from "./Benefit";
-import { BuildBenefit, Race } from "./Race";
+
 
 
 /**
@@ -9,60 +9,28 @@ import { BuildBenefit, Race } from "./Race";
  */
 class BuildingLib {
 
-    // public mines: BuildBenefit[]
-    // public station: BuildBenefit[]
-    // public institute: BuildBenefit[];
-    // public lab: BuildBenefit[];
-    // public academies: BuildBenefit[];
-    // public gaiaformer: BuildBenefit[];
-
     public mines: Structure[]
-    public station: Structure[]
+    public station: Structure[];
     public institute: Structure[];
     public lab: Structure[];
     public academies: Structure[];
     public gaiaformer: Structure[];
+    public race: RaceType;
 
     constructor(race: RaceType) {
+        this.race = race;
         this.mines = [];
         this.station = [];
         this.institute = [];
         this.lab = [];
         this.academies = [];
         this.gaiaformer = [];
-        
 
-        /**
-         * Adds Mines
-         */
-            // for (let i = 1; i <= 8; i++) {
-            //     let item = false;
-            //     if (i === 3) {
-            //       //Mine 2
-            //       const mine2 = new Structure(StructureType.Mine,
-            //                           [new Value( 2, Material.Gold),
-            //                               new Value(1, Material.Ore)],
-            //                           1,
-            //                           new Benefit(Trigger.Income, null,
-            //                               null, [new Value(0, Material.Ore)]));
-            //         let struct = {built: item, benefit: mine2};
-            //         this.mines.push(struct);
-            //     } else {
-            //        //Mine 1
-            //       const mine1 = new Structure(StructureType.Mine,
-            //                          [new Value(2, Material.Gold),
-            //                              new Value(1, Material.Ore)],
-            //                          1,
-            //                          new Benefit(Trigger.Income, null,
-            //                              null, [new Value(1, Material.Ore)]));
-            //       let struct = {built: item, benefit: mine1};
-            //       this.mines.push(struct);
-            //     }
-            // }
+
+
 
 
             /**
-             * 
              * Trading Station types on Faction Board
              */
             const station1 = new Structure(StructureType.Station,
@@ -72,19 +40,19 @@ class BuildingLib {
                                 new Benefit(Trigger.Income, null,
                                     null, [new Value(3, Material.Gold)]));
 
-            // const station2 = new Structure(StructureType.Station,
-            //                     [new Value(3, Material.Gold),
-            //                         new Value(1, Material.Ore)],
-            //                     2,
-            //                     new Benefit(Trigger.Income, null,
-            //                         null, [new Value(4, Material.Gold)]));
+            const station2 = new Structure(StructureType.Station,
+                                [new Value(3, Material.Gold),
+                                    new Value(1, Material.Ore)],
+                                2,
+                                new Benefit(Trigger.Income, null,
+                                    null, [new Value(4, Material.Gold)]));
 
-            // const station3 = new Structure(StructureType.Station,
-            //                     [new Value(3, Material.Gold),
-            //                         new Value(1, Material.Ore)],
-            //                     2,
-            //                     new Benefit(Trigger.Income, null,
-            //                         null, [new Value(5, Material.Gold)]))
+            const station3 = new Structure(StructureType.Station,
+                                [new Value(3, Material.Gold),
+                                    new Value(1, Material.Ore)],
+                                2,
+                                new Benefit(Trigger.Income, null,
+                                    null, [new Value(5, Material.Gold)]))
 
 
 
@@ -116,183 +84,209 @@ class BuildingLib {
                                 new Benefit(Trigger.Special, null, null, [new Value(4, Material.Gold)]));
 
 
-        //     /**
-        //      * Adds Trading stations
-        //      */
-        //     if (this.race === RaceType.Bescods) {
-        //       /**
-        //        * Lab types on Faction Board
-        //        */
-        //        for (let i = 1; i <= 4; i++) {
-        //         const lab = new Structure(StructureType.Lab,
-        //                       [new Value(Material.Gold, 5),
-        //                           new Value(Material.Ore, 3)],
-        //                           2, new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]));
-        //         this.station.push(lab);
-        //       }
-        //     } else {
-        //         this.station.push(station1);
-        //         this.station.push(station2);
-        //         this.station.push(station2);
-        //         this.station.push(station3);
-        //    }
+             /**
+              * Adds Mines
+              */
+            for (let i = 1; i <= 8; i++) {
+                if (i === 3) {
+                  //Mine 2
+                  const mine2 = new Structure(StructureType.Mine,
+                                      [new Value( 2, Material.Gold),
+                                          new Value(1, Material.Ore)],
+                                      1,
+                                      new Benefit(Trigger.Income, null,
+                                          null, [new Value(0, Material.Ore)]));
 
-        //     /**
-        //      * Adds Labs
-        //      */
-        //     if (this.race === RaceType.Bescods) {
-        //         this.lab.push(station1);
-        //         this.lab.push(station2);
-        //         this.lab.push(station3);
-        //     } else {
-        //         for (let i = 1; i <= 3; i++) {
-        //           /**
-        //            * Lab types on Faction Board
-        //            */
-        //           const lab = new Structure(StructureType.Lab,
-        //                           [new Value(Material.Gold, 5),
-        //                               new Value(Material.Ore, 3)],
-        //                               2, new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]));
-        //             this.lab.push(lab);
-        //         }
-        //     }
+                    this.mines.push(mine2);
+                } else {
+                  //Mine 1
+                  const mine1 = new Structure(StructureType.Mine,
+                                     [new Value(2, Material.Gold),
+                                         new Value(1, Material.Ore)],
+                                     1,
+                                     new Benefit(Trigger.Income, null,
+                                         null, [new Value(1, Material.Ore)]));
 
-        //     /**
-        //      * Adds Academies
-        //      */
-        //     if (this.race === RaceType.Itars) {
-        //         this.academies.push(academy1a);
-        //         this.academies.push(academy2);
-        //     } else if (this.race === RaceType.Baltaks) {
-        //         this.academies.push(academy1);
-        //         this.academies.push(academy2a);
-        //     } else {
-        //         this.academies.push(academy1);
-        //         this.academies.push(academy2);
-        //     }
+                    this.mines.push(mine1);
+                }
+            }
+            /**
+             * Adds Trading stations
+             */
+            if (this.race === RaceType.Bescods) {
+              /**
+               * Lab types on Faction Board
+               */
+               for (let i = 1; i <= 4; i++) {
+                const lab = new Structure(StructureType.Lab,
+                              [new Value(Material.Gold, 5),
+                                  new Value(Material.Ore, 3)],
+                                  2, new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]));
+                this.station.push(lab);
+              }
+            } else {
+                this.station.push(station1);
+                this.station.push(station2);
+                this.station.push(station2);
+                this.station.push(station3);
+           }
 
-        //     /**
-        //      * Adds Institute
-        //      * Different Institute powers
-        //      */
-        //     if (this.race === RaceType.Terrans) {
-        //         let values:Value[] = [new Value(Material.Gold, 6), new Value(Material.Ore, 4)];
-        //         let benefit:Benefit = new Benefit(Trigger.Income, null, null, [new Value(1, Material.ExtraPower), new Value(4, Material.Power)]);
+            /**
+             * Adds Labs
+             */
+            if (this.race === RaceType.Bescods) {
+                this.lab.push(station1);
+                this.lab.push(station2);
+                this.lab.push(station3);
+            } else {
+                for (let i = 1; i <= 3; i++) {
+                  /**
+                   * Lab types on Faction Board
+                   */
+                  const lab = new Structure(StructureType.Lab,
+                                  [new Value(Material.Gold, 5),
+                                      new Value(Material.Ore, 3)],
+                                      2, new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]));
+                    this.lab.push(lab);
+                }
+            }
 
-        //         const terranInstitute = new Structure(StructureType.Institute, values, 3, benefit);
+            /**
+             * Adds Academies
+             */
+            if (this.race === RaceType.Itars) {
+                this.academies.push(academy1a);
+                this.academies.push(academy2);
+            } else if (this.race === RaceType.Baltaks) {
+                this.academies.push(academy1);
+                this.academies.push(academy2a);
+            } else {
+                this.academies.push(academy1);
+                this.academies.push(academy2);
+            }
 
-        //         this.institute.push(terranInstitute);
+            /**
+             * Adds Institute
+             * Different Institute powers
+             */
+            if (this.race === RaceType.Terrans) {
+                let values:Value[] = [new Value(Material.Gold, 6), new Value(Material.Ore, 4)];
+                let benefit:Benefit = new Benefit(Trigger.Income, null, null, [new Value(1, Material.ExtraPower), new Value(4, Material.Power)]);
 
-        //     } else if (this.race === RaceType.Lantids){
-        //         const lantidsInstitute = new Structure(StructureType.Institute,
-        //                                     [new Value(Material.Gold, 6),
-        //                                         new Value(Material.Ore, 4)],
-        //                                     3,
-        //                                     new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power)]));
-        //         this.institute.push(lantidsInstitute);
+                const terranInstitute = new Structure(StructureType.Institute, values, 3, benefit);
 
-        //     } else if(this.race === RaceType.Xenos) {
-        //         const xenosInstitute = new Structure(StructureType.Institute,
-        //                                     [new Value(Material.Gold, 6),
-        //                                         new Value(Material.Ore, 4)],
-        //                                     3,
-        //                                     new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(1, Material.QIC)]));
-        //         this.institute.push(xenosInstitute);
+                this.institute.push(terranInstitute);
+
+            } else if (this.race === RaceType.Lantids){
+                const lantidsInstitute = new Structure(StructureType.Institute,
+                                            [new Value(Material.Gold, 6),
+                                                new Value(Material.Ore, 4)],
+                                            3,
+                                            new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power)]));
+                this.institute.push(lantidsInstitute);
+
+            } else if(this.race === RaceType.Xenos) {
+                const xenosInstitute = new Structure(StructureType.Institute,
+                                            [new Value(Material.Gold, 6),
+                                                new Value(Material.Ore, 4)],
+                                            3,
+                                            new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(1, Material.QIC)]));
+                this.institute.push(xenosInstitute);
 
 
-        //     } else if (this.race === RaceType.Gleens) {
-        //         const gleensInstitute = new Structure(StructureType.Institute,
-        //                                     [new Value(Material.Gold, 6),
-        //                                         new Value(Material.Ore, 4)],
-        //                                     3,
-        //                                     new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(1, Material.Ore)]));
-        //         this.institute.push(gleensInstitute);
+            } else if (this.race === RaceType.Gleens) {
+                const gleensInstitute = new Structure(StructureType.Institute,
+                                            [new Value(Material.Gold, 6),
+                                                new Value(Material.Ore, 4)],
+                                            3,
+                                            new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(1, Material.Ore)]));
+                this.institute.push(gleensInstitute);
 
-        //     } else if (this.race === RaceType.Taklons) {
-        //         const taklonsInstitute = new Structure(StructureType.Institute,
-        //                                     [new Value(Material.Gold, 6),
-        //                                         new Value(Material.Ore, 4)],
-        //                                     3,
-        //                                     new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(1, Material.Power)]));
-        //         this.institute.push(taklonsInstitute);
+            } else if (this.race === RaceType.Taklons) {
+                const taklonsInstitute = new Structure(StructureType.Institute,
+                                            [new Value(Material.Gold, 6),
+                                                new Value(Material.Ore, 4)],
+                                            3,
+                                            new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(1, Material.Power)]));
+                this.institute.push(taklonsInstitute);
 
-        //     } else if (this.race === RaceType.Ambas) {
-        //         const ambasInstitute = new Structure(StructureType.Institute,
-        //             [new Value(Material.Gold, 6),
-        //                 new Value(Material.Ore, 4)],
-        //             3,
-        //             new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(2, Material.Power)]));
-        //         this.institute.push(ambasInstitute);
+            } else if (this.race === RaceType.Ambas) {
+                const ambasInstitute = new Structure(StructureType.Institute,
+                    [new Value(Material.Gold, 6),
+                        new Value(Material.Ore, 4)],
+                    3,
+                    new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(2, Material.Power)]));
+                this.institute.push(ambasInstitute);
 
-        //     } else if (this.race === RaceType.Nevlas) {
-        //         const nevlasInstitute = new Structure(StructureType.Institute,
-        //             [new Value(Material.Gold, 6),
-        //                 new Value(Material.Ore, 4)],
-        //             3,
-        //             new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(1, Material.Power)]));
-        //         this.institute.push(nevlasInstitute);
+            } else if (this.race === RaceType.Nevlas) {
+                const nevlasInstitute = new Structure(StructureType.Institute,
+                    [new Value(Material.Gold, 6),
+                        new Value(Material.Ore, 4)],
+                    3,
+                    new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(1, Material.Power)]));
+                this.institute.push(nevlasInstitute);
 
-        //     } else if (this.race === RaceType.Itars) {
-        //         const itarsInstitute = new Structure(StructureType.Institute,
-        //             [new Value(Material.Gold, 6),
-        //                 new Value(Material.Ore, 4)],
-        //             3,
-        //             new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(1, Material.Power)]));
-        //         this.institute.push(itarsInstitute);
+            } else if (this.race === RaceType.Itars) {
+                const itarsInstitute = new Structure(StructureType.Institute,
+                    [new Value(Material.Gold, 6),
+                        new Value(Material.Ore, 4)],
+                    3,
+                    new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(1, Material.Power)]));
+                this.institute.push(itarsInstitute);
 
-        //     } else if (this.race === RaceType.Ivits) {
-        //         const ivitsInstitute = new Structure(StructureType.Institute,
-        //             [new Value(Material.Gold, 6),
-        //                 new Value(Material.Ore, 4)],
-        //             3,
-        //             new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(1, Material.Power)]));
-        //         this.institute.push(ivitsInstitute);
+            } else if (this.race === RaceType.Ivits) {
+                const ivitsInstitute = new Structure(StructureType.Institute,
+                    [new Value(Material.Gold, 6),
+                        new Value(Material.Ore, 4)],
+                    3,
+                    new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(1, Material.Power)]));
+                this.institute.push(ivitsInstitute);
 
-        //     } else if (this.race === RaceType.HadschHallas) {
-        //         const hHInstitute = new Structure(StructureType.Institute,
-        //             [new Value(Material.Gold, 6),
-        //                 new Value(Material.Ore, 4)],
-        //             3,
-        //             new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(1, Material.Power)]));
+            } else if (this.race === RaceType.HadschHallas) {
+                const hHInstitute = new Structure(StructureType.Institute,
+                    [new Value(Material.Gold, 6),
+                        new Value(Material.Ore, 4)],
+                    3,
+                    new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(1, Material.Power)]));
 
-        //         this.institute.push(hHInstitute);
+                this.institute.push(hHInstitute);
 
-        //     } else if (this.race === RaceType.Geodens) {
-        //         const geodensInstitute = new Structure(StructureType.Institute,
-        //             [new Value(Material.Gold, 6),
-        //                 new Value(Material.Ore, 4)],
-        //             3,
-        //             new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(1, Material.Power)]));
-        //         this.institute.push(geodensInstitute);
+            } else if (this.race === RaceType.Geodens) {
+                const geodensInstitute = new Structure(StructureType.Institute,
+                    [new Value(Material.Gold, 6),
+                        new Value(Material.Ore, 4)],
+                    3,
+                    new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(1, Material.Power)]));
+                this.institute.push(geodensInstitute);
 
-        //     } else if (this.race === RaceType.Baltaks) {
-        //         const baltaksInstitute = new Structure(StructureType.Institute,
-        //             [new Value(Material.Gold, 6),
-        //                 new Value(Material.Ore, 4)],
-        //             3,
-        //             new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(1, Material.Power)]));
-        //         this.institute.push(baltaksInstitute);
+            } else if (this.race === RaceType.Baltaks) {
+                const baltaksInstitute = new Structure(StructureType.Institute,
+                    [new Value(Material.Gold, 6),
+                        new Value(Material.Ore, 4)],
+                    3,
+                    new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(1, Material.Power)]));
+                this.institute.push(baltaksInstitute);
 
-        //     } else if (this.race === RaceType.Firaks) {
-        //         const firaksInstitute = new Structure(StructureType.Institute,
-        //             [new Value(Material.Gold, 6),
-        //                 new Value(Material.Ore, 4)],
-        //             3,
-        //             new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(1, Material.Power)]));
+            } else if (this.race === RaceType.Firaks) {
+                const firaksInstitute = new Structure(StructureType.Institute,
+                    [new Value(Material.Gold, 6),
+                        new Value(Material.Ore, 4)],
+                    3,
+                    new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(1, Material.Power)]));
 
-        //         this.institute.push(firaksInstitute);
+                this.institute.push(firaksInstitute);
 
-        //     } else if (this.race === RaceType.Bescods) {
-        //         const bescodsInstitute = new Structure(StructureType.Institute,
-        //             [new Value(Material.Gold, 6),
-        //                 new Value(Material.Ore, 4)],
-        //             3,
-        //             new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(2, Material.Power)]));
+            } else if (this.race === RaceType.Bescods) {
+                const bescodsInstitute = new Structure(StructureType.Institute,
+                    [new Value(Material.Gold, 6),
+                        new Value(Material.Ore, 4)],
+                    3,
+                    new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power), new Value(2, Material.Power)]));
 
-        //         this.institute.push(bescodsInstitute);
-        //     }
-        // }
-    }
+                this.institute.push(bescodsInstitute);
+            }
+        }
+
         /**
          * this function serve for the techtile of changing power value of bigbuilding
          * @param value
