@@ -106,7 +106,11 @@ class Exchange{
 
     if(get === Material.QIC) player.qic += totalGet;
     if(get === Material.Ore) player.ore += totalGet;
-    if(get === Material.Gold) player.gold += totalGet;
+    if(get === Material.Gold) {
+      console.log(player.gold);
+      player.gold += totalGet;
+      console.log(player.gold);
+    }
     if(get === Material.Science) player.science += totalGet;
     // TODO: is this the right way to handle this? VVV
     // if(get === Material.Power) player.power1 += totalGet;
@@ -120,7 +124,7 @@ class Exchange{
    */
   public checkResources(player: Player, give: Material, quantity: number){
     // TODO : uncomment and fix
-    // if(give === Material.Power) return player.power3 >= quantity;
+    if(give === Material.Power) return player.power.bowl3 >= quantity;
     if(give === Material.Ore) return player.ore >= quantity;
     if(give === Material.QIC) return player.qic >= quantity;
     if(give === Material.Science) return player.science >= quantity;

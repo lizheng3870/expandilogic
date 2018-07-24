@@ -26,7 +26,6 @@ function testExchange(exchangeType: Merchandise, player:Player, times: number, e
 
     exchange.trade(player, give, get, times)
 
-    
     if(exchangeType === exchange.powerToGold){ 
         //old value of item used to exchange = quantity given + new value a player has now
         expect(oldPower3).to.equal(exchangeType.numGive*times + player.power.bowl3)
@@ -80,18 +79,16 @@ describe('Exchange Test', () => {
 
     beforeEach(() => {
         p = new Player('jon', RaceType.Terrans)
-        var give = 0
-        var get = 0
         exchange = new Exchange()
     })
 
-    it('try to trade an invalid merchandise', ()=>{
-        try{
-            testExchange(new Merchandise(Material.Power, Material.SpecialRange, 4, 1), p, 3, exchange)
-        }catch(e){
-            expect('merchandise not found')
-        }
-    })
+    // it('try to trade an invalid merchandise', ()=>{
+    //     try{
+    //         testExchange(new Merchandise(Material.Power, Material.SpecialRange, 4, 1), p, 3, exchange)
+    //     }catch(e){
+    //         expect('merchandise not found')
+    //     }
+    // })
 
     // it('try to trade with not enough resources', ()=>{
     //     p.power.bowl3 = 1
@@ -103,12 +100,31 @@ describe('Exchange Test', () => {
     //     expect(p.power.bowl3).to.equal(1)
     // })
     //
-    // it('single time trade success', ()=>{
-    //     testExchange(exchange.powerToGold, p, 1, exchange)
-    // })
 
-    // it('single time trade success', ()=>{
-        // testExchange(exchange.powerToGold, p, 1, exchange)
-    // })
+    
+    it('single time trade success', ()=>{
+        p.gold = 10;
+        p.power.bowl3 = 1;
+        exchange.trade(p, Material.Power, Material.Gold, 1);
+        expect(p.gold).to.equal(11);
+    })
+
+    it('multiple times trade success', ()=>{
+        p.gold = 10;
+        p.power.bowl3 = 3;
+        exchange.trade(p, Material.Power, Material.Gold, 3);
+        expect(p.gold).to.equal(13);
+    })
+
+    it('multiple times trade failure: not enough resouces', ()=>{
+        p.gold = 10;
+        p.power.bowl3 = 1;
+        exchange.trade(p, Material.Power, Material.Gold, 11);
+        expect(p.gold).to.equal(10);
+    })
+
+
+
 
 })
+
