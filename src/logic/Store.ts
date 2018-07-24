@@ -32,6 +32,7 @@ class Store{
         this.pw3pw2 = new Merchandise(Material.Power, Material.ExtraPower, 3, 2);
         this.pw3pw2.available = true;
         //push them all into an array
+        this.exchanges = [];
         this.exchanges.push(this.pw7sci3);
         this.exchanges.push(this.pw5dig2);
         this.exchanges.push(this.pw4ore2);
@@ -77,8 +78,7 @@ class Store{
         if(get === Material.Ore) player.ore += totalGet;
         if(get === Material.Gold) player.gold += totalGet;
         if(get === Material.Science) player.science += totalGet;
-        if(get === Material.Dig) player.dig += totalGet;
+        if(get === Material.Dig) player.specialDig += totalGet;
         if(get === Material.ExtraPower) player.power.bowl1 += totalGet;
-
     }
 }
