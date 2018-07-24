@@ -21,6 +21,29 @@ class TechBoard {
     this.advanceTechTiles = []
     this.loadTechs();
   }
+  
+  /**
+   * print out the id
+   */
+  public print(){
+    console.log("normal 6 are: " + this.normal6Id[0] + " " + 
+    this.normal6Id[1] + " " + 
+    this.normal6Id[2] + " " + 
+    this.normal6Id[3] + " " + 
+    this.normal6Id[4] + " " + 
+    this.normal6Id[5] + " " );
+
+    console.log("normal 3 are: " + this.normal3Id[0] + " " + 
+    this.normal3Id[1] + " " + 
+    this.normal3Id[2] + " " );
+
+    console.log("advance 6 are: " + this.advanceId[0] + " " + 
+    this.advanceId[1] + " " + 
+    this.advanceId[2] + " " + 
+    this.advanceId[3] + " " + 
+    this.advanceId[4] + " " + 
+    this.advanceId[5] + " " );
+  }
 
    /**
     * update the technology
@@ -28,8 +51,12 @@ class TechBoard {
     * @param player
     */
    public update(lane: number, player: Player){  // 0 - 5  lane 0 -5
-      // var level = player.techs[lane];
-      // this.table[lane][level + 1].update(player);
+      var level = player.techs[lane];
+      if(level === 5) {
+        // console.log("max level, can not update");
+        return;
+      }
+      this.table[lane][level + 1].update(player);
       player.techs[lane]++;
    }
 
@@ -67,13 +94,14 @@ class TechBoard {
    }
 
    public loadTechs(){
-    var i = 0;
-    var j = 0;
+    var i;
+    var j;
 
-    for(; i < 6; i++){
+    for(i = 0; i < 6; i++){
       this.table[i] = [];
-     for(; j< 6; j++){
+     for(j = 0; j< 6; j++){
        this.table[i][j] = new Tech(i, j);
+      //  console.log("a new tech at " + i + " " + j);
      }
     }
 

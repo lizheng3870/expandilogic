@@ -11,8 +11,8 @@ class Tech{
    * @param this.level the this.level of technology
    */
   constructor(lane: number, level: number){
-    this.lane = this.lane;
-    this.level = this.level;
+    this.lane = lane;
+    this.level = level;
   }
 
 /**
@@ -20,6 +20,7 @@ class Tech{
  * @param player the player who do the update
  */
   public update(player: Player){
+    // console.log("the lane is: " + this.lane + "; the level is: " + this.level);
     if(this.level === 3){
       //player.chargePower(3);
       const b1 = new Benefit(Trigger.Now, null, null, [new Value(3, Material.Power)]);
@@ -110,7 +111,11 @@ class Tech{
         player.getBenefit(b3);
       }
     }
-    if(b2 != null) player.getBenefit(b2);
+    if(b2 !== null) {
+      // console.log("tech benefit is passing");
+      player.getBenefit(b2);
+    }
+    // console.log("tech benefit is null");
 
   }
 }
