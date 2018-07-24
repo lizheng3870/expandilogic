@@ -4,6 +4,7 @@ import * as Lab from 'lab'
 import { expect } from 'code'
 import { Player , RaceType} from '../logic/Player';
 import { Benefit, Trigger, Value, Material } from '../logic/Benefit';
+import TechBoard from '../logic/TechBoard';
 
 const lab = Lab.script()
 const { describe, it, before, beforeEach } = lab
@@ -94,6 +95,54 @@ describe('Benefit Test', () => {
         expect(p.science - s1).to.equal(6);
         expect(p.qic - q1).to.equal(16);
     })
+})
+
+describe('tech test', () => {
+    let p: Player
+    let techboard: TechBoard;
+    beforeEach(() => {
+        console.log("tech test begin");
+        p = new Player('jon', RaceType.Terrans);
+        expect(p.techs[0]).to.equal(0);
+        expect(p.techs[1]).to.equal(0);
+        expect(p.techs[2]).to.equal(0);
+        expect(p.techs[3]).to.equal(0);
+        expect(p.techs[4]).to.equal(0);
+        expect(p.techs[5]).to.equal(0);
+        techboard = new TechBoard();
+        // techboard.print();
+    })
+
+    it("update test: 1.if it can update; 2.can not update when it is level 5", () => {
+        techboard.update(0,p);
+        expect(p.techs[0]).to.equal(1);
+        techboard.update(0,p);
+        expect(p.techs[0]).to.equal(2);
+        techboard.update(0,p);
+        expect(p.techs[0]).to.equal(3);
+        techboard.update(0,p);
+        expect(p.techs[0]).to.equal(4);
+        techboard.update(0,p);
+        expect(p.techs[0]).to.equal(5);
+        techboard.update(0,p);
+        expect(p.techs[0]).to.equal(5);
+    })
+
+    it("the effect of tech is right: dig", () => {
+        console.log("the dig cost was: " + p.digCost);
+        techboard.update(0, p);
+        expect(p.ore).to.equal(6);
+        techboard.update(0, p);
+        expect(p.digCost).to.equal(2);
+        techboard.update(0, p);
+        expect(p.digCost).to.equal(1);
+        expect(p.power.bowl2).to.equal(5);
+        expect(p.power.bowl3).to.equal(1);
+        techboard.update(0, p);
+        expect(p.ore).to.equal(8);
+    })
+
+
 
 
 })
