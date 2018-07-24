@@ -41,10 +41,16 @@ class Exchange{
   public scienceToGold: Merchandise;
   public exchanges: Merchandise[];
 
-  constructor(){
-    // todo
-    //this.powerToGold = new Merchandise(Material.Power, Material.Gold, ?, ?);
-
+  constructor(give: number, get: number){
+    this.powerToGold = new Merchandise(Material.Power, Material.Gold, give, get);
+    this.powerToOre = new Merchandise(Material.Power, Material.Gold, give, get);
+    this.powerToScience = new Merchandise(Material.Power, Material.Gold, give, get);
+    this.powerToQIC = new Merchandise(Material.Power, Material.Gold, give, get);
+    this.oreToGold = new Merchandise(Material.Power, Material.Gold, give, get);
+    this.oreToExtra = new Merchandise(Material.Power, Material.Gold, give, get);
+    this.qicToOre = new Merchandise(Material.Power, Material.Gold, give, get);
+    this.qicToRange = new Merchandise(Material.Power, Material.Gold, give, get);
+    this.scienceToGold = new Merchandise(Material.Power, Material.Gold, give, get);
   }
 
   /**

@@ -26,9 +26,13 @@ function testExchange(exchangeType: Merchandise, player:Player, times: number, e
 
     exchange.trade(player, give, get, times)
 
-    if(exchangeType === exchange.powerToGold){
+    
+    if(exchangeType === exchange.powerToGold){ 
+        //old value of item used to exchange = quantity given + new value a player has now
         expect(oldPower3).to.equal(exchangeType.numGive*times + player.power.bowl3)
         expect(exchangeType.numGet*times + oldPower1).to.equal(player.power.bowl1)
+
+        //old value of purchased item + quantity purchased = new value a player has now
         expect(exchangeType.numGet*times + oldGold).to.equal(player.gold)
     }
     else if (exchangeType === exchange.powerToOre){
@@ -76,7 +80,9 @@ describe('Exchange Test', () => {
 
     beforeEach(() => {
         p = new Player('jon', RaceType.Terrans)
-        exchange = new Exchange()
+        var give = 0
+        var get = 0
+        exchange = new Exchange(give, get)
     })
 
     it('try to trade an invalid merchandise', ()=>{
@@ -99,6 +105,10 @@ describe('Exchange Test', () => {
     //
     // it('single time trade success', ()=>{
     //     testExchange(exchange.powerToGold, p, 1, exchange)
+    // })
+
+    // it('single time trade success', ()=>{
+        // testExchange(exchange.powerToGold, p, 1, exchange)
     // })
 
 })
