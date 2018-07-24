@@ -62,7 +62,7 @@ class Tech{
     //gaia
     if(this.lane === 3){
       if(this.level === 1) {b2 = new Benefit(Trigger.Now, null, null, [new Value(1, Material.GaiaFormer)]);}
-      if(this.level === 2) {b2 = new Benefit(Trigger.Now, null, null, [new Value(3, Material.Power)]);}
+      if(this.level === 2) {b2 = new Benefit(Trigger.Now, null, null, [new Value(3, Material.ExtraPower)]);}
       if(this.level === 3){
         b2 = new Benefit(Trigger.Now, null, null, [new Value(1, Material.GaiaFormer)]);
         player.gaiaFormingCost = 4;

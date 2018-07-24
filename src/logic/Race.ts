@@ -68,7 +68,7 @@ export class Race {
     public gaiaFormingCost: number = 6;
     public digCost: number = 3;
     public range: number; // basic range, can be increased by upgrading the tech of range and will not decrease;
-    public specialDig: number;
+    public specialDig: number = 0;
     public specialRange: number; // temporary range, increased by spend QIC or special power, will go back to 0 every new turn;
     public roundBooster: RoundBooster;
     
