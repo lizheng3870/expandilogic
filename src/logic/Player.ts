@@ -6,6 +6,7 @@ import {Federation} from './Federation'
 import RoundBooster  from './RoundBooster'
 import {BuildingLib} from './BuildingLib'
 import {Hex} from './Hex'
+import {Terrans} from './Terrans'
 import {StructureStatus} from './Structure'
 
 export enum RaceType {
@@ -24,8 +25,21 @@ export enum RaceType {
   Firaks,
   Bescods,
 }
+// export type Player = Terrans | Lantids | Xenos,
+// Gleens,
+// Taklons,
+// Ambas,
+// Nevlas,
+// Itars,
+// HadschHallas,
+// Ivits,
+// Geodens,
+// Baltaks,
+// Firaks,
+// Bescods,
 
-class Player extends Race {
+
+class Player extends Race{
   public name: string
   public planets: Planet[]
   public numGaia: number

@@ -27,6 +27,7 @@ interface BuildBoard {
  * tech tracks
  *
  */
+
 export class Race {
 
     //Player Resources
@@ -68,6 +69,7 @@ export class Race {
     }
 
     // The permanent board incomes
+    // hadsch hallas has 3 gold income no matter what, for example]
     public income : Benefit[]
 
     //Player Status - should these be set to private????

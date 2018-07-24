@@ -2,8 +2,13 @@ import {StructureType, Structure} from "./Structure";
 import {RaceType} from "./Player";
 import {Benefit, Value, Material, Trigger} from "./Benefit";
 
-
-
+export interface BuildingList{
+    mines? : Benefit[],
+    trading? : Benefit[],
+    labs? : Benefit[],
+    academies? : Benefit[],
+    institute? : Benefit[]
+}
 /**
  * Building Libraries for each faction
  */
@@ -15,10 +20,8 @@ class BuildingLib {
     public lab: Structure[];
     public academies: Structure[];
     public gaiaformer: Structure[];
-    public race: RaceType;
 
-    constructor(race: RaceType) {
-        this.race = race;
+    constructor(bldlist : BuildingList) {
         this.mines = [];
         this.station = [];
         this.institute = [];
