@@ -112,8 +112,6 @@ export class Race {
     // - todo - initialize number of planets
     // - todo - initialize number of federations
 
-
-
 }
 
 /**
@@ -131,7 +129,7 @@ public setRaceType(race: RaceType) {
  */
 public setUpBuildBoard(){
     this.addMines();
-    this.addStations();
+    // this.addStations();
 }
 
 /**
@@ -139,25 +137,14 @@ public setUpBuildBoard(){
  */
 private addMines() {
     let item = false;
-    let playerBenefit1 = new Benefit(Trigger.Income, null, BuildingType.Mine, [new Value(1, Material.Ore)]);
-    let playerBenefit2 = new Benefit(Trigger.Income, null, BuildingType.Mine, [new Value(0, Material.Ore)]);
-    let mine1 = {built: item, benefit: playerBenefit1};
-    let mine2 = {built: item, benefit: playerBenefit2};
-
-    for (let i = 1; i <= 8; i++) {
-        if (i === 3) {
-            this.buildBoard.mines.push(mine2);
-        }
-        this.buildBoard.mines.push(mine1);
-    }
 }
 
 /**
  * Add Trading Stations for buildboard
  */
-private addStations() {
+// private addStations() {
 
-}
+// }
 
 
 
