@@ -41,15 +41,15 @@ class BuildingLib {
                                     null, [new Value(3, Material.Gold)]));
 
             const station2 = new Structure(StructureType.Station,
-                                [new Value(Material.Gold, 3),
-                                    new Value(Material.Ore, 1)],
+                                [new Value(3, Material.Gold),
+                                    new Value(1, Material.Ore)],
                                 2,
                                 new Benefit(Trigger.Income, null,
                                     null, [new Value(4, Material.Gold)]));
 
             const station3 = new Structure(StructureType.Station,
-                                [new Value(Material.Gold, 3),
-                                    new Value(Material.Ore, 1)],
+                                [new Value(3, Material.Gold),
+                                    new Value(1, Material.Ore)],
                                 2,
                                 new Benefit(Trigger.Income, null,
                                     null, [new Value(5, Material.Gold)]))
@@ -61,13 +61,13 @@ class BuildingLib {
               */
 
             const academy1 = new Structure(StructureType.Academy,
-                                [new Value(Material.Gold, 6),
-                                    new Value(Material.Ore, 6)],
+                                [new Value(6, Material.Gold),
+                                    new Value(6, Material.Ore)],
                                     3, new Benefit(Trigger.Income, null, null, [new Value(2, Material.Science)]));
 
             const academy1a = new Structure(StructureType.Academy,
-                                [new Value(Material.Gold, 6),
-                                    new Value(Material.Ore, 6)],
+                                [new Value(6, Material.Gold),
+                                    new Value(6, Material.Ore)],
                                     3, new Benefit(Trigger.Income, null, null, [new Value(3, Material.Science)]));
 
 
