@@ -128,7 +128,7 @@ describe('tech test', () => {
         expect(p.techs[0]).to.equal(5);
     })
 
-    it("the effect of tech is right: dig", () => {
+    it("has the right effect of dig tech", () => {
         console.log("the dig cost was: " + p.digCost);
         techboard.update(0, p);
         expect(p.ore).to.equal(6);
@@ -140,6 +140,56 @@ describe('tech test', () => {
         expect(p.power.bowl3).to.equal(1);
         techboard.update(0, p);
         expect(p.ore).to.equal(8);
+    })
+
+    it('has right effect of range tech', () => {
+        techboard.update(1,p);
+        expect(p.qic).to.equal(2);
+        techboard.update(1,p);
+        expect(p.range).to.equal(2);
+        techboard.update(1,p);
+        expect(p.qic).to.equal(3);
+        expect(p.power.bowl2).to.equal(5);
+        expect(p.power.bowl3).to.equal(1);
+        techboard.update(1,p);
+        expect(p.range).to.equal(3);
+        techboard.update(1,p);
+        expect(p.range).to.equal(4);
+    })
+
+    it('has right effect of QIC tech', () => {
+        // console.log("the terran QIC was: " + p.qic);
+        techboard.update(2,p);
+        expect(p.qic).to.equal(2);
+        techboard.update(2,p);
+        expect(p.qic).to.equal(3);
+        techboard.update(2,p);
+        expect(p.qic).to.equal(5);
+        expect(p.power.bowl2).to.equal(5);
+        expect(p.power.bowl3).to.equal(1);
+        techboard.update(2,p);
+        expect(p.qic).to.equal(7);
+        techboard.update(2,p);
+        expect(p.qic).to.equal(11);
+    })
+
+    it('has right effect of Gaia tech', () => {
+        // console.log("the terran QIC was: " + p.qic);
+        techboard.update(3,p);
+        expect(p.gaiaformer).to.equal(1);
+        expect(p.gaiaFormingCost).to.equal(6);
+        techboard.update(3,p);
+        expect(p.power.bowl1).to.equal(5);
+        techboard.update(3,p);
+        expect(p.gaiaformer).to.equal(2);
+        expect(p.gaiaFormingCost).to.equal(4);
+        expect(p.power.bowl2).to.equal(7);
+        expect(p.power.bowl1).to.equal(2);
+        techboard.update(3,p);
+        expect(p.gaiaformer).to.equal(3);
+        expect(p.gaiaFormingCost).to.equal(3);
+        techboard.update(3,p);
+        // expect(p.qic).to.equal(11);
     })
 
 

@@ -15,6 +15,7 @@ class Merchandise{
   public get: Material;
   public numGive: number;
   public numGet: number;
+  public available: boolean
 
   constructor(give: Material, get: Material, numGive: number, numGet: number){
     this.give = give;
@@ -42,9 +43,25 @@ class Exchange{
   public exchanges: Merchandise[];
 
   constructor(){
-    // todo
-    //this.powerToGold = new Merchandise(Material.Power, Material.Gold, ?, ?);
-
+    this.powerToGold = new Merchandise(Material.Power, Material.Gold, 1, 1);
+    this.powerToOre = new Merchandise(Material.Power, Material.Ore, 3, 1);
+    this.powerToScience = new Merchandise(Material.Power, Material.Science, 4, 1);
+    this.powerToQIC = new Merchandise(Material.Power, Material.QIC, 4, 1);
+    this.oreToGold = new Merchandise(Material.Ore, Material.Gold, 1, 1);
+    this.oreToExtra = new Merchandise(Material.Ore, Material.ExtraPower, 1, 1);
+    this.qicToOre = new Merchandise(Material.QIC, Material.Ore, 1, 1);
+    this.qicToRange = new Merchandise(Material.QIC, Material.SpecialRange, 1, 2);
+    this.scienceToGold = new Merchandise(Material.Science, Material.Gold, 1, 1);
+    //push them all into an array
+    this.exchanges = [];
+    this.exchanges.push(this.powerToGold);
+    this.exchanges.push(this.powerToOre);
+    this.exchanges.push(this.powerToScience);
+    this.exchanges.push(this.oreToGold);
+    this.exchanges.push(this.oreToExtra);
+    this.exchanges.push(this.qicToOre);
+    this.exchanges.push(this.qicToRange);
+    this.exchanges.push(this.scienceToGold);
   }
 
   /**
@@ -89,7 +106,11 @@ class Exchange{
 
     if(get === Material.QIC) player.qic += totalGet;
     if(get === Material.Ore) player.ore += totalGet;
-    if(get === Material.Gold) player.gold += totalGet;
+    if(get === Material.Gold) {
+      console.log(player.gold);
+      player.gold += totalGet;
+      console.log(player.gold);
+    }
     if(get === Material.Science) player.science += totalGet;
     // TODO: is this the right way to handle this? VVV
     // if(get === Material.Power) player.power1 += totalGet;
@@ -103,7 +124,7 @@ class Exchange{
    */
   public checkResources(player: Player, give: Material, quantity: number){
     // TODO : uncomment and fix
-    // if(give === Material.Power) return player.power3 >= quantity;
+    if(give === Material.Power) return player.power.bowl3 >= quantity;
     if(give === Material.Ore) return player.ore >= quantity;
     if(give === Material.QIC) return player.qic >= quantity;
     if(give === Material.Science) return player.science >= quantity;
