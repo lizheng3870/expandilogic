@@ -1,5 +1,5 @@
 import {StructureType, Structure} from "./Structure";
-import {RaceType} from "./Player";
+import {RaceType} from "./Race";
 import {Benefit, Value, Material, Trigger} from "./Benefit";
 
 

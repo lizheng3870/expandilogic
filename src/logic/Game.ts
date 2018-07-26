@@ -3,7 +3,12 @@ import {MapBoard} from './MapBoard'
 import TechBoard from './TechBoard'
 import ScoringBoard from './ScoringBoard'
 import RoundBooster  from './RoundBooster'
-import {Player} from './Player'
+import {Player, CreatePlayer} from './Player'
+import {RaceType} from './Race'
+import {Terrans} from './Races/Terrans'
+import {Xenos} from './Races/Xenos'
+import {Nevlas} from './Races/Nevlas'
+import {HadschHallas} from './Races/HadschHallas'
 import {Benefit} from './Benefit'
 import {Request, RequestType} from './Request'
 import {TypeState} from 'TypeState'
@@ -97,15 +102,41 @@ class Game {
 
    }
 
+
+    public addPlayerNew(name: string, raceType:RaceType): boolean{
+      // if(raceType === RaceType.Terrans){ //blue
+      //   let player = new Terrans(name);
+      // }
+      //
+      //
+      // if(raceType === RaceType.Xenos ){
+      //       let player = new Xenos(name);
+      // }
+      //
+      //
+      // if(raceType === RaceType.HadschHallas){
+      //     let player = new Xenos(HadschHallas);
+      // }
+      //
+      // if(raceType === RaceType.Nevlas){
+      //     let player = new Xenos(Nevlas);
+      // }
+      // return  this.addPlayer(player);
+
+
+     return true;
+    }
+
    public addPlayer(player: Player): boolean{
      if (this.players.length === Config.PlayerLimit){
        throw new Error(`Config.PlayerLimit (${Config.PlayerLimit}) reached`)
      } else {
-       // check for another player of the same race
-      //  console.log(`${this.players.length} players`)
-       let sameRace = this.players.findIndex(p => p.race === player.race)
-       if (player.race !== null && sameRace !== -1){
-          throw new Error(`a player already exists with that raceType: ${player.race}/${this.players[sameRace]}`)
+       //check for another player of the same race
+
+       let sameRace = this.players.findIndex(p => p.raceType === player.raceType)
+
+       if (player.raceType !== null && sameRace !== -1){
+          throw new Error(`a player already exists with that raceType: ${player.raceType}/${this.players[sameRace]}`)
        }
        this.players.push(player)
        player.pid = this.players.length - 1
@@ -153,6 +184,7 @@ class Game {
       }
      }
    }
+
 
    public endRound(){
      this.round++;
@@ -293,7 +325,9 @@ console.log( stack )
       const player = this.players[this.turn];
       let action = new Action(this, player, request)
       if(action.checkValid()){
-        action.doAction();
+         action.doAction();
+         this.nextTurn();
+
       }else{
         console.log("action failed") // send message to client player
         console.log(action.message);
@@ -335,6 +369,7 @@ console.log( stack )
       throw new Error(`getPlayer error for pid is error`)
 
     }
+
 
 
 

@@ -2,11 +2,15 @@ import * as Lab from 'lab'
 
 import { expect } from 'code'
 import {Game, GameStatus} from '../logic/Game'
-import {Player, RaceType} from '../logic/Player'
+import {Player, RaceType, CreatePlayer} from '../logic/Player'
 
 const lab = Lab.script()
 const { describe, it, before, beforeEach } = lab
 export { lab }
+
+//silence all console log
+console.log = function() {}
+
 
 function powerTest(p:Player, charge: number, bowl1:number, bowl2:number, bowl3:number){
     p.chargePower(charge)
@@ -49,30 +53,30 @@ describe('Basic Game Tests', () => {
 
     it('creates Player', () => {
         // a player should have no planets when it's first created
-        const p = new Player('jon', RaceType.Terrans)
+        const p = CreatePlayer('jon', RaceType.Terrans)
         expect(p.planets.length).to.equal(0)
     })
 
     it('creates Player without Race', () => {
         // a player should have no planets when it's first created
-        const p = new Player('jon', RaceType.Terrans)
+        const p = CreatePlayer('jon', RaceType.Terrans)
         expect(p.planets.length).to.equal(0)
     })
 
     it('adds Player to game', () => {
         // when you add a player to a game, the game should have one player
-        const p = new Player('jon', RaceType.Terrans)
+        const p = CreatePlayer('jon', RaceType.Terrans)
         g.addPlayer(p)
         expect(g.players.length).to.equal(1)
     })
 
     it(`doesn't allow adding five Players to game`, () => {
-        g.addPlayer(new Player('yousong', RaceType.Terrans))
-        g.addPlayer(new Player('nina', RaceType.Xenos))
-        g.addPlayer(new Player('yalei', RaceType.Lantids))
-        g.addPlayer(new Player('rong', RaceType.Gleens))
+        g.addPlayer(CreatePlayer('yousong', RaceType.Terrans))
+        g.addPlayer(CreatePlayer('nina', RaceType.Xenos))
+        g.addPlayer(CreatePlayer('yalei', RaceType.Lantids))
+        g.addPlayer(CreatePlayer('rong', RaceType.Gleens))
         try{
-            g.addPlayer(new Player('jon', RaceType.Ambas))
+            g.addPlayer(CreatePlayer('jon', RaceType.Ambas))
         }catch(e){
             expect(g.players.length).to.equal(4)
         }
@@ -80,9 +84,9 @@ describe('Basic Game Tests', () => {
     })
 
     it(`doesn't allow adding two Players of the same race`, () => {
-        g.addPlayer(new Player('yousong', RaceType.Terrans))
+        g.addPlayer(CreatePlayer('yousong', RaceType.Terrans))
         try{
-            g.addPlayer(new Player('nina', RaceType.Terrans))
+            g.addPlayer(CreatePlayer('nina', RaceType.Terrans))
         }catch(e){
             expect(g.players.length).to.equal(1)
         }
@@ -90,17 +94,17 @@ describe('Basic Game Tests', () => {
     })
 
     // it('can go to the next turn', () => {  // only can not test turn without add roundBooster
-    //     g.addPlayer(new Player('yousong', RaceType.Terrans));
-    //     g.addPlayer(new Player('rong', RaceType.Ambas));
-    //     g.addPlayer(new Player('yalei', RaceType.Baltaks));
+    //     g.addPlayer(CreatePlayer('yousong', RaceType.Terrans));
+    //     g.addPlayer(CreatePlayer('rong', RaceType.Ambas));
+    //     g.addPlayer(CreatePlayer('yalei', RaceType.Baltaks));
     //     g.nextTurn();
     //     expect(g.turn).to.equal(1);
     //     })
     //
     // it('can go back to the turn 0', () => {
-    //     g.addPlayer(new Player('yousong', RaceType.Terrans));
-    //     g.addPlayer(new Player('rong', RaceType.Ambas));
-    //     g.addPlayer(new Player('yalei', RaceType.Baltaks));
+    //     g.addPlayer(CreatePlayer('yousong', RaceType.Terrans));
+    //     g.addPlayer(CreatePlayer('rong', RaceType.Ambas));
+    //     g.addPlayer(CreatePlayer('yalei', RaceType.Baltaks));
     //     g.nextTurn();
     //     g.nextTurn();
     //     g.nextTurn();
@@ -118,7 +122,7 @@ describe('Basic Game Tests', () => {
 describe('Power tests', () => {
     let p: Player
     beforeEach(() => {
-        p = new Player('jon', RaceType.Terrans)
+        p = CreatePlayer('jon', RaceType.Terrans)
     })
     it('begins each player with the normal default power', ()=>{
         powerTest(p, 0, 2, 4, 0)

@@ -1,7 +1,7 @@
 import * as Lab from 'lab'
 
 import { expect } from 'code'
-import { Player, RaceType } from '../logic/Player';
+import { Player, CreatePlayer,  RaceType } from '../logic/Player';
 import { Benefit, Trigger, Value, Material } from '../logic/Benefit';
 import {Merchandise, Exchange} from '../logic/Exchange';
 import { Race } from '../logic/Race';
@@ -9,6 +9,7 @@ import { Race } from '../logic/Race';
 const lab = Lab.script()
 const { describe, it, before, beforeEach } = lab
 export { lab }
+
 
 function testExchange(exchangeType: Merchandise, player:Player, times: number, exchange: Exchange){
 
@@ -26,7 +27,7 @@ function testExchange(exchangeType: Merchandise, player:Player, times: number, e
 
     exchange.trade(player, give, get, times)
 
-    if(exchangeType === exchange.powerToGold){ 
+    if(exchangeType === exchange.powerToGold){
         //old value of item used to exchange = quantity given + new value a player has now
         expect(oldPower3).to.equal(exchangeType.numGive*times + player.power.bowl3)
         expect(exchangeType.numGet*times + oldPower1).to.equal(player.power.bowl1)
@@ -78,7 +79,7 @@ describe('Exchange Test', () => {
     let exchange: Exchange
 
     beforeEach(() => {
-        p = new Player('jon', RaceType.Terrans)
+        p = CreatePlayer('jon', RaceType.Terrans)
         exchange = new Exchange()
     })
 
@@ -101,7 +102,7 @@ describe('Exchange Test', () => {
     // })
     //
 
-    
+
     it('single time trade success', ()=>{
         p.gold = 10;
         p.power.bowl3 = 1;
@@ -127,4 +128,3 @@ describe('Exchange Test', () => {
 
 
 })
-

@@ -149,10 +149,19 @@ export class Hex
 
       }
 
-
+       // include center 
       public static spiral(center:Hex, radius:number){
         let results:Hex[] = []
         results.push(center)
+        for(let k = 1 ; k <= radius; k++){
+          results = results.concat(this.ring(center, k))
+        }
+        return results;
+      }
+
+      // not include center
+      public static rangeHexs(center:Hex, radius:number){
+        let results:Hex[] = []
         for(let k = 1 ; k <= radius; k++){
           results = results.concat(this.ring(center, k))
         }

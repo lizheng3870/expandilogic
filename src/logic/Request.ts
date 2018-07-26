@@ -39,6 +39,7 @@ class Request {
     public freePurchase: Merchandise  // for free action
 
 
+
 }
 
 export {Request, RequestType, UpgradeType}

@@ -9,7 +9,7 @@ import { Player } from "./Player";
 class Store{
     public pw7sci3: Merchandise; // id 0
     public pw5dig2: Merchandise; // id 1
-    public pw4ore2: Merchandise;        
+    public pw4ore2: Merchandise;
     public pw4gold7: Merchandise;
     public pw4sci2: Merchandise;
     public pw3dig1: Merchandise;
@@ -41,7 +41,7 @@ class Store{
         this.exchanges.push(this.pw3dig1);
         this.exchanges.push(this.pw3pw2);
     }
-    
+
     public trade(player: Player, give: Material, get: Material, times: number){
         var good = null;
         // find the type of trading
@@ -73,7 +73,7 @@ class Store{
 
         player.spendPower(totalGive);
         good.available = false;
-        
+
         if(get === Material.QIC) player.qic += totalGet;
         if(get === Material.Ore) player.ore += totalGet;
         if(get === Material.Gold) player.gold += totalGet;

@@ -220,10 +220,15 @@ class MapBoard {
   public hasNeighboring(hex: Hex, playerID: number ){
     let neighborsHex = Hex.spiral(hex, 2); // distance = 2 as neighbor
     for(let h of neighborsHex){
-        const planet = this.getPlanet(h);
-        if(planet !==null && planet.playerID >= 0 && planet.playerID !== playerID){
-          return true;
+        if(this.hasPlanet(h)){
+          const planet = this.getPlanet(h);
+          if(planet !==null && planet.playerID >= 0 && planet.playerID !== playerID){
+            return true;
+          }
+
         }
+
+
     }
 
     return false;

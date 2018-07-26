@@ -1,6 +1,6 @@
 import {Game} from "./Game";
 import {MapBoard} from "./MapBoard";
-import {Player} from "./Player";
+import {Player, CreatePlayer} from "./Player";
 //import {Hex} from "./Hex";
 import { Request , UpgradeType} from './Request'
 import { StructureType, StructureStatus} from './Structure'
@@ -223,7 +223,6 @@ class Action {
 
  public checkResearch(){
    if(this.player.science < 4)return false;
-   //todo talk with yalei
    return true;
 
  }
@@ -479,7 +478,7 @@ public doAction(){
   }
 
   public Research(){
-    //todo
+  //  this.game.techBoard.update(line, this.player)
   }
 
   public powerAndQIC(){

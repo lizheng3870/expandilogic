@@ -2,7 +2,7 @@
 import * as Lab from 'lab'
 
 import { expect } from 'code'
-import { Player , RaceType} from '../logic/Player';
+import { Player , CreatePlayer, RaceType} from '../logic/Player';
 import { Benefit, Trigger, Value, Material } from '../logic/Benefit';
 import TechBoard from '../logic/TechBoard';
 
@@ -34,7 +34,7 @@ describe('Benefit Test', () => {
     let b2: Benefit;
     // let b3: Benefit;
     beforeEach(() => {
-        p = new Player('jon', RaceType.Terrans);
+        p =  CreatePlayer('jon', RaceType.Terrans);
         b1 = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Gold)]);
         b2 = new Benefit(Trigger.Now, null, null, [new Value(1, Material.Ore)]);
         // b3 = new Benefit(Trigger.Income, null, null, [new Value(3, Material.QIC)]);
@@ -101,8 +101,8 @@ describe('tech test', () => {
     let p: Player
     let techboard: TechBoard;
     beforeEach(() => {
-        console.log("tech test begin");
-        p = new Player('jon', RaceType.Terrans);
+        //console.log("tech test begin");
+        p = CreatePlayer('jon', RaceType.Terrans);
         expect(p.techs[0]).to.equal(0);
         expect(p.techs[1]).to.equal(0);
         expect(p.techs[2]).to.equal(0);
@@ -129,7 +129,7 @@ describe('tech test', () => {
     })
 
     it("has the right effect of dig tech", () => {
-        console.log("the dig cost was: " + p.digCost);
+        //console.log("the dig cost was: " + p.digCost);
         techboard.update(0, p);
         expect(p.ore).to.equal(6);
         techboard.update(0, p);
