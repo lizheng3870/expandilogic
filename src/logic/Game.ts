@@ -10,9 +10,9 @@ import {Xenos} from './Races/Xenos'
 import {Nevlas} from './Races/Nevlas'
 import {HadschHallas} from './Races/HadschHallas'
 import {Benefit} from './Benefit'
-import {Request, RequestType} from './Request'
+import {Request, RequestType, TechLaneType} from './Request'
 import {TypeState} from 'TypeState'
-import {Action} from './Action'
+import {Action, ActionType} from './Action'
 import {StructureStatus} from './Structure'
 import {Store} from './Store'
 
@@ -329,7 +329,13 @@ console.log( stack )
       let action = new Action(this, player, request)
       if(action.checkValid()){
          action.doAction();
-         this.nextTurn();
+         if(request.actionType === ActionType.Free || request.actionType === ActionType.Special ||
+            (request.actionType === ActionType.PowerAndQIC && request.techLane === TechLaneType.Dig ) ){
+              // can not to next turn
+            }else{
+               this.nextTurn();
+            }
+
 
       }else{
         console.log("action failed") // send message to client player

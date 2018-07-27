@@ -25,6 +25,8 @@ class Merchandise{
   }
 }
 
+
+
 /**
  * Exchange has nine kinds of Merchandise;
  * this class will be initialized in the Action class;
@@ -65,6 +67,46 @@ class Exchange{
   }
 
   /**
+   * the function to check a particular times of trade;
+   * @param player the player who does the trade;
+   * @param give the material given out;
+   * @param get the material get;
+   * @param times the times of trade
+   */
+  public checkTrade(player: Player, give: Material, get: Material, times: number){
+    var good = this.getGood(give, get);
+    // find the type of trading
+    if(give === Material.Power && get === Material.Power){
+        return player.power.bowl2 >= times;
+    }
+
+    if(good === null)return false;
+
+    var totalGive = good.numGive * times;
+
+    //check if you have enough resources
+    if(!this.checkResources(player, give, totalGive)){
+        return false;
+    }else{
+      return true;
+    }
+  }
+
+  public getGood(give: Material, get: Material){
+    var good = null;
+    for(let i = 0; i < this.exchanges.length; i++){
+      if(this.exchanges[i].give === give && this.exchanges[i].get === get){
+        good = this.exchanges[i];
+        break;
+      }
+    }
+    return good;
+  }
+
+
+
+
+  /**
    * the function to make a particular times of trade;
    * @param player the player who does the trade;
    * @param give the material given out;
@@ -72,14 +114,24 @@ class Exchange{
    * @param times the times of trade
    */
   public trade(player: Player, give: Material, get: Material, times: number){
-    var good = null;
-    // find the type of trading
-    for(let i = 0; i < this.exchanges.length; i++){
-      if(this.exchanges[i].give === give && this.exchanges[i].get === get){
-        good = this.exchanges[i];
-        break;
-      }
+
+    // special case for Discard one power token from area II of
+    //  your power cycle to move one power token from area II to area III.
+    if(give === Material.Power && get === Material.Power){
+        let amount = times;
+        player.power.bowl2 -= amount;
+        if(player.power.bowl2 < amount){
+            amount = player.power.bowl2;
+        }
+
+        player.power.bowl2 -= amount;
+        player.power.bowl3 += amount;
+        return ;
     }
+
+
+
+    var good = this.getGood(give, get);
 
     if(good === null) {// if not find the type of trading
       console.log("merchandise not found");

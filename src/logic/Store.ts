@@ -53,37 +53,48 @@ class Store{
         this.exchanges.push(this.pw3pw2);
     }
 
+    public getGood(type : StoreMerchandiseType){
+            let good = null;
+            // find the type of trading
+            if(type === StoreMerchandiseType.Pw7sci3){
+                good = this.pw7sci3
+            }
+
+            if(type === StoreMerchandiseType.Pw5dig2){
+                good = this.pw5dig2
+            }
+
+            if(type === StoreMerchandiseType.Pw4ore2){
+                good = this.pw4ore2
+            }
+
+            if(type === StoreMerchandiseType.Pw4gold7){
+                good = this.pw4gold7
+            }
+
+            if(type === StoreMerchandiseType.Pw4sci2){
+                good = this.pw4sci2
+            }
+
+
+            if(type === StoreMerchandiseType.Pw3dig1){
+                good = this.pw3dig1
+            }
+
+           // last case
+            good = this.pw3pw2
+
+
+            return good;
+
+    }
+
     public checkTrade(player: Player, type : StoreMerchandiseType){
-      let totalGive = 10000;  // must call if
-      if(type === StoreMerchandiseType.Pw7sci3){
-        totalGive = 7;
-      }
+       // must call if
+      let good  = this.getGood(type)
+      let totalGive = good.numGive;
 
-      if(type === StoreMerchandiseType.Pw5dig2){
-        totalGive = 5;
-      }
-
-      if(type === StoreMerchandiseType.Pw4ore2){
-        totalGive = 2;
-      }
-
-      if(type === StoreMerchandiseType.Pw4gold7){
-        totalGive = 4;
-      }
-
-      if(type === StoreMerchandiseType.Pw4sci2){
-        totalGive = 4;
-      }
-
-      if(type === StoreMerchandiseType.Pw3dig1){
-        totalGive = 3;
-      }
-
-      if(type === StoreMerchandiseType.Pw3pw2){
-        totalGive = 3;
-      }
-
-      return player.power.bowl3 > totalGive;
+      return player.power.bowl3 > totalGive && good.available;
 
     }
 

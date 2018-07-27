@@ -3,6 +3,7 @@ import {StructureType } from './Structure'
 import {ActionType } from './Action'
 import {Merchandise} from './Exchange'
 import {StoreMerchandiseType} from './Store'
+import {Material} from './Benefit'
 
 
 
@@ -48,6 +49,8 @@ class Request {
     public specialTokenType:TokenType
     public freePurchase: Merchandise  // for free action
     public storeMerchandiseType: StoreMerchandiseType // Power and QIC
+    public freeExchangeItems: Material[]   //
+    public freeExchangeTimes:number //
 
 
 

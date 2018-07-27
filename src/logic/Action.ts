@@ -5,6 +5,7 @@ import {Player, CreatePlayer} from "./Player";
 import { Request , UpgradeType} from './Request'
 import { StructureType, StructureStatus} from './Structure'
 import {PlanetType} from './Planet'
+import {Material} from './Benefit'
 
 /**
  * Types of actions that a player can make on his turn
@@ -237,8 +238,9 @@ public checkSpecial(){
 }
 
 public checkFree(){
-  //todo
-  return true;
+  return this.game.exchange.checkTrade(this.player, this.request.freeExchangeItems[0],
+                           this.request.freeExchangeItems[1],
+                           this.request.freeExchangeTimes);
 
 }
 
@@ -494,8 +496,9 @@ public doAction(){
   }
 
   public free(){
-    //todo
-    return true;
+    this.game.exchange.trade(this.player, this.request.freeExchangeItems[0],
+                             this.request.freeExchangeItems[1],
+                             this.request.freeExchangeTimes);
 
   }
 

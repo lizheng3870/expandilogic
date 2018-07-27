@@ -8,6 +8,7 @@ import {Hex} from '../logic/Hex'
 import {ActionType} from '../logic/Action'
 import {StructureType} from '../logic/Structure'
 import {StoreMerchandiseType} from '../logic/Store'
+import {Material} from '../logic/Benefit'
 
 const lab = Lab.script()
 const { describe, it, before } = lab
@@ -245,14 +246,65 @@ describe('Player Actions Tests', () => {
       expect(player.science).to.equal(6)
       expect(player.power.bowl3).to.equal(1)
       expect(player.power.bowl1).to.equal(9)
-      //
-      //
-      // expect(player.name).to.equal("yalei")
-      // expect(g.turn).to.equal(0)
+      expect(g.turn).to.equal(0)
 
 
 
     });
 
+
+    it('yousong player(pid:0) send free action one ore to one gold request to Game', () => {
+      let request = new Request()
+      request.type = RequestType.Action
+      request.actionType = ActionType.Free
+      request.freeExchangeItems = [Material.Ore, Material.Gold]
+      request.freeExchangeTimes = 1;
+      request.pid = 0;
+
+
+     let player = g.getPlayer(request.pid);
+     // change science
+
+      // default value
+      expect(player.ore).to.equal(3)
+      expect(player.gold).to.equal(13)
+      g.processPlayerRequest(request)
+      //
+      expect(player.ore).to.equal(2)
+      expect(player.gold).to.equal(14)
+
+      request.freeExchangeItems = [Material.Power, Material.Power]
+      request.freeExchangeTimes = 2;
+      request.pid = 0;
+
+
+    });
+
+
+    it('yousong player(pid:0) send free action discard bowl2 power to charge bowl2 => bowl3 request to Game', () => {
+      let request = new Request()
+      request.type = RequestType.Action
+      request.actionType = ActionType.Free
+      request.freeExchangeItems = [Material.Power, Material.Power]
+      request.freeExchangeTimes = 2;
+      request.pid = 0;
+
+      let player = g.getPlayer(request.pid);
+
+
+
+      // default value
+      expect(player.power.bowl1).to.equal(2)
+      expect(player.power.bowl2).to.equal(4)
+      expect(player.power.bowl3).to.equal(0)
+      g.processPlayerRequest(request)
+      //
+      expect(player.power.bowl1).to.equal(2)
+      expect(player.power.bowl2).to.equal(0)
+      expect(player.power.bowl3).to.equal(2)
+
+
+
+    });
 
 });

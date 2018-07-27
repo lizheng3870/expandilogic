@@ -9,7 +9,7 @@ const { describe, it, before, beforeEach } = lab
 export { lab }
 
 //silence all console log
-console.log = function() {}
+//console.log = function() {}
 
 
 function powerTest(p:Player, charge: number, bowl1:number, bowl2:number, bowl3:number){
