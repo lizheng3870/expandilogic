@@ -14,6 +14,7 @@ import {Request, RequestType} from './Request'
 import {TypeState} from 'TypeState'
 import {Action} from './Action'
 import {StructureStatus} from './Structure'
+import {Store} from './Store'
 
 
 
@@ -52,6 +53,7 @@ class Game {
     public roundBoosters:RoundBooster[]
     public stateMachine:TypeState.FiniteStateMachine<GameStatus>
     public firstStructuresRound: number
+    public store : Store // techBoard bottom store (Power and QIC)
     // 0 : not into setup build first Structures
     // 1 normal:  0 1 2 3
     // 2 revserse:  3 2 1 0
@@ -69,6 +71,7 @@ class Game {
      this.roundBoosters = [];
      this.loadRoundBooster();
      this.firstStructuresRound = 0;
+     this.store = new Store();
      this.stateMachine = new TypeState.FiniteStateMachine<GameStatus>(GameStatus.Open);
      this.stateMachine.from(GameStatus.Open).to(GameStatus.Setup)
      this.stateMachine.from(GameStatus.Setup).to(GameStatus.Playing)

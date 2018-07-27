@@ -2,6 +2,17 @@ import {Merchandise, Exchange} from './Exchange';
 import { Material } from "./Benefit";
 import { Player } from "./Player";
 
+enum StoreMerchandiseType{
+  Pw7sci3, // id 0
+  Pw5dig2, // id 1
+  Pw4ore2,
+  Pw4gold7,
+  Pw4sci2,
+  Pw3dig1,
+  Pw3pw2,
+  // missing 3 QIC item
+}
+
 /**
  * Store.ts
  * this class is the store on the tech board. It gives a discount on regular exchange
@@ -42,14 +53,80 @@ class Store{
         this.exchanges.push(this.pw3pw2);
     }
 
-    public trade(player: Player, give: Material, get: Material, times: number){
+    public checkTrade(player: Player, type : StoreMerchandiseType){
+      let totalGive = 10000;  // must call if
+      if(type === StoreMerchandiseType.Pw7sci3){
+        totalGive = 7;
+      }
+
+      if(type === StoreMerchandiseType.Pw5dig2){
+        totalGive = 5;
+      }
+
+      if(type === StoreMerchandiseType.Pw4ore2){
+        totalGive = 2;
+      }
+
+      if(type === StoreMerchandiseType.Pw4gold7){
+        totalGive = 4;
+      }
+
+      if(type === StoreMerchandiseType.Pw4sci2){
+        totalGive = 4;
+      }
+
+      if(type === StoreMerchandiseType.Pw3dig1){
+        totalGive = 3;
+      }
+
+      if(type === StoreMerchandiseType.Pw3pw2){
+        totalGive = 3;
+      }
+
+      return player.power.bowl3 > totalGive;
+
+    }
+
+
+    public  trade(player: Player, type : StoreMerchandiseType){
         var good = null;
+        var get = null;
+
         // find the type of trading
-        for(let i = 0; i < this.exchanges.length; i++){
-            if(this.exchanges[i].give === give && this.exchanges[i].get === get){
-                good = this.exchanges[i];
-                break;
-            }
+        if(type === StoreMerchandiseType.Pw7sci3){
+            good = this.pw7sci3
+            get = Material.Science
+        }
+
+        if(type === StoreMerchandiseType.Pw5dig2){
+            good = this.pw5dig2
+            get = Material.Dig
+        }
+
+        if(type === StoreMerchandiseType.Pw4ore2){
+            good = this.pw4ore2
+            get = Material.Ore
+        }
+
+        if(type === StoreMerchandiseType.Pw4gold7){
+            good = this.pw4gold7
+            get = Material.Gold
+        }
+
+        if(type === StoreMerchandiseType.Pw4sci2){
+            good = this.pw4sci2
+            get = Material.Science
+        }
+
+
+        if(type === StoreMerchandiseType.Pw3dig1){
+            good = this.pw3dig1
+            get = Material.Dig
+        }
+
+        if(type === StoreMerchandiseType.Pw3pw2){
+            good = this.pw3pw2
+            get = Material.ExtraPower
         }
 
         if(good === null) {// if not find the type of trading
@@ -62,8 +139,8 @@ class Store{
             return;
         }
 
-        var totalGive = good.numGive * times;
-        var totalGet = good.numGet * times;
+        var totalGive = good.numGive ;
+        var totalGet = good.numGet ;
 
         //check if you have enough resources
         if(player.power.bowl3 < totalGive){
@@ -83,4 +160,4 @@ class Store{
     }
 }
 
-export {Merchandise, Exchange}
+export {Merchandise, Store, StoreMerchandiseType}

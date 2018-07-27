@@ -433,10 +433,10 @@ public setPlanetType(playerPlanet: PlanetType) {
       return false;
   }
 
-  // terraforming will cost ore according tech level
+  // terraforming will cost ore according tech level Dig Lane
   public terraformingCost(){
-    //// TODO:
-    return 3;
+    //
+    return this.digCost;
   }
 
   public getAvalibleMine(){

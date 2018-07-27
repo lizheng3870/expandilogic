@@ -70,7 +70,7 @@ class Action {
     }
 
     if(this.request.actionType === ActionType.PowerAndQIC){
-      return this.checkPowerAndQIC()
+       return this.checkPowerAndQIC()
     }
 
     if(this.request.actionType === ActionType.Special){
@@ -228,8 +228,7 @@ class Action {
  }
 
 public checkPowerAndQIC(){
-  //todo
-  return true;
+  return this.game.store.checkTrade(this.player, this.request.storeMerchandiseType)
 }
 
 public checkSpecial(){
@@ -261,28 +260,29 @@ public doAction(){
 
       if(this.request.actionType === ActionType.BuildMine) {
         this.buildMine();
-      }
-
-      if(this.request.actionType === ActionType.Gaia) {
+      }else if(this.request.actionType === ActionType.Gaia) {
         this.startGaiaProject();
-      }
-
-      if(this.request.actionType === ActionType.Upgrade){
+      }else if(this.request.actionType === ActionType.Upgrade){
         this.updateBuilding();
-      }
-
-      if(this.request.actionType === ActionType.Federate){
+      }else if(this.request.actionType === ActionType.Federate){
         this.FormFederation();
-      }
-
-      if(this.request.actionType === ActionType.Federate){
-        this.FormFederation();
-      }
-
-
-      if(this.request.actionType === ActionType.Research){
+      }else if(this.request.actionType === ActionType.Research){
         this.Research();
+      }else if(this.request.actionType === ActionType.PowerAndQIC){
+        this.powerAndQIC();
+      }else if(this.request.actionType === ActionType.Special){
+        this.special();
+      }else if(this.request.actionType === ActionType.Free){
+        this.free();
+      }else if(this.request.actionType === ActionType.Pass){
+        this.pass();
+      }else{
+        console.trace()
+        console.log("error can not find action type")
       }
+
+
+
 
 
   }
@@ -478,11 +478,13 @@ public doAction(){
   }
 
   public Research(){
-  //  this.game.techBoard.update(line, this.player)
+
+    let line : number = this.request.techLane
+    this.game.techBoard.update(line, this.player)
   }
 
   public powerAndQIC(){
-    //todo
+      this.game.store.trade(this.player, this.request.storeMerchandiseType)
   }
 
 
