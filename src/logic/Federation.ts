@@ -21,10 +21,16 @@ class Federation {
   public benefit: Benefit
   public planets: Planet[]
   public satellites: Hex[]
+  public feds:Federations
+  public usables: Federation[]//6 usable federation, 1 is unavailable. refer Federations class below
+  public notUsable : Federation
 
   constructor(fedName: Fed){
     //total 7 kinds of federation
     // this.planets = planets;
+
+    this.notUsable = this.feds.getSpecial();
+    this.usables = this.feds.getUsable();
 
     if(fedName === Fed.vp12){
       this.fed = fedName;
@@ -57,7 +63,34 @@ class Federation {
     }
   }
 
-  
+  /**
+   * select planets, then form a federation.
+   * TODO: mark planets as used in a federation, so that they can't be used in a 2nd federation
+   * TODO: satellites?
+   * @param planets1 
+   * @param fedName 
+   */
+  public formFederation(planets1:Planet[], fedName:Fed){
+    this.addPlanets(planets1);
+    if(this.getTotalPower() >= 7){
+      for(let i = 0; i < this.usables.length; i++){
+        if(fedName === this.notUsable.fed){
+          return "unable to form federation of type " + fedName + "because it's the special one";
+        }
+        if(fedName === this.usables[i].fed){
+          var myFed = new Federation(fedName);
+        }
+      }
+    }
+    return "unable to form federation because power < 7" 
+  }
+
+  //add planets used in a federation
+  public addPlanets(planets1:Planet[]){
+    for(let i = 0; i < planets1.length; i++){
+      this.planets.push(planets1[i]);
+    }
+  }
    // use the federation to go into the top spot on a tech track
   public spend (){
     if (this.used){
@@ -123,6 +156,10 @@ class Federations {
 
   }
 
+  // at the start of each round, 1 type of federation gets put away. other 6 types are available for use
+  public getUsable(){
+    return this.sixNormal;
+  }
   /**
    * return the special one 
    */
