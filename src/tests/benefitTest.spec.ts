@@ -106,7 +106,7 @@ describe('tech test', () => {
         expect(p.techs[0]).to.equal(0);
         expect(p.techs[1]).to.equal(0);
         expect(p.techs[2]).to.equal(0);
-        expect(p.techs[3]).to.equal(0);
+        expect(p.techs[3]).to.equal(1);
         expect(p.techs[4]).to.equal(0);
         expect(p.techs[5]).to.equal(0);
         techboard = new TechBoard();
@@ -175,7 +175,6 @@ describe('tech test', () => {
 
     it('has right effect of Gaia tech', () => {
         // console.log("the terran QIC was: " + p.qic);
-        techboard.update(3,p);
         expect(p.gaiaformer).to.equal(1);
         expect(p.gaiaFormingCost).to.equal(6);
         techboard.update(3,p);
