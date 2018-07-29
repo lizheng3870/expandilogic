@@ -1,9 +1,9 @@
-
 import {Planet} from './Planet'
 import {Hex} from './Hex'
 
 import {Benefit, Count, Trigger, Material, Value} from './Benefit'
 import {MapBoard} from './MapBoard'
+import { Player } from './Player';
 
 enum Fed{
   vp12, // id 0
@@ -21,16 +21,11 @@ class Federation {
   public benefit: Benefit
   public planets: Planet[]
   public satellites: Hex[]
-  public feds:Federations
-  public usables: Federation[]//6 usable federation, 1 is unavailable. refer Federations class below
-  public notUsable : Federation
+  public feds: Federations
 
   constructor(fedName: Fed){
     //total 7 kinds of federation
     // this.planets = planets;
-
-    this.notUsable = this.feds.getSpecial();
-    this.usables = this.feds.getUsable();
 
     if(fedName === Fed.vp12){
       this.fed = fedName;
@@ -70,17 +65,10 @@ class Federation {
    * @param planets1 
    * @param fedName 
    */
-  public formFederation(planets1:Planet[], fedName:Fed){
+  public formFederation(planets1:Planet[], player: Player){
     this.addPlanets(planets1);
     if(this.getTotalPower() >= 7){
-      for(let i = 0; i < this.usables.length; i++){
-        if(fedName === this.notUsable.fed){
-          return "unable to form federation of type " + fedName + "because it's the special one";
-        }
-        if(fedName === this.usables[i].fed){
-          var myFed = new Federation(fedName);
-        }
-      }
+      player.getBenefit(this.benefit);
     }
     return "unable to form federation because power < 7" 
   }
@@ -138,13 +126,14 @@ class Federation {
 class Federations {
   public specialOne: Federation; // this one is on the techBoard as a special level 5 benefit in dig technology
   public sixNormal: Federation[]; // this is the normal selectable
+  public tempArr: number[];
 
   constructor(){
-    let tempArr = [0, 1, 2, 3, 4, 5];
-    tempArr.sort(function(){ return 0.5 - Math.random() });
+    this.tempArr = [0, 1, 2, 3, 4, 5];
+    this.tempArr.sort(function(){ return 0.5 - Math.random() });
 
     // assign the special one;
-    let tempNum = tempArr[5];
+    let tempNum = this.tempArr[5];
     let fed = this.hashFed(tempNum);
     if(fed != null) this.specialOne = new Federation(fed);
 
@@ -154,6 +143,19 @@ class Federations {
       if(fed != null) this.sixNormal[i] = new Federation(fed);
     }
 
+  }
+
+  /**
+   * print out the federations
+   */
+  public printFed(){
+    for(let i = 0; i < 5; i++){
+      console.log("index: " + i + " effect: " + this.sixNormal[i].getFedName);
+    }
+  }
+
+  public getFederation(planets: Planet[], index: number, player: Player){
+    this.sixNormal[index].formFederation(planets, player);
   }
 
   // at the start of each round, 1 type of federation gets put away. other 6 types are available for use

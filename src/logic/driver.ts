@@ -1,26 +1,6 @@
-// function readCommandLine(text: String): PromiseLike<string> {  
-//     return new Promise((resolve, reject) => {    
-//         var result = "";    
-//         console.log(text);    
-//         process.stdin.setEncoding('utf8');    
-//         var n;    
-//         process.stdin.on('readable', function () {      
-//             n = process.stdin.read();      
-//             if (n !== null) {        
-//                 result = n.toString();              
-//                 process.exit();      
-//             }    
-//         });  
-//     })
-// }
-// async function main() {  
-//     var out = await readCommandLine("please enter the number of players");  
-//     console.log("the number is: " + out);  
-//     var personCount = await readCommandLine('plz enter person number');  
-//     console.log('xxx' + personCount);
-// }
-
-// main();
+import {Player, CreatePlayer, RaceType} from '../logic/Player'  
+import { Game } from './Game';
+ 
 
 const readline = require('readline');
 
@@ -39,10 +19,15 @@ function readCommandLine(text: String): PromiseLike<string> {
 }
 
 async function main() {
-    var out = await readCommandLine("please enter the number of players");
-    console.log("the number is: " + out);
-    var personCount = await readCommandLine('plz enter person number');
-    console.log('xxx' + personCount);
+    // var out = await readCommandLine("please enter the number of players");
+    // console.log("the number is: " + out);
+    // var personCount = await readCommandLine('plz enter person number');
+    // console.log('xxx' + personCount);
+    let g = new Game(1)
+    g.addPlayer(CreatePlayer('yousong', RaceType.Terrans))//blue
+    g.addPlayer(CreatePlayer('nina', RaceType.Xenos))//Yellow
+    g.addPlayer(CreatePlayer('yalei', RaceType.Taklons)) //brown
+    g.addPlayer(CreatePlayer('rong', RaceType.HadschHallas)) //red
     rl.close();
     process.exit();
 }

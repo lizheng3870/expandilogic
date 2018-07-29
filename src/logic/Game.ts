@@ -15,6 +15,7 @@ import {TypeState} from 'TypeState'
 import {Action, ActionType} from './Action'
 import {StructureStatus} from './Structure'
 import {Store} from './Store'
+import { Federations } from './Federation';
 
 
 
@@ -48,6 +49,7 @@ class Game {
     public board: MapBoard
     public techBoard: TechBoard
     public scoringBoard:ScoringBoard
+    public federations: Federations
     public benefits: Benefit[] = []
     public exchange: Exchange
     public roundBoosters:RoundBooster[]
@@ -69,6 +71,7 @@ class Game {
      this.exchange = new Exchange();
      this.scoringBoard = new ScoringBoard();
      this.roundBoosters = [];
+     this.federations = new Federations();
      this.loadRoundBooster();
      this.firstStructuresRound = 0;
      this.store = new Store();
