@@ -103,7 +103,11 @@ class Federation {
   public getTotalPower(): number{
     let sum = 0;
     this.planets.forEach(p => {
-      sum += p.type;
+      if(p.structure === null){
+        console.log("can not put an empty planet into federation");
+        return;
+      }
+      sum += p.structure.value;
     })
     return sum;
   }

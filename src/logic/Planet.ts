@@ -1,4 +1,4 @@
-import {StructureType} from "./Structure"
+import {Structure, StructureType} from "./Structure"
 import {Player} from "./Player"
 import {Hex as Location} from "./Hex"
 
@@ -17,7 +17,8 @@ enum PlanetType{
 }
 
 class Planet{
-  public building: StructureType // change from StructureType[] to StructureType without concern specail race.
+  public building: StructureType | null = null // change from StructureType[] to StructureType without concern specail race.
+  public structure: Structure | null
   public type : PlanetType
   public loc : Location
   public playerID: number
@@ -52,6 +53,18 @@ class Planet{
      return distance
   }
 
+  public onStructure(structure: Structure){
+    if(this.structure != null){
+      console.log("already built on this planet")
+    }
+    this.structure = structure;
+  }
+
+  public offStructure(){
+    this.structure = null;
+  }
 }
+
+
 
 export {Planet, PlanetType}
