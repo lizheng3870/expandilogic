@@ -6,7 +6,7 @@
   "scripts": {
     "pretest": "npm run compile",
     "build": "react-scripts-ts build",
-    "compile": "rm -r dist/*; tsc",
+    "compile": "tsc",
     "test": "lab -l --timeout 10000 -S ./dist/tests",
     "eject": "react-scripts-ts eject"
   },
@@ -22,6 +22,7 @@
   "homepage": "https://github.com/jonrahoi/expandilogic#readme",
   "dependencies": {
     "@types/code": "^4.0.4",
+    "@types/node": "^8.0.4",
     "code": "^5.2.0",
     "lab": "^15.5.0",
     "prettier": "^1.13.6",
@@ -30,5 +31,7 @@
     "typescript": "^2.9.2",
     "typestate": "^1.0.6"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "ts-node": "^7.0.0"
+  }
 }
