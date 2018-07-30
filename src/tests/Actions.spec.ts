@@ -302,6 +302,7 @@ describe('Player Actions Tests', () => {
       expect(player.power.bowl1).to.equal(2)
       expect(player.power.bowl2).to.equal(0)
       expect(player.power.bowl3).to.equal(2)
+      g.saveGame();
 
 
 

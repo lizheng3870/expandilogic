@@ -17,6 +17,8 @@ import {StructureStatus} from './Structure'
 import {Store} from './Store'
 import { Federations } from './Federation';
 
+import firebase from './firebase';
+
 
 
 
@@ -379,6 +381,19 @@ console.log( stack )
           if(player.pid === pid)return player;
       }
       throw new Error(`getPlayer error for pid is error`)
+
+    }
+
+    public saveGame(){
+      const itemsRef = firebase.database().ref('test');
+    //  itemsRef.set({"test":"I am a good person"});
+       //console.log("I am a good person")
+
+      itemsRef.on('value', (snapshot) => {
+      let value = snapshot.val();
+       console.log(value.test)
+
+      });
 
     }
 
