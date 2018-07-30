@@ -68,7 +68,7 @@ class Federation {
   public formFederation(planets1:Planet[], player: Player){
     this.addPlanets(planets1);
     if(this.getTotalPower() >= 7){
-      player.getBenefit(this.benefit);
+      player.getFedrationBenefit(this.benefit);
     }
     return "unable to form federation because power < 7" 
   }

@@ -10,7 +10,7 @@ export class Terrans extends Race{
         super(name);
         this.setRaceType(RaceType.Terrans);
         this.setPlanetType(PlanetType.Blue);
-        this.getBenefit(new Benefit(Trigger.Now, null, null, [new Value(1, Material.GaiaFormer)]));
+        this.getTechBenefit(new Benefit(Trigger.Now, null, null, [new Value(1, Material.GaiaFormer)]));
         this.techs = [0,0,0,1,0,0];
 
 0

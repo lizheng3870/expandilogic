@@ -24,7 +24,7 @@ class Tech{
     if(this.level === 3){
       //player.chargePower(3);
       const b1 = new Benefit(Trigger.Now, null, null, [new Value(3, Material.Power)]);
-      player.getBenefit(b1);
+      player.getTechBenefit(b1);
     }
 
     let b2 = null;
@@ -74,7 +74,7 @@ class Tech{
       if(this.level === 5) {
         b2 = new Benefit(Trigger.Now, Count.Gaia, null, [new Value(1, Material.VP)]);
         const b3 = new Benefit(Trigger.Now, null, null, [new Value(4, Material.VP)]);
-        player.getBenefit(b3);
+        player.getTechBenefit(b3);
       }
     }
 
@@ -95,7 +95,7 @@ class Tech{
       if(this.level === 5){
         b2 = new Benefit(Trigger.Income, null, null, [new Value(-2, Material.Ore), new Value(-4, Material.Gold), new Value(-4, Material.Power)]);
         const b3 = new Benefit(Trigger.Now, null, null, [new Value(3, Material.Ore), new Value(6, Material.Gold), new Value(6, Material.Power)]);
-        player.getBenefit(b3);
+        player.getTechBenefit(b3);
       }
     }
 
@@ -108,12 +108,12 @@ class Tech{
       if(this.level === 5){
         b2 = new Benefit(Trigger.Income, null, null, [new Value(-4, Material.Science)]);
         const b3 = new Benefit(Trigger.Now, null, null, [new Value(9, Material.Science)]);
-        player.getBenefit(b3);
+        player.getTechBenefit(b3);
       }
     }
     if(b2 !== null) {
       // console.log("tech benefit is passing");
-      player.getBenefit(b2);
+      player.getTechBenefit(b2);
     }
     // console.log("tech benefit is null");
 

@@ -1,7 +1,7 @@
 import {PlanetType, Planet} from './Planet'
 import Tech from './Tech'
 import {Federation} from './Federation';
-import { Benefit, Trigger, BuildingType, Value, Material } from "./Benefit";
+import { Benefit, Trigger, BuildingType, Value, Material, Count } from "./Benefit";
 // from player class
 
 import TechTiles from './TechTiles'
@@ -10,6 +10,7 @@ import {BuildingLib} from './BuildingLib'
 import {Hex} from './Hex'
 import {StructureStatus} from './Structure'
 import {MapBoard} from './MapBoard'
+import { count } from '../../node_modules/@types/code';
 
 export enum RaceType {
   Terrans,
@@ -76,11 +77,22 @@ export class Race {
     public gaiaformer: number;  // How many gaiaformers do I have
     public federations: Federation[]; // My Federations
     public numGaia: number; // How many gaia planets have a conquered
+    public sectors: number = 0;
+    public satellites: number = 0;
 
     //Benefits not from the buildBoard
-    public nowBenefits: Benefit[];
-    public incomeBenefits: Benefit[];
-    public specialBenefits: Benefit[];
+    // public nowBenefits: Benefit[];
+    // public incomeBenefits: Benefit[];
+    // public specialBenefits: Benefit[];
+
+    //Benefit from all the board
+    public techBenefits: Benefit[];
+    public techTileBenefits: Benefit[];
+    public roundTileBenefits: Benefit[];
+    public roundBoosterBenefits: Benefit[];
+    public federationBenefits: Benefit[];
+
+
 
     // This buildBoard holds the benefits that are unlocked at each step
     public buildBoard : BuildBoard = {
@@ -106,17 +118,6 @@ export class Race {
     public range: number; // basic range, can be increased by upgrading the tech of range and will not decrease;
     public specialDig: number;
     public specialRange: number; // temporary range, increased by spend QIC or special power, will go back to 0 every new turn;
-
-    //Tech level of player
-    //Tech level array form - EITHER
-    // public techs: Tech[];
-    // Tech level value form - OR
-    public dig: number;
-    public nav: number;
-    public qicTech: number;
-    public gaia: number;
-    public resources: number;
-    public knowledge: number;
 
 
     // variable from previous player currentPlayerPass  public name: string
@@ -162,8 +163,14 @@ export class Race {
   this.techTiles = [];
   this.federations = [];
   this.pid =  -1;  // pid is player id for example 0 1 2 3
-  this.nowBenefits = [];
-  this.incomeBenefits = [];
+  // this.nowBenefits = [];
+  // this.incomeBenefits = [];
+  this.techBenefits = [];
+  this.techTileBenefits = [];
+  this.roundTileBenefits = [];
+  this.roundBoosterBenefits = [];
+  this.federationBenefits = [];
+
 //  this.planetType = this.getPlantType(raceType);
   this.buildings = new BuildingLib(this.raceType);
 
@@ -216,32 +223,32 @@ private addStations() {
 
 
 
-/**
- * Adds now benefits collected during game play
- * Note: Not on buildBoard
- * @param nowBenefit
- */
-public addNowBenefits(nowBenefit: Benefit) {
-    this.nowBenefits.push(nowBenefit);
-}
+// /**
+//  * Adds now benefits collected during game play
+//  * Note: Not on buildBoard
+//  * @param nowBenefit
+//  */
+// public addNowBenefits(nowBenefit: Benefit) {
+//     this.nowBenefits.push(nowBenefit);
+// }
 
-/**
- * Adds income benefits collected during game play
- * Note: Not on buildBoard
- * @param incomeBenefit
- */
-public addIncomeBenefits(incomeBenefit: Benefit) {
-    this.incomeBenefits.push(incomeBenefit);
-}
+// /**
+//  * Adds income benefits collected during game play
+//  * Note: Not on buildBoard
+//  * @param incomeBenefit
+//  */
+// public addIncomeBenefits(incomeBenefit: Benefit) {
+//     this.incomeBenefits.push(incomeBenefit);
+// }
 
 
-/**
- * Adds special benefits collected during game play
- * Note: Not on buildBoard
- */
-public addSpecialBenefits(specialBenefit: Benefit) {
-    this.specialBenefits.push(specialBenefit);
-}
+// /**
+//  * Adds special benefits collected during game play
+//  * Note: Not on buildBoard
+//  */
+// public addSpecialBenefits(specialBenefit: Benefit) {
+//     this.specialBenefits.push(specialBenefit);
+// }
 
 
 /**
@@ -346,27 +353,139 @@ public setPlanetType(playerPlanet: PlanetType) {
 
     }
 
-    /*
-    * Add the benefit into the benefit array by the trigger,
-    * notice: this is only add them into the array, the benefit has not been used yet
-    * input: benefit
-    * output: add the benefit into the array
-    * @yalei
-    */
-    public getBenefit(benefit: Benefit){
-      if(benefit.trigger === Trigger.Income){
-        this.incomeBenefits.push(benefit);
-      }
+    // /*
+    // * Add the benefit into the benefit array by the trigger,
+    // * notice: this is only add them into the array, the benefit has not been used yet
+    // * input: benefit
+    // * output: add the benefit into the array
+    // * @yalei
+    // */
+    // public getBenefit(benefit: Benefit){
+    //   if(benefit.trigger === Trigger.Income){
+    //     this.incomeBenefits.push(benefit);
+    //   }
+    //   if(benefit.trigger === Trigger.Now){
+    //     this.nowBenefits.push(benefit);
+    //     // since it is now, so we call the onBenefit at once;
+    //     this.onBenefit(benefit);
+    //   }
+    //   if(benefit.trigger === Trigger.Special){
+    //     this.activateSpecialPower(benefit);
+    //   }
+    // }
+
+    public getTechBenefit(benefit: Benefit){
+      this.techBenefits.push(benefit);
       if(benefit.trigger === Trigger.Now){
-        this.nowBenefits.push(benefit);
-        // since it is now, so we call the onBenefit at once;
         this.onBenefit(benefit);
-      }
-      if(benefit.trigger === Trigger.Special){
-        this.activateSpecialPower(benefit);
       }
     }
 
+    public getTechTileBenefit(benefit: Benefit){
+      this.techTileBenefits.push(benefit);
+      if(benefit.trigger === Trigger.Now){
+        this.onBenefit(benefit);
+      }
+    }
+
+    public getRoundTileBenefit(benefit: Benefit){
+      this.roundTileBenefits.push(benefit);
+      if(benefit.trigger === Trigger.Now){
+        this.onBenefit(benefit);
+      }
+    }
+
+    public getRoundBoosterBenefit(benefit: Benefit){
+      this.roundBoosterBenefits.push(benefit);
+      if(benefit.trigger === Trigger.Now){
+        this.onBenefit(benefit);
+      }
+    }
+
+    public getFedrationBenefit(benefit: Benefit){
+      this.federationBenefits.push(benefit);
+      if(benefit.trigger === Trigger.Now){
+        this.onBenefit(benefit);
+      }
+    }
+
+
+    /**
+     * search all the benefit array to find the benefit having the trigger
+     * then call it onBenefit
+     * if the trigger is build, we need to check if the building type is right
+     * @param trigger the trigger you want to call
+     * @param buildingType if the trigger is build, this is neccessary. If not, this should be null
+     */
+    public triggerBenefit(trigger: Trigger, buildingType: BuildingType | null){
+      this.techBenefits.forEach(b => {
+        if(b.trigger === trigger){
+          if(trigger !== Trigger.Build){
+            this.onBenefit(b);
+          }else{
+            if(b.object === buildingType){
+              this.onBenefit(b);
+            }
+          }
+        }
+      })
+      this.techTileBenefits.forEach(b => {
+        if(b.trigger === trigger){
+          if(trigger !== Trigger.Build){
+            this.onBenefit(b);
+          }else{
+            if(b.object === buildingType){
+              this.onBenefit(b);
+            }
+          }
+        }
+      })
+      this.roundTileBenefits.forEach(b => {
+        if(b.trigger === trigger){
+          if(trigger !== Trigger.Build){
+            this.onBenefit(b);
+          }else{
+            if(b.object === buildingType){
+              this.onBenefit(b);
+            }
+          }
+        }
+      })
+      this.roundBoosterBenefits.forEach(b => {
+        if(b.trigger === trigger){
+          if(trigger !== Trigger.Build){
+            this.onBenefit(b);
+          }else{
+            if(b.object === buildingType){
+              this.onBenefit(b);
+            }
+          }
+        }
+      })
+      this.federationBenefits.forEach(b => {
+        if(b.trigger === trigger){
+          if(trigger !== Trigger.Build){
+            this.onBenefit(b);
+          }else{
+            if(b.object === buildingType){
+              this.onBenefit(b);
+            }
+          }
+        }
+      })
+    }
+
+    /**
+     * get the number of how many different types of planet you have occupied
+     */
+    public getPlanetTypes(): number{
+      let temp: PlanetType[] = [];
+      for(let i = 0; i < this.planets.length; i++){
+        var type = this.planets[i].type;
+        if(temp.indexOf(type) === -1) temp.push(type);
+      }
+      return temp.length;
+    }
     /**
      * the function which will add the amount of resource into players class
      * @param benefit
@@ -375,27 +494,39 @@ public setPlanetType(playerPlanet: PlanetType) {
       const values = benefit.values;
       let i = 0;
       let value;
+      let times = 1;
+
+      // asign the times
+      if(benefit.count === Count.Sectors){ times = this.sectors}
+      if(benefit.count === Count.Mines){} // times = num of mine
+      if(benefit.count === Count.TradingStations){} // times = num of station
+      if(benefit.count === Count.Labs){}
+      if(benefit.count === Count.BigBuildings){}
+      if(benefit.count === Count.Feds){ times = this.federations.length }
+      if(benefit.count === Count.PlanetTypes){ times = this.getPlanetTypes() }
+      if(benefit.count === Count.Satellites){ times = this.satellites }
+      if(benefit.count === Count.Gaia){ times = this.numGaia }
+
       for(; i < values.length; i++){
         value = values[i];
         if(value.material === Material.Gold){
-          this.gold += value.quantity;
+          this.gold += value.quantity * times;
         }
         if(value.material === Material.Ore){
-          this.ore += value.quantity;
+          this.ore += value.quantity * times;
         }
         if(value.material === Material.Science){
-          this.science += value.quantity;
+          this.science += value.quantity * times;
         }
-        if(value.material === Material.QIC){ this.qic += value.quantity; }
-        if(value.material === Material.ExtraPower){ this.power.bowl1 += value.quantity; }
+        if(value.material === Material.QIC){ this.qic += value.quantity * times; }
+        if(value.material === Material.ExtraPower){ this.power.bowl1 += value.quantity * times; }
         if(value.material === Material.Power){
-          this.chargePower(value.quantity);
+          this.chargePower(value.quantity * times);
         }
-        if(value.material === Material.Dig){ /*lets discuss this part later --- by yalei*/ }
-        if(value.material === Material.VP){ this.vp += value.quantity; }
-        // if(value.material === Material.SpecialDig){ /*what is the special dig? ---by yalei*/ }
-        if(value.material === Material.SpecialRange){ this.specialRange += value.quantity; }
-        if(value.material === Material.GaiaFormer){this.gaiaformer += value.quantity;}
+        if(value.material === Material.Dig){ this.specialDig += value.quantity * times }
+        if(value.material === Material.VP){ this.vp += value.quantity * times; }
+        if(value.material === Material.SpecialRange){ this.specialRange += value.quantity * times; }
+        if(value.material === Material.GaiaFormer){this.gaiaformer += value.quantity * times;}
       }
       if(this.gold > 30) this.gold = 30;
     }

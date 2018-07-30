@@ -10,15 +10,6 @@ const lab = Lab.script()
 const { describe, it, before, beforeEach } = lab
 export { lab }
 
-function testAddIncomeBenefit(player: Player, benefits: Benefit[], numOfIncome: number){
-    var old = player.incomeBenefits.length;
-    for(var i = 0; i < benefits.length; i++){
-        player.getBenefit(benefits[i]);
-    }
-    var now = player.incomeBenefits.length;
-    expect(now - old).to.equal(numOfIncome);
-}
-
 
 describe('experiment', () => {
     before(() => {});
@@ -40,21 +31,9 @@ describe('Benefit Test', () => {
         // b3 = new Benefit(Trigger.Income, null, null, [new Value(3, Material.QIC)]);
     })
 
-    it('begin the player with no benefit', ()=>{
-        expect(p.incomeBenefits.length).to.equal(0);
-    })
-
-    it('add one income benefit of income into the player', ()=>{
-        testAddIncomeBenefit(p, [b1], 1);
-    })
-
-    it('add one income benefit and one now benefit, to see if the income benefit is added into the right place', ()=>{
-        testAddIncomeBenefit(p, [b1, b2], 1);
-    })
-
     it('can add the resource of now benefit into player class', () => {
         var oldOre = p.ore;
-        p.getBenefit(b2);
+        p.getTechBenefit(b2);
         var nowOre = p.ore;
         expect(nowOre - oldOre).to.equal(1);
     })
@@ -68,7 +47,7 @@ describe('Benefit Test', () => {
                                                        new Value(3, Material.Ore),
                                                        new Value(5, Material.Science),
                                                        new Value(7, Material.QIC)]);
-        p.getBenefit(b3);
+        p.getTechBenefit(b3);
         expect(p.gold - g1).to.equal(10);
         expect(p.ore - o1).to.equal(3);
         expect(p.science - s1).to.equal(5);
@@ -88,8 +67,8 @@ describe('Benefit Test', () => {
                                                        new Value(6, Material.Ore),
                                                        new Value(1, Material.Science),
                                                        new Value(9, Material.QIC)]);
-        p.getBenefit(b3);
-        p.getBenefit(b4);
+        p.getTechBenefit(b3);
+        p.getTechBenefit(b4);
         expect(p.gold - g1).to.equal(12);
         expect(p.ore - o1).to.equal(9);
         expect(p.science - s1).to.equal(6);

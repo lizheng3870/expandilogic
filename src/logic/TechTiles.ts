@@ -50,7 +50,7 @@ class TechTile {
        //power: can charge 4 power, everyturn
        b1 = new Benefit(Trigger.Special, null, null, [new Value(4, Material.Power)]);
      }
-     if(b1 != null) player.getBenefit(b1);
+     if(b1 != null) player.getTechTileBenefit(b1);
    }
 
    /*
@@ -161,7 +161,7 @@ class TechTile {
        //every time build station: +3 VP;
        b1 = new Benefit(Trigger.Build, null, BuildingType.TradingStation, [new Value(3, Material.VP)]);
      }
-     if(b1 != null) player.getBenefit(b1);
+     if(b1 != null) player.getTechTileBenefit(b1);
    }
 }
 
