@@ -11,17 +11,14 @@ export class Ivits extends Race{
         this.setRaceType(RaceType.Ivits);
         this.setPlanetType(PlanetType.Red);
         this.techs = [0,0,0,0,0,0];
-        // this.permanentIncomes();
+        const ore = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Ore)]);
+        const science = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]);
+
+        this.income.push(ore)
+        this.income.push(science);
         
     }
 
-    // private permanentIncomes() {
-    //     const ore = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Ore)]);
-    //     const science = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]);
-
-    //     this.income.push(ore)
-    //     this.income.push(science);
-    // }
 
 
 

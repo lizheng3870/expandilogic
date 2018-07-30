@@ -294,12 +294,12 @@ describe('Player Actions Tests', () => {
 
 
       // default value
-      expect(player.power.bowl1).to.equal(2)
+      expect(player.power.bowl1).to.equal(4)
       expect(player.power.bowl2).to.equal(4)
       expect(player.power.bowl3).to.equal(0)
       g.processPlayerRequest(request)
       //
-      expect(player.power.bowl1).to.equal(2)
+      expect(player.power.bowl1).to.equal(4)
       expect(player.power.bowl2).to.equal(0)
       expect(player.power.bowl3).to.equal(2)
 

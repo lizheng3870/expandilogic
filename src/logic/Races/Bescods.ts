@@ -12,17 +12,14 @@ export class Bescods extends Race{
         this.setPlanetType(PlanetType.Black);
         this.ore = 4;
         this.science = 1;
-        // this.permanentIncomes();
+        const ore = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Ore)]);
+        const science = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]);
+
+        this.income.push(ore)
+        this.income.push(science);
         
     }
 
-    // private permanentIncomes() {
-    //     const ore = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Ore)]);
-    //     // const science = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]);
-
-    //     this.income.push(ore)
-    //     // this.income.push(science);
-    // }
 
 
 
