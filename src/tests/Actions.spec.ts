@@ -73,7 +73,7 @@ describe('Player Actions Tests', () => {
       //reverse
       {
         let request = new Request()
-        let hex = new Hex(-4, 2, 2);
+        let hex = new Hex(-6, 3, 3);
         //console.log(hex)
         request.type = RequestType.FirstStructures
         request.pid = 3;
@@ -85,7 +85,7 @@ describe('Player Actions Tests', () => {
 
       {
         let request = new Request()
-        let hex = new Hex(6, -2, -4);
+        let hex = new Hex(4, -1, -3);
         //console.log(hex)
         request.type = RequestType.FirstStructures
         request.pid = 2;
@@ -108,7 +108,7 @@ describe('Player Actions Tests', () => {
 
       {
         let request = new Request()
-        let hex = new Hex(3, -1, -2);
+        let hex = new Hex(4, 6, -10);
         //console.log(hex)
         request.type = RequestType.FirstStructures
         request.pid = 0;
@@ -147,7 +147,7 @@ describe('Player Actions Tests', () => {
       request.type = RequestType.Action
       request.actionType = ActionType.BuildMine
       request.pid = 0;
-      request.hex = new Hex(3, -2, -1);
+      request.hex = new Hex(1, -1, 0);
       g.processPlayerRequest(request)
       let player = g.getPlayer(request.pid);
 
@@ -160,7 +160,7 @@ describe('Player Actions Tests', () => {
         player.accessiblePlanets(g.board);
 
        }
-    });
+   });
 
 
     it('nina player(pid:1) send a update mine structure to station request to Game', () => {
@@ -188,7 +188,7 @@ describe('Player Actions Tests', () => {
 
        }
     });
-
+    
     it('yalei player(yalei:2) send rearch action to Game', () => {
       let request = new Request()
       request.type = RequestType.Action

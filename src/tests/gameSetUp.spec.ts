@@ -142,15 +142,15 @@ describe('Game SetUp Build First Structures Tests', () => {
         console.log(g.turn)
         g.processSetupFirstStructures(request)
 
-        // expect(g.board.hasPlanet(hex)).to.equal(true);
-        // let planet = g.board.getPlanet(hex);
-        // expect(planet.building).to.equal(StructureType.Mine);
-        // expect(planet.type).to.equal(PlanetType.Yellow);
-        // expect(planet.playerID).to.equal(1);
-        //
-        // let player = g.getPlayer(1);
-        // let mine = player.buildings.mines[0];
-        // expect(mine.status).to.equal(StructureStatus.Built);
+        expect(g.board.hasPlanet(hex)).to.equal(true);
+        let planet = g.board.getPlanet(hex);
+        expect(planet.building).to.equal(StructureType.Mine);
+        expect(planet.type).to.equal(PlanetType.Yellow);
+        expect(planet.playerID).to.equal(1);
+
+        let player = g.getPlayer(1);
+        let mine = player.buildings.mines[0];
+        expect(mine.status).to.equal(StructureStatus.Built);
 
 
       })
@@ -204,7 +204,7 @@ describe('Game SetUp Build First Structures Tests', () => {
       it('player(pid:3) build second mine', () =>
       {
         let request = new Request()
-        let hex = new Hex(-4, 2, 2);
+        let hex = new Hex(-6, 3, 3);
         //console.log(hex)
         request.type = RequestType.FirstStructures
         request.pid = 3;
@@ -229,7 +229,7 @@ describe('Game SetUp Build First Structures Tests', () => {
       it('player(pid:2) build second mine', () =>
       {
         let request = new Request()
-        let hex = new Hex(6, -2, -4);
+        let hex = new Hex(4, -1, -3);
         //console.log(hex)
         request.type = RequestType.FirstStructures
         request.pid = 2;
@@ -279,7 +279,7 @@ describe('Game SetUp Build First Structures Tests', () => {
       it('player(pid:0) build second mine', () =>
       {
         let request = new Request()
-        let hex = new Hex(3, -1, -2);
+        let hex = new Hex(1, -1, 0);
         //console.log(hex)
         request.type = RequestType.FirstStructures
         request.pid = 0;

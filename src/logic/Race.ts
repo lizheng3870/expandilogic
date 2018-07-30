@@ -12,6 +12,18 @@ import {StructureStatus} from './Structure'
 import {MapBoard} from './MapBoard'
 import { count } from '../../node_modules/@types/code';
 
+
+interface RaceJSON {
+  name:       string;
+  type:       number;
+  gold:       number;
+  ore:      number;
+  vp:       number;
+  science:   number;
+  qic:      number;
+}
+
+
 export enum RaceType {
   Terrans,
   Lantids,
@@ -868,12 +880,25 @@ public setPlanetType(playerPlanet: PlanetType) {
 
             if(planet.playerID === -1 ){
               plants.push(planet);
-              console.log(planet);
+              //console.log(planet);
             }
           }
         }
 
       }
+
+    }
+
+    public getJsonData():RaceJSON{
+      return {
+        name:       this.name,
+        type:       this.raceType,
+        gold:       this.gold,
+        ore:      this.ore,
+        vp:       this.vp,
+        science:   this.science,
+        qic:      this.qic,
+      };
 
     }
 

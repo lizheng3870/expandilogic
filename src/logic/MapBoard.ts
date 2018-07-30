@@ -3,6 +3,14 @@ import {Planet, PlanetType} from './Planet'
 import {Config} from './Game'
 import {StructureType} from './Structure'
 
+interface SpaceJSON {
+  q:       number;
+  r:       number;
+  s:       number;
+  planet:  number;
+  playerID: number;
+  building: number;
+}
 
 class Space {
   public hex:Hex
@@ -87,12 +95,11 @@ class MapBoard {
 
 
         spaces0[0].setPlanetType(PlanetType.Blue);
-        spaces0[1].setPlanetType(PlanetType.Blue);
-        spaces0[2].setPlanetType(PlanetType.Blue);
-        spaces0[3].setPlanetType(PlanetType.Blue);
+        spaces0[2].setPlanetType(PlanetType.Transdim);
+
         spaces0[4].setPlanetType(PlanetType.Blue);
-        spaces0[5].setPlanetType(PlanetType.Orange);
-        spaces0[8].setPlanetType(PlanetType.Red);
+        spaces0[5].setPlanetType(PlanetType.White);
+      //  spaces0[8].setPlanetType(PlanetType.Red);
         //console.log(spaces0)
         //this.randomRotation(spaces0);
 
@@ -100,10 +107,10 @@ class MapBoard {
 
         spaces1[0].setPlanetType(PlanetType.Yellow);
         spaces1[1].setPlanetType(PlanetType.Yellow);
-        spaces1[2].setPlanetType(PlanetType.Yellow);
+        spaces1[2].setPlanetType(PlanetType.Gaia);
         spaces1[3].setPlanetType(PlanetType.Yellow);
-        spaces1[4].setPlanetType(PlanetType.Yellow);
-        spaces1[5].setPlanetType(PlanetType.Orange);
+        spaces1[4].setPlanetType(PlanetType.Transdim);
+        spaces1[5].setPlanetType(PlanetType.White);
         // spaces1[8].setPlanetType(PlanetType.Red);
 
 
@@ -113,11 +120,9 @@ class MapBoard {
 
         spaces2[0].setPlanetType(PlanetType.Red);
         spaces2[1].setPlanetType(PlanetType.Red);
-        spaces2[2].setPlanetType(PlanetType.Red);
-        spaces2[3].setPlanetType(PlanetType.Red);
-        spaces2[4].setPlanetType(PlanetType.Red);
-        spaces2[5].setPlanetType(PlanetType.Orange);
-        spaces2[8].setPlanetType(PlanetType.Red);
+        spaces2[3].setPlanetType(PlanetType.Gaia);
+        spaces2[5].setPlanetType(PlanetType.White);
+        spaces2[8].setPlanetType(PlanetType.Transdim);
         //
         //
         // this.randomRotation(spaces2);
@@ -126,53 +131,67 @@ class MapBoard {
       //  console.log(spaces3)
         spaces3[0].setPlanetType(PlanetType.White);
         spaces3[1].setPlanetType(PlanetType.White);
-        spaces3[2].setPlanetType(PlanetType.White);
-        spaces3[3].setPlanetType(PlanetType.White);
-        spaces3[4].setPlanetType(PlanetType.White);
-        spaces3[5].setPlanetType(PlanetType.White);
-        spaces3[8].setPlanetType(PlanetType.White);
+        spaces3[3].setPlanetType(PlanetType.Transdim);
+        spaces3[4].setPlanetType(PlanetType.Red);
+        spaces3[5].setPlanetType(PlanetType.Yellow);
+        spaces3[8].setPlanetType(PlanetType.Gaia);
 
         //
         // this.randomRotation(spaces3)
         //
         //
-        // var spaces4 = Space.spiral(centers[4], 2);
+        var spaces4 = Space.spiral(centers[4], 2);
+        spaces4[0].setPlanetType(PlanetType.Gaia);
+        spaces4[2].setPlanetType(PlanetType.Red);
         //
         // this.randomRotation(spaces4)
         //
-        // var spaces5 = Space.spiral(centers[5], 2);
+         var spaces5 = Space.spiral(centers[5], 2);
+         spaces5[7].setPlanetType(PlanetType.Yellow);
+         spaces5[3].setPlanetType(PlanetType.Red);
+         spaces5[4].setPlanetType(PlanetType.Gaia);
         //
         // this.randomRotation(spaces5);
         //
         //
-        // var spaces6 = Space.spiral(centers[6], 2);
+         var spaces6 = Space.spiral(centers[6], 2);
+         spaces6[3].setPlanetType(PlanetType.Yellow);
+         spaces6[4].setPlanetType(PlanetType.Transdim);
         //
         // this.randomRotation(spaces6);
         //
         //
-        // var spaces7 = Space.spiral(centers[7], 2);
+         var spaces7 = Space.spiral(centers[7], 2);
+         spaces7[3].setPlanetType(PlanetType.Yellow);
+         spaces7[4].setPlanetType(PlanetType.Transdim);
+         spaces7[0].setPlanetType(PlanetType.Blue);
         //
         // this.randomRotation(spaces7)
         //
         //
-        // var spaces8 = Space.spiral(centers[8], 2);
+         var spaces8 = Space.spiral(centers[8], 2);
+         spaces8[0].setPlanetType(PlanetType.Gaia);
+         spaces8[2].setPlanetType(PlanetType.Red);
+         spaces8[3].setPlanetType(PlanetType.Red);
         //
         // this.randomRotation(spaces8)
         //
-        // var spaces9 = Space.spiral(centers[9], 2);
+         var spaces9 = Space.spiral(centers[9], 2);
+         spaces9[3].setPlanetType(PlanetType.Yellow);
+         spaces9[4].setPlanetType(PlanetType.Transdim);
         //
         // this.randomRotation(spaces9)
         //
 
-         var spaces = spaces0.concat(spaces1);
+          var spaces = spaces0.concat(spaces1);
          spaces = spaces.concat(spaces2);
          spaces = spaces.concat(spaces3);
-        // spaces = spaces.concat(spaces4);
-        // spaces = spaces.concat(spaces5);
-        // spaces = spaces.concat(spaces6);
-        // spaces = spaces.concat(spaces7);
-        // spaces = spaces.concat(spaces8);
-        // spaces = spaces.concat(spaces9);
+         spaces = spaces.concat(spaces4);
+         spaces = spaces.concat(spaces5);
+         spaces = spaces.concat(spaces6);
+         spaces = spaces.concat(spaces7);
+         spaces = spaces.concat(spaces8);
+         spaces = spaces.concat(spaces9);
         this.spaces = spaces;
 
         for(let space of spaces){
@@ -284,6 +303,53 @@ class MapBoard {
       if(space == null)return;
       space.feded = true;
     }
+  }
+
+
+  public getSpace(space:Space):SpaceJSON {
+
+    if(space.planet === null){
+      return {
+        q: space.hex.q,
+        r: space.hex.r,
+        s: space.hex.s,
+        planet:  null,
+        playerID: -1,
+        building: null,
+
+      };
+    }else if (space.planet.playerID === -1){
+      return {
+        q: space.hex.q,
+        r: space.hex.r,
+        s: space.hex.s,
+        planet:  space.planet.type,
+        playerID: -1,
+        building: null,
+
+      };
+    }else{
+      return {
+        q: space.hex.q,
+        r: space.hex.r,
+        s: space.hex.s,
+        planet:  space.planet.type,
+        playerID: space.planet.playerID,
+        building: space.planet.building,
+
+      };
+
+    }
+
+
+
+  }
+  public dumpSpace(){
+    let data : SpaceJSON[] = []
+    for(let space of this.spaces){
+      data.push(this.getSpace(space));
+    }
+    return data;
   }
 
 

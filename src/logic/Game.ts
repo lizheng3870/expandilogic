@@ -17,7 +17,7 @@ import {StructureStatus} from './Structure'
 import {Store} from './Store'
 import { Federations } from './Federation';
 
-import firebase from './firebase';
+import GFirebase from './GFirebase';
 
 
 
@@ -41,6 +41,7 @@ export enum Config{
 }
 
 class Game {
+    public gid:number; //game id
     public round: number;  // which round the game in  for example round 1
     public players: Player[] = []
     public nextRound: Player[] = []  // passed player will go here for next round
@@ -65,6 +66,7 @@ class Game {
 
     constructor(gid: number){
       // console.log(`creating game ${gid}`)
+     this.gid = gid;
      this.round = 1;
      this.turn = 0;  // start from 0;
 //     this.status = GameStatus.Open
@@ -288,6 +290,9 @@ console.log( stack )
 
 
          let planet = this.board.getPlanet(request.hex);
+
+         //console.log(player.pid+ "   >>player.planetType  >>  " + player.planetType)
+         //console.log("planet.type" + planet.type)
          // put mine on planet
          if(planet.type === player.planetType ){
            this.board.buildMine(request.hex, player.pid);
@@ -386,17 +391,23 @@ console.log( stack )
     }
 
     public saveGame(){
-      const itemsRef = firebase.database().ref('test');
-    //  itemsRef.set({"test":"I am a good person"});
-       //console.log("I am a good person")
+      const itemsRef = GFirebase.database().ref('game/'+this.gid + '/mapboard');
+      itemsRef.set(this.board.dumpSpace());
 
-      itemsRef.on('value', (snapshot) => {
-      let value = snapshot.val();
-       console.log(value.test)
+      const itemsRef2 = GFirebase.database().ref('game/'+this.gid + '/players');
+      itemsRef2.set(this.dumpPlayers());
+    }
 
-      });
+    public dumpPlayers(){
+      let data = []
+      for(let player of this.players){
+        data.push(player.getJsonData())
+      }
+      return data;
 
     }
+
+
 
 
 

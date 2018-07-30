@@ -13,7 +13,7 @@ enum PlanetType{
   Lost,
   Gaia,  // green
   Transdim, // purple
-  Gaiaformer
+  Gaiaformer//  this is Transdim planet maybe need change
 }
 
 class Planet{
@@ -63,7 +63,10 @@ class Planet{
   public offStructure(){
     this.structure = null;
   }
+
+
 }
+
 
 
 

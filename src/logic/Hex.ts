@@ -136,7 +136,7 @@ export class Hex
     public static ring(center:Hex, radius:number){
         let results:Hex[] = []
         // this code doesn't work for radius == 0; can you see why?
-        var cube = center.add( Hex.direction(0).scale(radius))
+        var cube = center.add( Hex.direction(4).scale(radius))
 
         for(let i = 0; i < 6 ; i++)
             for(let j = 0; j < radius; j++){
@@ -149,7 +149,7 @@ export class Hex
 
       }
 
-       // include center 
+       // include center
       public static spiral(center:Hex, radius:number){
         let results:Hex[] = []
         results.push(center)
