@@ -37,6 +37,11 @@ class Structure {
     this.value = value;
   }
 
+  public changeBenefit(newBenefit: Benefit) {
+    this.benefit = newBenefit;
+
+  }
+
 }
 
 export {StructureType,StructureStatus, Structure}

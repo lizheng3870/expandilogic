@@ -8,7 +8,7 @@ import TechTiles from './TechTiles'
 import RoundBooster  from './RoundBooster'
 import {BuildingLib} from './BuildingLib'
 import {Hex} from './Hex'
-import {StructureStatus} from './Structure'
+import {Structure, StructureStatus} from './Structure'
 import {MapBoard} from './MapBoard'
 import { count } from '../../node_modules/@types/code';
 
@@ -47,11 +47,11 @@ export interface BuildBenefit{
 }
 
 interface BuildBoard {
-    mines : BuildBenefit[],
-    stations : BuildBenefit[],
-    labs : BuildBenefit[],
-    academies : BuildBenefit[]
-    institutes : BuildBenefit[],
+    mines : Structure[],
+    stations : Structure[],
+    labs : Structure[],
+    academies : Structure[]
+    institutes : Structure[],
 }
 /**
  * Race base class. Every race shares similar base
@@ -119,13 +119,9 @@ export class Race {
     public income : Benefit[]
 
     //Player Status - should these be set to private????
-    //public playerId: number;
     public raceType: RaceType;
     public planetType: PlanetType;
     public passed: boolean;
-    // public roundBooster: Benefit;
-    // public digCost: Benefit;
-    // public gaiaFormingCost: Benefit;
     public gaiaColonize: Benefit;
     public range: number; // basic range, can be increased by upgrading the tech of range and will not decrease;
     public specialDig: number;
@@ -138,10 +134,9 @@ export class Race {
     public techTiles: TechTiles[]
     public gaiaFormingCost: number = 6
     public digCost: number = 3
-  //  public race: RaceType|null
     public pid: number
-    public roundBooster:RoundBooster
-    public buildings:BuildingLib
+    public roundBooster: RoundBooster
+    public buildings: BuildingLib
 
   constructor(name:string){
 
@@ -151,8 +146,10 @@ export class Race {
     this.ore = 4;
     this.science = 3;
     this.qic = 1;
-
-    // - todo - some factions have different power bowl starting points
+    this.power.bowl1 = 2;
+    this.power.bowl2 = 4;
+    this.power.bowl3 = 0;
+    this.power.gaia = 0;
 
     //Player Milestones
     this.gaiaformer = 0;
@@ -168,7 +165,6 @@ export class Race {
   //initialize  from player
   this.initializeSpecialPowers();
   this.name = name;
-  //this.race = raceType;
   this.planets = [];
   this.numGaia = 0;
   this.techs = [0,0,0,0,0,0];
@@ -184,7 +180,7 @@ export class Race {
   this.federationBenefits = [];
 
 //  this.planetType = this.getPlantType(raceType);
-  this.buildings = new BuildingLib(this.raceType);
+  this.buildings = new BuildingLib();
 
 
 
@@ -204,35 +200,12 @@ public setRaceType(race: RaceType) {
  * Set player buildBoard
  */
 public setUpBuildBoard(){
-    this.addMines();
-    this.addStations();
+  this.buildBoard.mines = this.buildings.mines;
+  this.buildBoard.stations = this.buildings.station;
+  this.buildBoard.labs = this.buildings.lab;
+  this.buildBoard.academies = this.buildings.academies;
+  this.buildBoard.institutes = this.buildings.institute;
 }
-
-/**
- * AddMines for buildBoard
- */
-private addMines() {
-    let item = false;
-    let playerBenefit1 = new Benefit(Trigger.Income, null, BuildingType.Mine, [new Value(1, Material.Ore)]);
-    let playerBenefit2 = new Benefit(Trigger.Income, null, BuildingType.Mine, [new Value(0, Material.Ore)]);
-    let mine1 = {built: item, benefit: playerBenefit1};
-    let mine2 = {built: item, benefit: playerBenefit2};
-
-    for (let i = 1; i <= 8; i++) {
-        if (i === 3) {
-            this.buildBoard.mines.push(mine2);
-        }
-        this.buildBoard.mines.push(mine1);
-    }
-}
-
-/**
- * Add Trading Stations for buildboard
- */
-private addStations() {
-
-}
-
 
 
 // /**
@@ -324,39 +297,38 @@ public setPlanetType(playerPlanet: PlanetType) {
 
   }
 
-
-  // previous player function
+  // Previous player function
 
     // map race type to plant types
-    public getPlantType(raceType: RaceType):PlanetType{
-      if(raceType === RaceType.Terrans || raceType === RaceType.Lantids)
-        return PlanetType.Blue;
+    // public getPlantType(raceType: RaceType):PlanetType{
+    //   if(raceType === RaceType.Terrans || raceType === RaceType.Lantids)
+    //     return PlanetType.Blue;
 
-      if(raceType === RaceType.Xenos || raceType === RaceType.Gleens)
-          return PlanetType.Yellow;
+    //   if(raceType === RaceType.Xenos || raceType === RaceType.Gleens)
+    //       return PlanetType.Yellow;
 
-      if(raceType === RaceType.Taklons || raceType === RaceType.Ambas)
-          return PlanetType.Brown;
+    //   if(raceType === RaceType.Taklons || raceType === RaceType.Ambas)
+    //       return PlanetType.Brown;
 
-      if(raceType === RaceType.HadschHallas || raceType === RaceType.Ivits)
-          return PlanetType.Red;
-
-
-      if(raceType === RaceType.Nevlas || raceType === RaceType.Itars)
-          return PlanetType.White;
-
-      if(raceType === RaceType.Geodens || raceType === RaceType.Baltaks)
-          return PlanetType.Orange;
-
-      if(raceType === RaceType.Firaks || raceType === RaceType.Bescods)
-            return PlanetType.Black;
+    //   if(raceType === RaceType.HadschHallas || raceType === RaceType.Ivits)
+    //       return PlanetType.Red;
 
 
-      if(raceType === RaceType.Nevlas || raceType === RaceType.Itars)
-          return PlanetType.White;
+    //   if(raceType === RaceType.Nevlas || raceType === RaceType.Itars)
+    //       return PlanetType.White;
 
-      return PlanetType.Blue;
-    }
+    //   if(raceType === RaceType.Geodens || raceType === RaceType.Baltaks)
+    //       return PlanetType.Orange;
+
+    //   if(raceType === RaceType.Firaks || raceType === RaceType.Bescods)
+    //         return PlanetType.Black;
+
+
+    //   if(raceType === RaceType.Nevlas || raceType === RaceType.Itars)
+    //       return PlanetType.White;
+
+    //   return PlanetType.Blue;
+    // }
 
     /**
      * initiallize the lib of special powers
