@@ -276,14 +276,14 @@ console.log( stack )
 
      //send to all client;
 
-     public processSetupFirstStructures(request:Request){
-       if(this.checkTurn(request.pid) === false)return;
+     public processSetupFirstStructures(request:Request): boolean{
+       if(this.checkTurn(request.pid) === false)return false;
        var player = this.getPlayer(request.pid);
        if(request.type === RequestType.FirstStructures){
          // check planet exist
          if(this.board.hasPlanet(request.hex) === false){
             console.log("planet is not exist");
-            return ;
+            return false;
          }
 
 
@@ -292,12 +292,12 @@ console.log( stack )
          if(planet.type === player.planetType ){
            this.board.buildMine(request.hex, player.pid);
            let mine = player.getAvalibleMine();
-           if(mine === null)return;
+           if(mine === null)return false;
            mine.status = StructureStatus.Built;
            player.planets.push(planet);
          }else{
            console.log("planetType error");
-           return
+           return false;
          }
        }
 
@@ -322,6 +322,7 @@ console.log( stack )
              this.firstStructuresRound = 3;
          }
       }
+      return true;
     }
 
 
