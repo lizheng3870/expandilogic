@@ -12,21 +12,12 @@ export class Itars extends Race{
         this.setPlanetType(PlanetType.White);
         this.ore = 5;
         this.power.bowl1 = 4;
-        // this.permanentIncomes();
-        this.initializeInstitute();
+        const ore = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Ore)]);
+        const science = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]);
+
+        this.income.push(ore)
+        this.income.push(science);
         
-    }
-
-    // private permanentIncomes() {
-    //     const ore = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Ore)]);
-    //     const science = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]);
-
-    //     this.income.push(ore)
-    //     this.income.push(science);
-    // }
-
-    public initializeInstitute() {
-
     }
         
 

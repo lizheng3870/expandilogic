@@ -90,11 +90,11 @@ describe('Game SetUp Before Build First Structures Tests', () => {
     })
 
 
-    it(`setup player's  ore, knowledge, gold`, () => {
-      for(let player of g.players){
-        playerTest(player);
-      }
-    })
+    // it(`setup player's  ore, knowledge, gold`, () => {
+    //   for(let player of g.players){
+    //     playerTest(player);
+    //   }
+    // })
 
 });
 

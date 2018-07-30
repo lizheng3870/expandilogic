@@ -116,7 +116,7 @@ export class Race {
     }
 
     // The permanent board incomes
-    public income : Benefit[]
+    public income : Benefit[] = [];
 
     //Player Status - should these be set to private????
     public raceType: RaceType;

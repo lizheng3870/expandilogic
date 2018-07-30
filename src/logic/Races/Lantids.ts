@@ -11,26 +11,23 @@ export class Lantids extends Race{
         this.setRaceType(RaceType.Lantids);
         this.setPlanetType(PlanetType.Blue);
         this.gold = 13;
-        // this.permanentIncomes();
+        const ore = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Ore)]);
+        const science = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]);
+
+        this.income.push(ore)
+        this.income.push(science);
         // this.initializeInstitute();
         this.power.bowl1 = 4;
         this.power.bowl2 = 0;
 
     }
 
-    // private permanentIncomes() {
-    //     const ore = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Ore)]);
-    //     const science = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]);
 
-    //     this.income.push(ore)
-    //     this.income.push(science);
-    // }
-
-    public initializeInstitute() {
-        let benefit = new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power)]);
-        this.buildBoard.institutes[0].changeBenefit(benefit);
+    // public initializeInstitute() {
+    //     let benefit = new Benefit(Trigger.Income, null, null, [new Value(4, Material.Power)]);
+    //     this.buildBoard.institutes[0].changeBenefit(benefit);
         
-    }
+    // }
 
 
 

@@ -115,8 +115,8 @@ describe('tech test', () => {
         expect(p.digCost).to.equal(2);
         techboard.update(0, p);
         expect(p.digCost).to.equal(1);
-        expect(p.power.bowl2).to.equal(5);
-        expect(p.power.bowl3).to.equal(1);
+        expect(p.power.bowl2).to.equal(7);
+        expect(p.power.bowl1).to.equal(1);
         techboard.update(0, p);
         expect(p.ore).to.equal(8);
     })
@@ -128,8 +128,8 @@ describe('tech test', () => {
         expect(p.range).to.equal(2);
         techboard.update(1,p);
         expect(p.qic).to.equal(3);
-        expect(p.power.bowl2).to.equal(5);
-        expect(p.power.bowl3).to.equal(1);
+        expect(p.power.bowl2).to.equal(7);
+        expect(p.power.bowl1).to.equal(1);
         techboard.update(1,p);
         expect(p.range).to.equal(3);
         techboard.update(1,p);
@@ -144,8 +144,8 @@ describe('tech test', () => {
         expect(p.qic).to.equal(3);
         techboard.update(2,p);
         expect(p.qic).to.equal(5);
-        expect(p.power.bowl2).to.equal(5);
-        expect(p.power.bowl3).to.equal(1);
+        expect(p.power.bowl2).to.equal(7);
+        expect(p.power.bowl1).to.equal(1);
         techboard.update(2,p);
         expect(p.qic).to.equal(7);
         techboard.update(2,p);
@@ -157,12 +157,12 @@ describe('tech test', () => {
         expect(p.gaiaformer).to.equal(1);
         expect(p.gaiaFormingCost).to.equal(6);
         techboard.update(3,p);
-        expect(p.power.bowl1).to.equal(5);
+        expect(p.power.bowl1).to.equal(7);
         techboard.update(3,p);
         expect(p.gaiaformer).to.equal(2);
         expect(p.gaiaFormingCost).to.equal(4);
         expect(p.power.bowl2).to.equal(7);
-        expect(p.power.bowl1).to.equal(2);
+        expect(p.power.bowl1).to.equal(4);
         techboard.update(3,p);
         expect(p.gaiaformer).to.equal(3);
         expect(p.gaiaFormingCost).to.equal(3);

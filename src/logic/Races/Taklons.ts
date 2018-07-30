@@ -11,16 +11,14 @@ export class Taklons extends Race{
         this.setRaceType(RaceType.Taklons);
         this.setPlanetType(PlanetType.Brown);
         // -to do- special power stone of Taklons
-        // this.permanentIncomes();
+        const ore = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Ore)]);
+        const science = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]);
+
+        this.income.push(ore)
+        this.income.push(science);
     }
 
-    // private permanentIncomes() {
-    //     const ore = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Ore)]);
-    //     const science = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]);
-
-    //     this.income.push(ore)
-    //     this.income.push(science);
-    // }
+    
 
 
 

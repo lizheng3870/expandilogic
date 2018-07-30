@@ -11,18 +11,15 @@ export class HadschHallas extends Race{
         this.setRaceType(RaceType.HadschHallas);
         this.setPlanetType(PlanetType.Red);
         this.techs = [0,0,0,0,1,0];
-        // this.permanentIncomes();
+        this.getTechBenefit(new Benefit(Trigger.Income, null, null, [new Value(2, Material.Gold), new Value(1, Material.Power)]));
+        const gold = new Benefit(Trigger.Income, null, null, [new Value(3, Material.Gold)]);
+        const ore = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Ore)]);
+        const science = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]);
+
+        this.income.push(gold);
+        this.income.push(ore);
+        this.income.push(science);
 
     }
-
-    // private permanentIncomes() {
-    //     const gold = new Benefit(Trigger.Income, null, null, [new Value(3, Material.Gold)]);
-    //     const ore = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Ore)]);
-    //     const science = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]);
-
-    //     this.income.push(gold);
-    //     this.income.push(ore);
-    //     this.income.push(science);
-    // }
 
 }

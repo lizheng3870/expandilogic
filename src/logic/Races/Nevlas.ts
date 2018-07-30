@@ -11,17 +11,14 @@ export class Nevlas extends Race{
         this.setRaceType(RaceType.Nevlas);
         this.setPlanetType(PlanetType.White);
         this.techs = [0,0,0,0,0,1];
-        this.science = 2;
-        // this.permanentIncomes();
+        this.getTechBenefit(new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]));
+        const ore = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Ore)]);
+        const science = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]);
+
+        this.income.push(ore)
+        this.income.push(science);
 
     }
     
 
-    // private permanentIncomes() {
-    //     const ore = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Ore)]);
-    //     const science = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]);
-
-    //     this.income.push(ore)
-    //     this.income.push(science);
-    // }
 }

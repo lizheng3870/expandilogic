@@ -125,10 +125,10 @@ describe('Power tests', () => {
         p = CreatePlayer('jon', RaceType.Terrans)
     })
     it('begins each player with the normal default power', ()=>{
-        powerTest(p, 0, 2, 4, 0)
+        powerTest(p, 0, 4, 4, 0)
     })
     it('properly charges power', ()=>{
-        powerTest(p, 2, 0, 6, 0)
+        powerTest(p, 2, 2, 6, 0)
 
     })
     it('properly charges power with overflow', ()=>{
@@ -170,6 +170,6 @@ describe('Power tests', () => {
 
     it('adds power', ()=>{
         p.addPower(2)
-        expect(p.power.bowl1).to.equal(4)
+        expect(p.power.bowl1).to.equal(6)
     })
 })

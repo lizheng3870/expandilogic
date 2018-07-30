@@ -11,17 +11,13 @@ export class Ambas extends Race{
         this.setRaceType(RaceType.Ambas);
         this.setPlanetType(PlanetType.Brown);
         this.techs = [0,1,0,0,0,0];
-        this.qic = 2;
-        // this.permanentIncomes();
+        this.getTechBenefit(new Benefit(Trigger.Now, null, null, [new Value(1, Material.QIC)]));
+        const ore = new Benefit(Trigger.Income, null, null, [new Value(2, Material.Ore)]);
+        const science = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]);
+
+        this.income.push(ore)
+        this.income.push(science);
     }
-
-    // private permanentIncomes() {
-    //     const ore = new Benefit(Trigger.Income, null, null, [new Value(2, Material.Ore)]);
-    //     const science = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]);
-
-    //     this.income.push(ore)
-    //     this.income.push(science);
-    // }
 
 
 
