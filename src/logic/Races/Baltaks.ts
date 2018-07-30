@@ -12,6 +12,7 @@ export class Baltaks extends Race{
         this.setPlanetType(PlanetType.Yellow);
         this.techs = [0,0,0,1,0,0];
         this.gaiaformer = 1;
+        this.power.bowl2 = 2;
         // this.permanentIncomes();
 
     }

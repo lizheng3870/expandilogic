@@ -11,7 +11,9 @@ export class Itars extends Race{
         this.setRaceType(RaceType.Itars);
         this.setPlanetType(PlanetType.White);
         this.ore = 5;
+        this.power.bowl1 = 4;
         // this.permanentIncomes();
+        this.initializeInstitute();
         
     }
 
@@ -23,6 +25,10 @@ export class Itars extends Race{
     //     this.income.push(science);
     // }
 
+    public initializeInstitute() {
+
+    }
+        
 
 
 
