@@ -185,7 +185,7 @@ async function main() {
      g.saveGame()
    }
 
-   out = await readCommandLine("Demo 3 :Action player(pid:1) update mine structure to station on location Hex(2, 3, -5) which cost  2 gold  1 ore ")
+   out = await readCommandLine("Demo 3 :Action player(pid:1) update mine structure to station on location Hex(2, 3, -5) which cost  3 gold  1 ore ")
 
 
   {
@@ -195,7 +195,8 @@ async function main() {
          request.upgradeType = UpgradeType.MineToStation;
          request.pid = 1;
          request.hex = new Hex(2, 3, -5);
-        g.saveGame()
+         g.processPlayerRequest(request)
+         g.saveGame()
   }
 
   out = await readCommandLine("Demo End : Thank you ")
