@@ -189,6 +189,7 @@ export class Race {
 
 }
 
+
 /**
  * Set player RaceType
  * @param race
@@ -405,6 +406,17 @@ public setPlanetType(playerPlanet: PlanetType) {
      * @param buildingType if the trigger is build, this is neccessary. If not, this should be null
      */
     public triggerBenefit(trigger: Trigger, buildingType: BuildingType | null){
+      this.income.forEach(b => {
+        if(b.trigger === trigger){
+          if(trigger !== Trigger.Build){
+            this.onBenefit(b);
+          }else{
+            if(b.object === buildingType){
+              this.onBenefit(b);
+            }
+          }
+        }
+      })
       this.techBenefits.forEach(b => {
         if(b.trigger === trigger){
           if(trigger !== Trigger.Build){
@@ -901,6 +913,34 @@ public setPlanetType(playerPlanet: PlanetType) {
         bowl3:    this.power.bowl3,
       };
 
+    }
+
+    /**
+     * get the number of mines player build
+     * @author yousong
+     */
+    public getMineNum(): number{
+
+      return 0;
+    }
+
+    public getStationNum():number{
+
+      return 0;
+    }
+
+    public getLabNum():number{
+      
+      return 0;
+    }
+    
+    /**
+     * return the number of Institutions and Academies
+     * notice: two kinds of structure
+     */
+    public getBigBuildingNum():number{
+
+      return 0;
     }
 
 }
