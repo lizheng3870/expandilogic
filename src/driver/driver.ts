@@ -4,6 +4,7 @@ import {Request, RequestType, UpgradeType, TechLaneType} from '../logic/Request'
 import { Hex } from '../logic/Hex';
 import {ActionType} from '../logic/Action'
 import {StructureType} from '../logic/Structure'
+import {Material} from '../logic/Benefit'
 
 
 const readline = require('readline');
@@ -29,7 +30,7 @@ async function main() {
     // console.log('xxx' + personCount);
 
     // start the game
-    let g = new Game(1)
+    let g = new Game(2)
       g.clearSaveGame()
 
 
@@ -48,7 +49,7 @@ async function main() {
 
     out = await readCommandLine("Demo 1 : initialize map and add 4 players ");
     g.saveGame()
-    out = await readCommandLine("Demo 2 : Setup Phase each Player build two mine one map ");
+    out = await readCommandLine("Demo 2 : Setup Phase each Player build two mines on map ");
 
     out = await readCommandLine("Demo 2 (1/8) : player(pid:0) build mine on location Hex(0, 0, 0) ");
     {
@@ -167,13 +168,13 @@ async function main() {
     request.roundBoosterID = 0;
     g.processRoundRooter(request)
 
-
+    out = await readCommandLine("Demo 3 : At beginning of each Round, Income Phase, calculate income of each player. all race will add 1 ore and 1 science.  Special Race : HadschHallas will add 5 Gold ( 3 from raceboard 2 from techBoard), Nevlas will add 1 science ")
     request.pid = 3;
     request.roundBoosterID = 9;
     g.processRoundRooter(request)
 
   }
-
+    g.saveGame();
     out = await readCommandLine("Demo 3 :Action player(pid:0) build mine on location Hex(1, -1, 0) which cost  2 gold  1 ore ")
    {
      let request = new Request()
@@ -198,6 +199,45 @@ async function main() {
          g.processPlayerRequest(request)
          g.saveGame()
   }
+
+
+  out = await readCommandLine("Demo 3 :Action player(pid:2)  Rearch Action which cost 4 science, set Player(2) has 8 science. ")
+
+{
+    let request = new Request()
+    request.type = RequestType.Action
+    request.actionType = ActionType.Research
+    request.techLane = TechLaneType.Dig;
+    request.pid = 2;
+    //request.hex = new Hex(2, 3, -5);
+
+
+   let player = g.getPlayer(request.pid);
+   // change science
+    player.science = 8
+    g.saveGame()
+
+    out = await readCommandLine("Demo 3 :Then Send Rearch (Dig Tech 0->1 ) Action  which will cost 4 science of player(2) and ore increase 2")
+    g.processPlayerRequest(request)
+    g.saveGame()
+
+}
+
+out = await readCommandLine("Demo 3 :Action Player(pid 3)  free action one ore to one gold ")
+{
+  let request = new Request()
+  request.type = RequestType.Action
+  request.actionType = ActionType.Free
+  request.freeExchangeItems = [Material.Ore, Material.Gold]
+  request.freeExchangeTimes = 1;
+  request.pid = 3;
+  g.processPlayerRequest(request)
+  g.saveGame()
+
+
+
+}
+
 
   out = await readCommandLine("Demo End : Thank you ")
     process.exit();

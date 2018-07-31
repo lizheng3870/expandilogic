@@ -13,9 +13,13 @@ import yellow from './res/images/yellow.png';
 import purple from './res/images/purple.png';
 import red from './res/images/red.png';
 import bluemine from './res/images/bluemine.png';
-import yellowmine from './res/images/yellowmine.png';
+import yellowmine from './res/images/yellowmine.jpeg';
 import redmine from './res/images/redmine.png';
 import whitemine from './res/images/whitemine.png';
+import bluestation from './res/images/bluestation.png';
+import yellowstation from './res/images/yellowstation.png';
+import redstation from './res/images/redstation.png';
+import whitestation from './res/images/whitestation.png';
 
 import MapBoard from './MapBoard'
 import TextDiv from './TextDiv'
@@ -97,7 +101,7 @@ onMouseEnter(event, source) {
 
 
 
-    const itemsRef2 = firebase.database().ref('game/1/mapboard');
+    const itemsRef2 = firebase.database().ref('game/2/mapboard');
     itemsRef2.on('value', (snapshot) => {
       let value = snapshot.val();
       if(value !== null){
@@ -113,7 +117,7 @@ onMouseEnter(event, source) {
     });
 
 
-    const itemsRef3 = firebase.database().ref('game/1/players');
+    const itemsRef3 = firebase.database().ref('game/2/players');
     itemsRef3.on('value', (snapshot) => {
       let value = snapshot.val();
       if(value !== null){
@@ -197,6 +201,10 @@ onMouseEnter(event, source) {
                <Pattern id="redmine" link={redmine} size={hexagonSize} />
                <Pattern id="yellowmine" link={yellowmine} size={hexagonSize} />
                <Pattern id="whitemine" link={whitemine} size={hexagonSize} />
+               <Pattern id="bluestation" link={bluestation} size={hexagonSize} />
+               <Pattern id="redstation" link={redstation} size={hexagonSize} />
+               <Pattern id="yellowstation" link={yellowstation} size={hexagonSize} />
+               <Pattern id="whitestation" link={whitestation} size={hexagonSize} />
 
            </HexGrid>
            </div>

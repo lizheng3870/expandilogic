@@ -219,6 +219,7 @@ class Game {
    }
 
    public calculateIncome(player: Player){
+     player.calculateIncomeBenefit();
 
    }
 
@@ -396,6 +397,9 @@ console.log( stack )
 
       const itemsRef2 = GFirebase.database().ref('game/'+this.gid + '/players');
       itemsRef2.set("");
+
+      const itemsRef3 = GFirebase.database().ref('game/'+this.gid + '/status');
+      itemsRef3.set("");
     }
 
     public saveGame(){
@@ -404,6 +408,9 @@ console.log( stack )
 
       const itemsRef2 = GFirebase.database().ref('game/'+this.gid + '/players');
       itemsRef2.set(this.dumpPlayers());
+
+      const itemsRef3 = GFirebase.database().ref('game/'+this.gid + '/status');
+      itemsRef3.set(this.stateMachine.currentState);
     }
 
     public dumpPlayers(){

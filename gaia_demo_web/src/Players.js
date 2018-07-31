@@ -46,6 +46,9 @@ class Players extends Component {
              <th scope="col" className="text-center" >Ore</th>
              <th scope="col" className="text-center" >Science</th>
              <th scope="col" className ="text-center" >QIC</th>
+             <th scope="col" className="text-center" >Bowl1</th>
+             <th scope="col" className="text-center" >Bowl2</th>
+             <th scope="col" className ="text-center" >Bowl3</th>
            </tr>
          </thead>
          <tbody>
@@ -58,6 +61,9 @@ class Players extends Component {
              <td>{this.props.players[0].ore}</td>
              <td>{this.props.players[0].science}</td>
              <td>{this.props.players[0].qic}</td>
+              <td>{this.props.players[0].bowl1}</td>
+              <td>{this.props.players[0].bowl2}</td>
+              <td>{this.props.players[0].bowl3}</td>
            </tr>
            <tr>
            <th scope="row">1</th>
@@ -68,6 +74,9 @@ class Players extends Component {
            <td>{this.props.players[1].ore}</td>
            <td>{this.props.players[1].science}</td>
            <td>{this.props.players[1].qic}</td>
+           <td>{this.props.players[1].bowl1}</td>
+           <td>{this.props.players[1].bowl2}</td>
+           <td>{this.props.players[1].bowl3}</td>
            </tr>
            <tr>
            <th scope="row">2</th>
@@ -78,6 +87,9 @@ class Players extends Component {
            <td>{this.props.players[2].ore}</td>
            <td>{this.props.players[2].science}</td>
            <td>{this.props.players[2].qic}</td>
+           <td>{this.props.players[2].bowl1}</td>
+           <td>{this.props.players[2].bowl2}</td>
+           <td>{this.props.players[2].bowl3}</td>
            </tr>
            <tr>
            <th scope="row">3</th>
@@ -88,6 +100,9 @@ class Players extends Component {
            <td>{this.props.players[3].ore}</td>
            <td>{this.props.players[3].science}</td>
            <td>{this.props.players[3].qic}</td>
+           <td>{this.props.players[3].bowl1}</td>
+           <td>{this.props.players[3].bowl2}</td>
+           <td>{this.props.players[3].bowl3}</td>
            </tr>
          </tbody>
        </table>

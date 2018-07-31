@@ -170,6 +170,21 @@ describe('tech test', () => {
         // expect(p.qic).to.equal(11);
     })
 
+    if('race HadschHallas add 2 gold 1 ore 1 science and power charge 1 at income phase'){
+      let p = CreatePlayer('yalei', RaceType.HadschHallas);
+      expect(p.science).to.equal(3);
+      expect(p.ore).to.equal(4);
+      expect(p.gold).to.equal(15);
+      expect(p.power.bowl1).to.equal(2);
+      expect(p.power.bowl2).to.equal(4);
+      p.calculateIncomeBenefit();
+      expect(p.science).to.equal(4);
+      expect(p.ore).to.equal(5);
+      expect(p.gold).to.equal(20);
+      expect(p.power.bowl1).to.equal(1);
+      expect(p.power.bowl2).to.equal(5);
+    }
+
 
 
 

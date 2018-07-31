@@ -171,9 +171,15 @@ describe('Player Actions Tests', () => {
       request.pid = 1;
       request.hex = new Hex(2, 3, -5);
 
-
-      g.processPlayerRequest(request)
       let player = g.getPlayer(request.pid);
+
+
+      let beforeGold = player.gold;
+      let beforeOre = player.ore;
+      g.processPlayerRequest(request)
+
+      expect(beforeGold - player.gold).to.equal(3)
+      expect(beforeOre - player.ore).to.equal(1)
 
       if(player === null){
           expect(0).to.equal(1);
@@ -182,20 +188,21 @@ describe('Player Actions Tests', () => {
         expect(g.turn).to.equal(2)
         expect(player.planets.length).to.equal(2)
         let planet = g.board.getPlanet(request.hex);
+
         expect(planet.building).to.equal(StructureType.Station)
 
         //player.accessiblePlanets(g.board);
 
        }
     });
-    
+
     it('yalei player(yalei:2) send rearch action to Game', () => {
       let request = new Request()
       request.type = RequestType.Action
       request.actionType = ActionType.Research
       request.techLane = TechLaneType.Dig;
       request.pid = 2;
-      request.hex = new Hex(2, 3, -5);
+      //request.hex = new Hex(2, 3, -5);
 
 
      let player = g.getPlayer(request.pid);
@@ -204,11 +211,11 @@ describe('Player Actions Tests', () => {
 
       // default value
       expect(player.digCost).to.equal(3)
-      expect(player.ore).to.equal(4)
+      expect(player.ore).to.equal(5)
       g.processPlayerRequest(request)
       // 0 ->1  add two ore
       expect(player.digCost).to.equal(3)
-      expect(player.ore).to.equal(6)
+      expect(player.ore).to.equal(7)
 
       expect(player.name).to.equal("yalei")
       expect(g.turn).to.equal(3)
@@ -217,7 +224,7 @@ describe('Player Actions Tests', () => {
       g.turn = 2;
       g.processPlayerRequest(request)
       // 1 ->2  add two ore
-      expect(player.ore).to.equal(6)
+      expect(player.ore).to.equal(7)
       expect(player.digCost).to.equal(2)
 
 
@@ -230,7 +237,7 @@ describe('Player Actions Tests', () => {
       request.actionType = ActionType.PowerAndQIC
       request.storeMerchandiseType = StoreMerchandiseType.Pw7sci3
       request.pid = 3;
-      request.hex = new Hex(2, 3, -5);
+      //request.hex = new Hex(2, 3, -5);
 
      let player = g.getPlayer(request.pid);
      // change science
@@ -238,12 +245,12 @@ describe('Player Actions Tests', () => {
       player.power.bowl3 = 8;
 
       // default value
-      expect(player.science).to.equal(3)
+      expect(player.science).to.equal(5)
       expect(player.power.bowl3).to.equal(8)
       expect(player.power.bowl1).to.equal(2)
       g.processPlayerRequest(request)
       //
-      expect(player.science).to.equal(6)
+      expect(player.science).to.equal(8)
       expect(player.power.bowl3).to.equal(1)
       expect(player.power.bowl1).to.equal(9)
       expect(g.turn).to.equal(0)
@@ -266,11 +273,11 @@ describe('Player Actions Tests', () => {
      // change science
 
       // default value
-      expect(player.ore).to.equal(3)
+      expect(player.ore).to.equal(4)
       expect(player.gold).to.equal(13)
       g.processPlayerRequest(request)
       //
-      expect(player.ore).to.equal(2)
+      expect(player.ore).to.equal(3)
       expect(player.gold).to.equal(14)
 
       request.freeExchangeItems = [Material.Power, Material.Power]

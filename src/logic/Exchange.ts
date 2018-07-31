@@ -159,9 +159,9 @@ class Exchange{
     if(get === Material.QIC) player.qic += totalGet;
     if(get === Material.Ore) player.ore += totalGet;
     if(get === Material.Gold) {
-      console.log(player.gold);
+      //console.log(player.gold);
       player.gold += totalGet;
-      console.log(player.gold);
+      //console.log(player.gold);
     }
     if(get === Material.Science) player.science += totalGet;
     // TODO: is this the right way to handle this? VVV

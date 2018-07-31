@@ -483,6 +483,7 @@ public doAction(){
 
     let line : number = this.request.techLane
     this.game.techBoard.update(line, this.player)
+    this.player.science -= 4;
   }
 
   public powerAndQIC(){
@@ -509,17 +510,6 @@ public doAction(){
   }
 
 
-
-//
-//    public pass(){
-//      this.player.passed = true;
-//      this.game.passed++;
-//    }
-//
-
-public chargePower(){
-
-}
 
 
 }

@@ -887,12 +887,12 @@ public setPlanetType(playerPlanet: PlanetType) {
       //   }
       // }
 
-      console.log(this.name)
-      console.log("before income");
-      console.log(this.gold +" gold vs ore "+ this.ore);
+      // console.log(this.name)
+      // console.log("before income");
+      // console.log(this.gold +" gold vs ore "+ this.ore);
       this.triggerBenefit(Trigger.Income, null);
-      console.log(this.gold +" gold vs ore "+ this.ore);
-      console.log("after income");
+      // console.log(this.gold +" gold vs ore "+ this.ore);
+      // console.log("after income");
 
       // for title do not need remove previous for it income by fraction
       // see detail code of tech
@@ -920,27 +920,50 @@ public setPlanetType(playerPlanet: PlanetType) {
      * @author yousong
      */
     public getMineNum(): number{
-
-      return 0;
+      let count = 0;
+      for(let mine of this.buildings.mines){
+        if(mine.status === StructureStatus.Built)
+           count++;
+      }
+         return count;
     }
 
     public getStationNum():number{
-
-      return 0;
+      let count = 0;
+      for(let s of this.buildings.station){
+        if(s.status === StructureStatus.Built)
+           count++;
+      }
+         return count;
     }
 
     public getLabNum():number{
-      
+      let count = 0;
+      for(let s of this.buildings.lab){
+        if(s.status === StructureStatus.Built)
+           count++;
+      }
+         return count;
       return 0;
     }
-    
+
     /**
      * return the number of Institutions and Academies
      * notice: two kinds of structure
      */
     public getBigBuildingNum():number{
+      let count = 0;
+      for(let s of this.buildings.institute){
+        if(s.status === StructureStatus.Built)
+           count++;
+      }
 
-      return 0;
+      for(let s of this.buildings.academies){
+        if(s.status === StructureStatus.Built)
+           count++;
+      }
+
+      return count;
     }
 
 }
