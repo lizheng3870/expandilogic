@@ -30,6 +30,7 @@ async function main() {
 
     // start the game
     let g = new Game(1)
+      g.clearSaveGame()
 
 
 

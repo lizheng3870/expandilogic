@@ -290,14 +290,14 @@ console.log( stack )
 
 
          let planet = this.board.getPlanet(request.hex);
+         let mine = player.getAvalibleMine();
+         if(mine === null)return false;
 
          //console.log(player.pid+ "   >>player.planetType  >>  " + player.planetType)
          //console.log("planet.type" + planet.type)
          // put mine on planet
          if(planet.type === player.planetType ){
            this.board.buildMine(request.hex, player.pid);
-           let mine = player.getAvalibleMine();
-           if(mine === null)return false;
            mine.status = StructureStatus.Built;
            player.planets.push(planet);
          }else{
@@ -388,6 +388,14 @@ console.log( stack )
       }
       throw new Error(`getPlayer error for pid is error`)
 
+    }
+
+    public clearSaveGame(){
+      const itemsRef = GFirebase.database().ref('game/'+this.gid + '/mapboard');
+      itemsRef.set("");
+
+      const itemsRef2 = GFirebase.database().ref('game/'+this.gid + '/players');
+      itemsRef2.set("");
     }
 
     public saveGame(){
