@@ -21,6 +21,9 @@ interface RaceJSON {
   vp:       number;
   science:   number;
   qic:      number;
+  bowl1:    number;
+  bowl2:    number;
+  bowl3:    number;
 }
 
 
@@ -861,6 +864,29 @@ public setPlanetType(playerPlanet: PlanetType) {
 
     }
 
+    public calculateIncomeBenefit(){
+      // // for default income for race board
+      // let benefits = this.incomes;
+      // //roundBooster
+      // let list = this.roundBooster.benefit;
+      // for(let benefit of list){
+      //   if(benefit.trigger === Trigger.Income){
+      //     benefits.push(benefit);
+      //   }
+      // }
+
+      console.log(this.name)
+      console.log("before income");
+      console.log(this.gold +" gold vs ore "+ this.ore);
+      this.triggerBenefit(Trigger.Income, null);
+      console.log(this.gold +" gold vs ore "+ this.ore);
+      console.log("after income");
+
+      // for title do not need remove previous for it income by fraction
+      // see detail code of tech
+
+    }
+
     public getJsonData():RaceJSON{
       return {
         name:       this.name,
@@ -870,6 +896,9 @@ public setPlanetType(playerPlanet: PlanetType) {
         vp:       this.vp,
         science:   this.science,
         qic:      this.qic,
+        bowl1:    this.power.bowl1,
+        bowl2:    this.power.bowl2,
+        bowl3:    this.power.bowl3,
       };
 
     }
