@@ -3,6 +3,9 @@ import {Benefit, Value, Material, Count, BuildingType, Trigger} from './Benefit'
 
 class TechTile {
   public techId: number;
+  public benefit: Benefit;
+  public round: number; // Each special action can be used only once per round.
+
 
   constructor(techId: number){
     this.techId = techId;
@@ -18,12 +21,12 @@ class TechTile {
    /**
     * when get a normal techtile
     * get something or get some power
-    * @param player 
+    * @param player
     */
    public onTechTile(player: Player){
      let b1 = null;
      if(this.techId === 0){
-      b1 = new Benefit(Trigger.Now, null, null, [new Value(1, Material.Ore), new Value(1, Material.QIC)]); 
+      b1 = new Benefit(Trigger.Now, null, null, [new Value(1, Material.Ore), new Value(1, Material.QIC)]);
      }
      if(this.techId === 1){
       b1 = new Benefit(Trigger.Now, Count.PlanetTypes, null, [new Value(1, Material.Science)]);
@@ -50,7 +53,15 @@ class TechTile {
        //power: can charge 4 power, everyturn
        b1 = new Benefit(Trigger.Special, null, null, [new Value(4, Material.Power)]);
      }
-     if(b1 != null) player.getTechTileBenefit(b1);
+
+     if(b1 != null){
+       player.getTechTileBenefit(b1);
+
+       let techtile = new TechTile(this.techId);
+       techtile.benefit = b1;
+       techtile.round = -1;
+       player.techTiles.push(techtile);
+     }
    }
 
    /*
@@ -161,7 +172,14 @@ class TechTile {
        //every time build station: +3 VP;
        b1 = new Benefit(Trigger.Build, null, BuildingType.TradingStation, [new Value(3, Material.VP)]);
      }
-     if(b1 != null) player.getTechTileBenefit(b1);
+
+     if(b1 != null){
+       player.getTechTileBenefit(b1);
+       let techtile = new TechTile(this.techId);
+       techtile.benefit = b1;
+       techtile.round = -1;
+       player.techTiles.push(techtile);
+     }
    }
 }
 

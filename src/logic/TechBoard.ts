@@ -11,7 +11,8 @@ class TechBoard {
   public advanceId: number[];
   public advanceTechTiles: TechTile[];
 
-  constructor() {
+
+  constructor(randomTechtile:boolean = true) { // for testcase which will set to false
     this.table = []
     this.normal6Id = []
     this.normal6TechTiles = []
@@ -19,29 +20,29 @@ class TechBoard {
     this.normal3TechTiles =[]
     this.advanceId = []
     this.advanceTechTiles = []
-    this.loadTechs();
+    this.loadTechs(randomTechtile);
   }
-  
+
   /**
    * print out the id
    */
   public print(){
-    console.log("normal 6 are: " + this.normal6Id[0] + " " + 
-    this.normal6Id[1] + " " + 
-    this.normal6Id[2] + " " + 
-    this.normal6Id[3] + " " + 
-    this.normal6Id[4] + " " + 
+    console.log("normal 6 are: " + this.normal6Id[0] + " " +
+    this.normal6Id[1] + " " +
+    this.normal6Id[2] + " " +
+    this.normal6Id[3] + " " +
+    this.normal6Id[4] + " " +
     this.normal6Id[5] + " " );
 
-    console.log("normal 3 are: " + this.normal3Id[0] + " " + 
-    this.normal3Id[1] + " " + 
+    console.log("normal 3 are: " + this.normal3Id[0] + " " +
+    this.normal3Id[1] + " " +
     this.normal3Id[2] + " " );
 
-    console.log("advance 6 are: " + this.advanceId[0] + " " + 
-    this.advanceId[1] + " " + 
-    this.advanceId[2] + " " + 
-    this.advanceId[3] + " " + 
-    this.advanceId[4] + " " + 
+    console.log("advance 6 are: " + this.advanceId[0] + " " +
+    this.advanceId[1] + " " +
+    this.advanceId[2] + " " +
+    this.advanceId[3] + " " +
+    this.advanceId[4] + " " +
     this.advanceId[5] + " " );
   }
 
@@ -93,7 +94,7 @@ class TechBoard {
       this.update(lane, player);
    }
 
-   public loadTechs(){
+   public loadTechs(randomTechtile : boolean){
     var i;
     var j;
 
@@ -106,7 +107,10 @@ class TechBoard {
     }
 
     var arr = [0,1,2,3,4,5,6,7,8];
-    arr.sort(function(){ return 0.5 - Math.random() });
+    if(randomTechtile === true){
+        arr.sort(function(){ return 0.5 - Math.random() });
+    }
+
     for(i = 0; i < 6; i++){
       this.normal6Id[i] = arr[i];
       this.normal6TechTiles[i] = new TechTile(arr[i]);
@@ -116,7 +120,10 @@ class TechBoard {
       this.normal3TechTiles[i] = new TechTile(arr[i + 6]);
     }
     arr = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14];
-    arr.sort(function(){ return 0.5 - Math.random() });
+    if(randomTechtile === true){
+        arr.sort(function(){ return 0.5 - Math.random() });
+    }
+
     for(i = 0; i < 6; i++){
       this.advanceId[i] = arr[i];
       this.advanceTechTiles[i] = new TechTile(arr[i]);

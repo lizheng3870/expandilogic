@@ -20,10 +20,11 @@ enum UpgradeType{
     LabToAcademy,
 }
 
-enum TokenType{
-  Roundbooter,
+enum SpecialActionSource{
+  RoundBooster,
   TechTile,
-  Federation
+  LastInstitute,
+  LastAcademy,
 }
 
 enum TechLaneType{
@@ -43,17 +44,32 @@ class Request {
     public actionType: ActionType
     public upgradeType: UpgradeType  // upgrade
     public path: Hex[]  // for Federation
-    public techLane: TechLaneType
-    public techTileID: number
+    public techLane: TechLaneType   // search action
+    public techTileID: number    // 0 - 14   for update action lab or academy pickup techtile , detail below
+    public offTechId: number  // related with advanced techtile, see detail below
     public purchase: Merchandise  // for PowerAndQIC actions
-    public specialTokenType:TokenType
+    public specialActionSource:SpecialActionSource
     public freePurchase: Merchandise  // for free action
     public storeMerchandiseType: StoreMerchandiseType // Power and QIC
     public freeExchangeItems: Material[]   //
     public freeExchangeTimes:number //
 
-
-
 }
 
-export {Request, RequestType, UpgradeType, TechLaneType}
+/*
+* You must have at least one uncovered standard tech tile.
+   When you gain an advanced tech tile, place it faceup covering one
+
+   update action lab or academy pickup techtile
+   case one:  takeNormal6TechTiles  techTileID  0 1 2 3 4 5
+   case two:  takeNormal3TechTiles  techTileID  6 7 8
+   case three: takeAdvancedTechTiles techTileID 9 10 11 12 13 14 offTechId  0 - 8  offTechId is ID of covered standard tech tile
+
+
+
+*/
+
+
+
+
+export {Request, RequestType, UpgradeType, TechLaneType, SpecialActionSource}

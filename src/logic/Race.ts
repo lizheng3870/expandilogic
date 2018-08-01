@@ -134,7 +134,7 @@ export class Race {
     // variable from previous player currentPlayerPass  public name: string
     public name: string
     public techs: number[]
-    public techTiles: TechTiles[]
+    public techTiles: TechTiles[]  // not used in current design
     public gaiaFormingCost: number = 6
     public digCost: number = 3
     public pid: number

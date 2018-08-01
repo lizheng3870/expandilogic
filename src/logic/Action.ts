@@ -2,10 +2,10 @@ import {Game} from "./Game";
 import {MapBoard} from "./MapBoard";
 import {Player, CreatePlayer} from "./Player";
 //import {Hex} from "./Hex";
-import { Request , UpgradeType} from './Request'
+import { Request , UpgradeType, SpecialActionSource} from './Request'
 import { StructureType, StructureStatus} from './Structure'
 import {PlanetType} from './Planet'
-import {Material} from './Benefit'
+import {Material, Trigger} from './Benefit'
 
 /**
  * Types of actions that a player can make on his turn
@@ -23,6 +23,8 @@ import {Material} from './Benefit'
      Pass
 
  }
+
+
 
 /**
  * Action class considers factors relating to making an action
@@ -88,21 +90,52 @@ class Action {
 
     return false;
 
-
-
-    //
-    // if(this.request.actionType === ActionType.Special){
-    //   return
-    // }
-    //
-    // if(this.request.actionType === ActionType.Pass){
-    //   return
-    // }
-
-     return true;
    }
 
+   /*
+   * You must have at least one uncovered standard tech tile.
+      When you gain an advanced tech tile, place it faceup covering one
+
+      update action lab or academy pickup techtile
+      case one:  takeNormal6TechTiles  techTileID  0 1 2 3 4 5
+      case two:  takeNormal3TechTiles  techTileID  6 7 8
+      case three: takeAdvancedTechTiles techTileID 9 10 11 12 13 14 offTechId  0 - 8  offTechId is ID of covered standard tech tile
+
+   */
+   public checkTechTile(){
+     if(this.request.techLane === undefined){
+       this.message = "this.request.techLane === undefined"
+       return false;
+     }
+
+     if(this.request.techTileID < 0  && this.request.techTileID >14){
+       this.message = "techTileID out of range [0 14]"
+       return false;
+     }
+
+     if(this.request.techTileID > 8 ){
+       if(this.request.offTechId === undefined){
+         this.message = "this.request.offTechId === undefined when techTileID > 8 "
+         return false;
+       }
+     }
+
+     return true;
+
+   }
+
+
+
    public checkUpdateBuilding(): boolean{
+       if(this.request.upgradeType === UpgradeType.StationToLab || this.request.upgradeType === UpgradeType.LabToAcademy){
+          if(this.request.techTileID === undefined){
+            this.message = "missing techTileID for update to lab and academy "
+            return false
+          }
+
+       }
+
+
       const planet = this.board.getPlanet(this.request.hex);
       if(planet.playerID !== this.player.pid){
         console.log("you do not own this planet")
@@ -112,22 +145,28 @@ class Action {
       let hasNeighboring = this.board.hasNeighboring(this.request.hex, this.player.pid);
       // check planet building type
       if(this.request.upgradeType === UpgradeType.MineToStation){
-        if(planet.building === StructureType.Mine)return true;
-        else return false;
+        if(planet.building !== StructureType.Mine){
+          console.log("planet.building !== StructureType.Mine")
+          return false;
+        }
 
       }
 
       if(this.request.upgradeType === UpgradeType.StationToInstitute ||
         this.request.upgradeType === UpgradeType.StationToLab
       ){
-        if(planet.building === StructureType.Station)return true;
-        else return false;
-
+        if(planet.building !== StructureType.Station){
+          console.log("planet.building !== StructureType.Station")
+          return false;
+        }
       }
 
       if(this.request.upgradeType === UpgradeType.LabToAcademy){
-        if(planet.building === StructureType.Lab)return true;
-        else return false;
+        if(planet.building !== StructureType.Lab){
+          console.log("planet.building !== StructureType.Lab")
+          return false;
+        }
+
       }
 
 
@@ -141,20 +180,23 @@ class Action {
       if(this.request.upgradeType === UpgradeType.StationToInstitute ){
         let institute = this.player.getAvalibleInstitute();
         if(institute === null)return false;
+
         return this.player.haveResouces(institute.cost);
       }
 
       if(this.request.upgradeType === UpgradeType.StationToLab){
           let lab = this.player.getAvalibleLab();
           if(lab === null)return false;
-          return this.player.haveResouces(lab.cost);
+          return this.player.haveResouces(lab.cost) && this.checkTechTile();
       }
 
       if(this.request.upgradeType === UpgradeType.LabToAcademy){
         let academy = this.player.getAvalibleAcademies();
         if(academy === null)return false;
-        return this.player.haveResouces(academy.cost);
+        return this.player.haveResouces(academy.cost) && this.checkTechTile();
       }
+
+
 
       return false;  // execute to here is wrong
 
@@ -233,7 +275,10 @@ public checkPowerAndQIC(){
 }
 
 public checkSpecial(){
-  //todo
+  if(this.request.specialActionSource === undefined){
+    this.message = "specialTokenType required"
+    return false;
+  }
   return true;
 }
 
@@ -245,6 +290,10 @@ public checkFree(){
 }
 
 public checkPass(){
+  if(this.game.round < 6 && this.request.roundBoosterID == null){
+    this.message = "roundBoosterID missing";
+    return false;
+  }
   return true;
 }
 
@@ -401,6 +450,33 @@ public doAction(){
 
   }
 
+  /*
+  * You must have at least one uncovered standard tech tile.
+     When you gain an advanced tech tile, place it faceup covering one
+
+     update action lab or academy pickup techtile
+     case one:  takeNormal6TechTiles  techTileID  0 1 2 3 4 5
+     case two:  takeNormal3TechTiles  techTileID  6 7 8
+     case three: takeAdvancedTechTiles techTileID 9 10 11 12 13 14 offTechId  0 - 8  offTechId is ID of covered standard tech tile
+
+  */
+  public takeTechTile(){
+    if(this.request.techTileID < 6){
+      this.game.techBoard.takeNormal6TechTiles(this.request.techLane, this.player);
+    }
+
+    if(this.request.techTileID >= 6  && this.request.techTileID <= 8){
+      let index = this.request.techTileID - 6;
+      this.game.techBoard.takeNormal3TechTiles(index, this.request.techLane, this.player);
+    }
+
+    if(this.request.techTileID > 8 ){
+      let index = this.request.techTileID - 9;
+      this.game.techBoard.takeAdvancedTechTiles(this.request.techLane, this.request.offTechId, this.player);
+    }
+
+  }
+
   public updateBuilding(){
     if(this.checkUpdateBuilding() === false)return
 
@@ -422,6 +498,7 @@ public doAction(){
 
     if(this.request.upgradeType === UpgradeType.LabToAcademy){
       last = this.player.getLastBuiltLab()
+
     }
 
     if(last){
@@ -440,6 +517,7 @@ public doAction(){
     }
 
     if(this.request.upgradeType === UpgradeType.StationToInstitute ){
+
       let institute = this.player.getAvalibleInstitute();
       if(institute === null)return;
       this.player.payResouces(institute.cost);
@@ -451,6 +529,7 @@ public doAction(){
         if(lab === null)return;
         this.player.payResouces(lab.cost);
         planet.building = StructureType.Lab;
+        this.takeTechTile()
     }
 
     if(this.request.upgradeType === UpgradeType.LabToAcademy){
@@ -458,6 +537,7 @@ public doAction(){
       if(academy === null)return;
       this.player.payResouces(academy.cost);
       planet.building = StructureType.Academy;
+      this.takeTechTile()
     }
 
   }
@@ -491,8 +571,33 @@ public doAction(){
   }
 
 
+  ///
   public special(){
-    //todo
+    if(this.request.specialActionSource === SpecialActionSource.RoundBooster){
+      let benefits = this.player.roundBooster.benefit;
+      for(let benefit of benefits){
+        if(benefit.trigger === Trigger.Special){
+          this.player.onBenefit(benefit);
+        }
+      }
+
+     }
+
+     if(this.request.specialActionSource === SpecialActionSource.TechTile){
+       let techtile = null;
+       for(let item of this.player.techTiles){
+         if(item.techId === this.request.techTileID){
+           techtile = item;
+         }
+       }
+
+       if(techtile !== null && techtile.benefit.trigger === Trigger.Special){
+             this.player.onBenefit(techtile.benefit);
+
+       }
+
+     }
+
     return true;
   }
 

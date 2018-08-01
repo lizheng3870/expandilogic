@@ -3,12 +3,13 @@ import * as Lab from 'lab'
 import { expect } from 'code'
 import {Game, GameStatus} from '../logic/Game'
 import {Player, CreatePlayer, RaceType} from '../logic/Player'
-import {Request, RequestType, UpgradeType, TechLaneType} from '../logic/Request'
+import {Request, RequestType, UpgradeType, TechLaneType, SpecialActionSource} from '../logic/Request'
 import {Hex} from '../logic/Hex'
 import {ActionType} from '../logic/Action'
 import {StructureType} from '../logic/Structure'
 import {StoreMerchandiseType} from '../logic/Store'
 import {Material} from '../logic/Benefit'
+import TechBoard from '../logic/TechBoard'
 
 const lab = Lab.script()
 const { describe, it, before } = lab
@@ -21,6 +22,7 @@ describe('Player Actions Tests', () => {
 
     before(() => {
       g = new Game(1)
+      g.techBoard = new TechBoard(false);
       g.addPlayer(CreatePlayer('yousong', RaceType.Terrans)) // blue
       g.addPlayer(CreatePlayer('nina', RaceType.Xenos))  //yellow
       g.addPlayer(CreatePlayer('yalei', RaceType.HadschHallas))  //red
@@ -179,7 +181,7 @@ describe('Player Actions Tests', () => {
       g.processPlayerRequest(request)
 
       expect(beforeGold - player.gold).to.equal(3)
-      expect(beforeOre - player.ore).to.equal(1)
+      expect(beforeOre - player.ore).to.equal(2)
 
       if(player === null){
           expect(0).to.equal(1);
@@ -231,7 +233,7 @@ describe('Player Actions Tests', () => {
     });
 
 
-    it('rong player(yalei:2) send reqest of QIC Action to Game', () => {
+    it('rong player(3) send reqest of QIC Action to Game', () => {
       let request = new Request()
       request.type = RequestType.Action
       request.actionType = ActionType.PowerAndQIC
@@ -309,10 +311,421 @@ describe('Player Actions Tests', () => {
       expect(player.power.bowl1).to.equal(4)
       expect(player.power.bowl2).to.equal(0)
       expect(player.power.bowl3).to.equal(2)
-      g.saveGame();
+
+    });
+
+    it('yousong player(pid:0) update mine to trade station', () => {
+      let request = new Request()
+      request.type = RequestType.Action
+      request.actionType = ActionType.Upgrade
+      request.upgradeType = UpgradeType.MineToStation;
+      request.pid = 0;
+      request.hex = new Hex(1, -1, 0);
+
+      let player = g.getPlayer(request.pid);
+
+      let beforeGold = player.gold;
+      let beforeOre = player.ore;
+
+
+      g.processPlayerRequest(request)
+
+      let planet = g.board.getPlanet(request.hex);
+      expect(planet.building).to.equal(StructureType.Station)
+
+     // for neighbor or not neighbor is gold 3 /6 does no check, all is 3
+      expect(beforeGold - player.gold).to.equal(3)
+      expect(beforeOre - player.ore).to.equal(2)
 
 
 
     });
+
+    it(' player(pid:1) trade station to Planetary Institute', () => {
+      let request = new Request()
+      request.type = RequestType.Action
+      request.actionType = ActionType.Upgrade
+      request.upgradeType = UpgradeType.StationToInstitute;
+      request.pid = 1;
+      request.hex = new Hex(2, 3, -5);
+
+      let player = g.getPlayer(request.pid);
+
+
+
+      // default value
+      // expect(player.power.bowl1).to.equal(4)
+      // expect(player.power.bowl2).to.equal(4)
+      // expect(player.power.bowl3).to.equal(0)
+
+      player.ore = 4; // ore not enough
+      let beforeGold = player.gold;
+      let beforeOre = player.ore;
+
+      g.processPlayerRequest(request)
+
+
+      let planet = g.board.getPlanet(request.hex);
+      expect(planet.building).to.equal(StructureType.Institute)
+
+      expect(beforeGold - player.gold).to.equal(6)
+      expect(beforeOre - player.ore).to.equal(4)
+
+
+    });
+
+
+
+        it('player(pid:2) update mine to trade station', () => {
+          let request = new Request()
+          request.type = RequestType.Action
+          request.actionType = ActionType.Upgrade
+          request.upgradeType = UpgradeType.MineToStation;
+          request.pid = 2;
+          request.hex = new Hex(5, -2, -3);
+
+          let player = g.getPlayer(request.pid);
+
+
+
+          // default value
+          // expect(player.power.bowl1).to.equal(4)
+          // expect(player.power.bowl2).to.equal(4)
+          // expect(player.power.bowl3).to.equal(0)
+
+        // ore not enough
+          let beforeGold = player.gold;
+          let beforeOre = player.ore;
+
+          g.processPlayerRequest(request)
+
+
+          let planet = g.board.getPlanet(request.hex);
+          expect(planet.building).to.equal(StructureType.Station)
+
+          expect(beforeGold - player.gold).to.equal(3)
+          expect(beforeOre - player.ore).to.equal(2)
+        });
+
+        it('player(3) update mine to trade station', () => {
+          let request = new Request()
+          request.type = RequestType.Action
+          request.actionType = ActionType.Upgrade
+          request.upgradeType = UpgradeType.MineToStation;
+          request.pid = 3;
+          request.hex = new Hex(-6, 3, 3);
+
+          let player = g.getPlayer(request.pid);
+
+
+
+          // default value
+          // expect(player.power.bowl1).to.equal(4)
+          // expect(player.power.bowl2).to.equal(4)
+          // expect(player.power.bowl3).to.equal(0)
+
+        // ore not enough
+          let beforeGold = player.gold;
+          let beforeOre = player.ore;
+
+          g.processPlayerRequest(request)
+
+
+          let planet = g.board.getPlanet(request.hex);
+          expect(planet.building).to.equal(StructureType.Station)
+
+          expect(beforeGold - player.gold).to.equal(3)
+          expect(beforeOre - player.ore).to.equal(2)
+        });
+
+
+        it('yousong player(pid:0) update mine to trade station', () => {
+          let request = new Request()
+          request.type = RequestType.Action
+          request.actionType = ActionType.Upgrade
+          request.upgradeType = UpgradeType.MineToStation;
+          request.pid = 0;
+          request.hex = new Hex(0, 0, 0);
+
+          let player = g.getPlayer(request.pid);
+
+          player.ore = 10 // not enough
+          let beforeGold = player.gold;
+          let beforeOre = player.ore;
+
+         g.processPlayerRequest(request)
+
+          let planet = g.board.getPlanet(request.hex);
+          expect(planet.building).to.equal(StructureType.Station)
+
+
+          expect(beforeGold - player.gold).to.equal(3)
+          expect(beforeOre - player.ore).to.equal(2)
+        });
+
+
+        it('player(1) update trade station to  lab', () => {
+          let request = new Request()
+          request.type = RequestType.Action
+          request.actionType = ActionType.Upgrade
+          request.upgradeType = UpgradeType.MineToStation;
+          request.pid = 1;
+          request.techTileID = 2;
+          request.hex = new Hex(3, 3, -6);
+
+          let player = g.getPlayer(request.pid);
+
+          player.ore = 10 // not enough
+          let beforeGold = player.gold;
+          let beforeOre = player.ore;
+
+
+          g.processPlayerRequest(request)
+
+
+          let planet = g.board.getPlanet(request.hex);
+          expect(planet.building).to.equal(StructureType.Station)
+
+
+          expect(beforeGold - player.gold).to.equal(3)
+          expect(beforeOre - player.ore).to.equal(2)
+        });
+
+
+
+        it('player(2) update trade station to lab', () => {
+          let request = new Request()
+          request.type = RequestType.Action
+          request.actionType = ActionType.Upgrade
+          request.upgradeType = UpgradeType.StationToLab;
+          request.pid = 2;
+          request.techTileID = 3;
+          request.techLane = 3;
+          request.hex = new Hex(5, -2, -3);
+
+          let player = g.getPlayer(request.pid);
+
+          //player.ore = 10 // not enough
+          // console.log("before ore" +  player.ore)
+          // console.log("before gold" +  player.gold)
+          let beforeGold = player.gold;
+          let beforeOre = player.ore;
+
+          g.processPlayerRequest(request)
+
+          let planet = g.board.getPlanet(request.hex);
+          expect(planet.building).to.equal(StructureType.Lab)
+
+
+          expect(beforeGold - player.gold).to.equal(5)
+          expect(beforeOre - player.ore).to.equal(3)
+        });
+
+
+        it('player(3) update trade station to lab', () => {
+          let request = new Request()
+          request.type = RequestType.Action
+          request.actionType = ActionType.Upgrade
+          request.upgradeType = UpgradeType.StationToLab;
+          request.pid = 3;
+          request.techTileID = 4;
+          request.techLane = 4;
+          request.hex = new Hex(-6, 3, 3);
+
+          let player = g.getPlayer(request.pid);
+
+          //player.ore = 10 // not enough
+          // console.log("before ore" +  player.ore)
+          // console.log("before gold" +  player.gold)
+          let beforeGold = player.gold;
+          let beforeOre = player.ore;
+
+          g.processPlayerRequest(request)
+
+          let planet = g.board.getPlanet(request.hex);
+          expect(planet.building).to.equal(StructureType.Lab)
+
+
+          expect(beforeGold - player.gold).to.equal(5)
+          expect(beforeOre - player.ore).to.equal(3)
+        });
+
+
+        it('player(0) update station to lab', () => {
+          let request = new Request()
+          request.type = RequestType.Action
+          request.actionType = ActionType.Upgrade
+          request.upgradeType = UpgradeType.StationToLab;
+          request.pid = 0;
+          request.hex = new Hex(0, 0, 0);
+          request.techTileID = 1;
+          request.techLane = 1;
+
+
+          let player = g.getPlayer(request.pid);
+
+          //player.ore = 10 // not enough
+          let beforeGold = player.gold;
+          let beforeOre = player.ore;
+          let beforeQic = player.qic;
+
+          g.processPlayerRequest(request)
+
+
+          let planet = g.board.getPlanet(request.hex);
+          expect(planet.building).to.equal(StructureType.Lab)
+
+          expect(beforeGold - player.gold).to.equal(5)
+          expect(beforeOre - player.ore).to.equal(3)
+         expect(player.qic - beforeQic).to.equal(1) // techLane from 1 to
+        });
+        //
+        it('player(1) pass test', () => {
+          let request = new Request()
+          request.type = RequestType.Action
+          request.actionType = ActionType.Pass
+          request.pid = 1;
+          request.roundBoosterID = 1;
+
+
+          let player = g.getPlayer(request.pid);
+
+
+          g.processPlayerRequest(request)
+
+          expect(g.turn).to.equal(1)  // for turn will not change but current player move to nextRound
+        });
+
+        it('player(2) update lab to Academy', () => {
+          let request = new Request()
+          request.type = RequestType.Action
+          request.actionType = ActionType.Upgrade
+          request.upgradeType = UpgradeType.LabToAcademy;
+          request.pid = 2;
+          request.techTileID = 8;
+          request.techLane = 1;
+          request.hex = new Hex(5, -2, -3);
+
+          let player = g.getPlayer(request.pid);
+
+          player.ore = 10 // not enough
+          let beforeGold = player.gold;
+          let beforeOre = player.ore;
+
+
+          g.processPlayerRequest(request)
+
+          let planet = g.board.getPlanet(request.hex);
+          expect(planet.building).to.equal(StructureType.Academy)
+
+
+          expect(beforeGold - player.gold).to.equal(6)
+          expect(beforeOre - player.ore).to.equal(6)
+        });
+
+
+        it('player(3) pass test', () => {
+          let request = new Request()
+          request.type = RequestType.Action
+          request.actionType = ActionType.Pass
+          request.pid = 3;
+          request.roundBoosterID = 4;
+
+
+          let player = g.getPlayer(request.pid);
+
+
+          g.processPlayerRequest(request)
+
+          expect(g.turn).to.equal(0)  // for turn will not change but current player move to nextRound
+        });
+
+        it('player(0) pass test', () => {
+          let request = new Request()
+          request.type = RequestType.Action
+          request.actionType = ActionType.Pass
+          request.pid = 0;
+          request.roundBoosterID = 6;
+
+          let player = g.getPlayer(request.pid);
+
+
+          g.processPlayerRequest(request)
+          expect(g.turn).to.equal(0)  // for turn will not change but current player move to nextRound
+        });
+
+
+        it('player(2) pass test', () => {
+          let request = new Request()
+          request.type = RequestType.Action
+          request.actionType = ActionType.Pass
+          request.pid = 2;
+          request.roundBoosterID = 3;
+
+
+          let player = g.getPlayer(request.pid);
+
+
+          g.processPlayerRequest(request)
+           expect(g.turn).to.equal(0)  // for turn will not change but current player move to nextRound
+           expect(g.round).to.equal(2)
+        });
+
+       // player 1 is first
+        it('new Round player(1) pass ', () => {
+          let request = new Request()
+          request.type = RequestType.Action
+          request.actionType = ActionType.Pass
+          request.pid = 1;
+          request.roundBoosterID = 5;
+
+          let player = g.getPlayer(request.pid);
+
+           g.processPlayerRequest(request)
+
+          expect(g.nextPlayerPid()).to.equal(3)
+
+
+        });
+
+        // player 1 is first
+         it('new Round player(3) special action ', () => {
+           let request = new Request()
+           request.type = RequestType.Action
+           request.actionType = ActionType.Special
+           request.specialActionSource = SpecialActionSource.RoundBooster
+           request.pid = 3;
+
+
+           let player = g.getPlayer(request.pid);
+
+
+           g.processPlayerRequest(request)
+
+           expect(player.specialRange).to.equal(3)
+
+         });
+
+         it('new Round player(3) pass ', () => {
+           let request = new Request()
+           request.type = RequestType.Action
+           request.actionType = ActionType.Pass
+           request.roundBoosterID = 1
+
+           request.pid = 3;
+
+
+
+           let player = g.getPlayer(request.pid);
+
+
+           g.processPlayerRequest(request)
+           expect(player.specialRange).to.equal(0)
+
+           expect(g.nextPlayerPid()).to.equal(0);
+
+         });
+
+
 
 });

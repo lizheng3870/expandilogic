@@ -26,8 +26,8 @@ import GFirebase from './GFirebase';
 enum GameStatus{
   Open,
   Setup,
-  Playing,
-  Income,
+  Playing,  // begin of round
+  Income,   // income of round
   Gaiaforming,
   Actions,
   Scoring,
@@ -67,7 +67,7 @@ class Game {
     constructor(gid: number){
       // console.log(`creating game ${gid}`)
      this.gid = gid;
-     this.round = 1;
+     this.round = 1;   // first round is 1
      this.turn = 0;  // start from 0;
 //     this.status = GameStatus.Open
      this.board = new MapBoard()
@@ -108,6 +108,13 @@ class Game {
 
      this.stateMachine.on(GameStatus.Actions, (from: GameStatus)=>{
       //  this.IncomePhase();
+     })
+
+
+     this.stateMachine.on(GameStatus.Scoring, (from: GameStatus)=>{
+
+      // after scoring play new game
+      this.stateMachine.go(GameStatus.Playing)
      })
 
    }
@@ -184,15 +191,10 @@ class Game {
    }
 
    public nextTurn(){
-     if(this.players.length === 0){
-       this.endRound();
-       this.newRound();
-     }else{
       this.turn++
       if (this.turn >= this.players.length){
         this.turn = 0
       }
-     }
    }
 
 
@@ -203,7 +205,8 @@ class Game {
      const tmp = this.players
      this.players = this.nextRound
      this.nextRound = tmp
-
+    // action = > playing
+     this.stateMachine.go(GameStatus.Scoring)
    }
 
    public newRound(){
@@ -234,11 +237,24 @@ class Game {
      if(currentPlayer.pid !== playerID){
        var stack = new Error().stack
 console.log( stack )
-       console.log(`not Player's turn pid: `+ playerID + `, curren turn : `+ this.turn )
+       console.log(`current Player pid: `+ currentPlayer.pid + `, curren turn : `+ this.turn )
        return false;
      }else{
        return true;
      }
+   }
+
+   public nextPlayerPid(){
+       let currentPlayer = this.players[this.turn];
+       return currentPlayer.pid;
+
+   }
+
+   public getRoundBooster(){
+       for(let item of this.roundBoosters){
+         console.log("id  " + item.id + "   valid "+ item.valid)
+       }
+
    }
 
    public processRoundRooter(request:Request){
@@ -337,14 +353,29 @@ console.log( stack )
     public processPlayerRequest(request:Request){
 
       this.checkTurn(request.pid);
-      const player = this.players[this.turn];
+      let player = this.players[this.turn];
       let action = new Action(this, player, request)
       if(action.checkValid()){
          action.doAction();
          if(request.actionType === ActionType.Free || request.actionType === ActionType.Special ||
             (request.actionType === ActionType.PowerAndQIC && request.techLane === TechLaneType.Dig ) ){
               // can not to next turn
-            }else{
+            }else if(request.actionType === ActionType.Pass ){
+            // in this case turn will not change but current player move to nextRound
+              if(this.players.length === 0){
+                this.endRound();
+                this.newRound();
+              }
+              // just not turn ++
+              if (this.turn >= this.players.length){
+                this.turn = 0
+              }
+
+              this.clearSpecialDigOrRange(player)
+
+            }
+            else{
+               this.clearSpecialDigOrRange(player)
                this.nextTurn();
             }
 
@@ -354,6 +385,11 @@ console.log( stack )
         console.log(action.message);
       }
 
+    }
+
+    public clearSpecialDigOrRange(player : Player){
+      player.specialDig = 0;
+      player.specialRange = 0;
     }
 
     public currentPlayerPass(request: Request){
@@ -373,7 +409,7 @@ console.log( stack )
 
 
       // remove player from players to nextRound
-      this.players.splice(this.turn - 1, 1);
+      this.players.splice(this.turn, 1);
       this.nextRound.push(player);
 
     }
@@ -381,6 +417,7 @@ console.log( stack )
 
     public getPlayer(pid:number){
       for(let player of this.players){
+
          if(player.pid === pid)return player;
       }
 
@@ -388,6 +425,20 @@ console.log( stack )
           if(player.pid === pid)return player;
       }
       throw new Error(`getPlayer error for pid is error`)
+
+    }
+
+    public getPlayer2(pid:number){
+      for(let player of this.players){
+        console.log(" id " + player.pid)
+         //if(player.pid === pid)return player;
+      }
+
+      for(let player of this.nextRound){
+        console.log("nextround id " + player.pid)
+          //if(player.pid === pid)return player;
+      }
+      //throw new Error(`getPlayer error for pid is error`)
 
     }
 

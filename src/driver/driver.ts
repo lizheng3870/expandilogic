@@ -100,7 +100,7 @@ async function main() {
     g.saveGame()
   }
 
-  out = await readCommandLine("Demo 2 (5/8) : player(pid:3) build mine on location Hex(2, 3, -5) ");
+  out = await readCommandLine("Demo 2 (5/8) : player(pid:3) build mine on location Hex(-6, 3, 3) ");
   {
     let request = new Request()
     let hex = new Hex(-6, 3, 3);
@@ -175,7 +175,7 @@ async function main() {
 
   }
     g.saveGame();
-    out = await readCommandLine("Demo 3 :Action player(pid:0) build mine on location Hex(1, -1, 0) which cost  2 gold  1 ore ")
+    out = await readCommandLine("Demo 4 :Action player(pid:0) build mine on location Hex(1, -1, 0) which cost  2 gold  1 ore ")
    {
      let request = new Request()
      request.type = RequestType.Action
@@ -186,7 +186,7 @@ async function main() {
      g.saveGame()
    }
 
-   out = await readCommandLine("Demo 3 :Action player(pid:1) update mine structure to station on location Hex(2, 3, -5) which cost  3 gold  1 ore ")
+   out = await readCommandLine("Demo 4 :Action player(pid:1) update mine structure to station on location Hex(2, 3, -5) which cost  3 gold  1 ore ")
 
 
   {
@@ -201,7 +201,7 @@ async function main() {
   }
 
 
-  out = await readCommandLine("Demo 3 :Action player(pid:2)  Rearch Action which cost 4 science, set Player(2) has 8 science. ")
+  out = await readCommandLine("Demo 4 :Action player(pid:2)  Rearch Action which cost 4 science. Player(2) do Rearch (Dig Tech 0->1 ) Action  which will cost 4 science and ore will increase 2")
 
 {
     let request = new Request()
@@ -213,17 +213,13 @@ async function main() {
 
 
    let player = g.getPlayer(request.pid);
-   // change science
-    player.science = 8
-    g.saveGame()
 
-    out = await readCommandLine("Demo 3 :Then Send Rearch (Dig Tech 0->1 ) Action  which will cost 4 science of player(2) and ore increase 2")
-    g.processPlayerRequest(request)
+      g.processPlayerRequest(request)
     g.saveGame()
 
 }
 
-out = await readCommandLine("Demo 3 :Action Player(pid 3)  free action one ore to one gold ")
+out = await readCommandLine("Demo 4 :Action Player(pid 3)  free action one ore to one gold ")
 {
   let request = new Request()
   request.type = RequestType.Action
