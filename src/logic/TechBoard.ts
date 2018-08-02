@@ -10,6 +10,7 @@ class TechBoard {
   public normal3TechTiles: TechTile[];
   public advanceId: number[];
   public advanceTechTiles: TechTile[];
+  public topLevelTaken: boolean[]
 
 
   constructor(randomTechtile:boolean = true) { // for testcase which will set to false
@@ -20,6 +21,7 @@ class TechBoard {
     this.normal3TechTiles =[]
     this.advanceId = []
     this.advanceTechTiles = []
+    this.topLevelTaken = [false, false, false, false, false, false]
     this.loadTechs(randomTechtile);
   }
 
@@ -46,6 +48,16 @@ class TechBoard {
     this.advanceId[5] + " " );
   }
 
+
+  public canUpdate(lane: number, player: Player){  // 0 - 5  lane 0 -5
+     var level = player.techs[lane];
+     if(level ===5 ||(level === 4 && this.topLevelTaken[lane] === true)) {
+       return false;
+     }else{
+       return true;
+     }
+   }
+
    /**
     * update the technology
     * @param lane update the lane of tech
@@ -53,12 +65,17 @@ class TechBoard {
     */
    public update(lane: number, player: Player){  // 0 - 5  lane 0 -5
       var level = player.techs[lane];
-      if(level === 5) {
-        // console.log("max level, can not update");
+      if(level === 5 ||(level === 4 && this.topLevelTaken[lane] === true)) {
+        // var stack = new Error().stack
+        // console.log( stack )
+        console.log("max level can only access by one or level already max ");
         return;
       }
       this.table[lane][level + 1].update(player);
       player.techs[lane]++;
+
+      if(level + 1 === 5)
+         this.topLevelTaken[lane] = true;
    }
 
    /**

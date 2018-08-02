@@ -89,11 +89,13 @@ export class Race {
 
     //Player Milestones
     public planets: Planet[]; // Which planets are my buildings on
+    public gaiaProjectPlanets:Planet[]; // Transdim planets start gaia project
     public gaiaformer: number;  // How many gaiaformers do I have
     public federations: Federation[]; // My Federations
     public numGaia: number; // How many gaia planets have a conquered
     public sectors: number = 0;
     public satellites: number = 0;
+    public passiveActionOn:boolean = true; //
 
     //Benefits not from the buildBoard
     // public nowBenefits: Benefit[];
@@ -134,12 +136,14 @@ export class Race {
     // variable from previous player currentPlayerPass  public name: string
     public name: string
     public techs: number[]
-    public techTiles: TechTiles[]  // not used in current design
+    public techTiles: TechTiles[]
     public gaiaFormingCost: number = 6
     public digCost: number = 3
     public pid: number
     public roundBooster: RoundBooster
     public buildings: BuildingLib
+
+    public sortByValue:number  //  final scoring count and sort
 
   constructor(name:string){
 
@@ -174,6 +178,7 @@ export class Race {
   this.techTiles = [];
   this.federations = [];
   this.pid =  -1;  // pid is player id for example 0 1 2 3
+  this.gaiaProjectPlanets = [];
   // this.nowBenefits = [];
   // this.incomeBenefits = [];
   this.techBenefits = [];
@@ -496,7 +501,7 @@ public setPlanetType(playerPlanet: PlanetType) {
       let times = 1;
 
       // asign the times
-      if(benefit.count === Count.Sectors){ times = this.sectors}
+      if(benefit.count === Count.Sectors){ times = this.getSectors()}
       if(benefit.count === Count.Mines){} // times = num of mine
       if(benefit.count === Count.TradingStations){} // times = num of station
       if(benefit.count === Count.Labs){}
@@ -504,7 +509,7 @@ public setPlanetType(playerPlanet: PlanetType) {
       if(benefit.count === Count.Feds){ times = this.federations.length }
       if(benefit.count === Count.PlanetTypes){ times = this.getPlanetTypes() }
       if(benefit.count === Count.Satellites){ times = this.satellites }
-      if(benefit.count === Count.Gaia){ times = this.numGaia }
+      if(benefit.count === Count.Gaia){ times = this.getGaiaNum() }
 
       for(; i < values.length; i++){
         value = values[i];
@@ -551,10 +556,10 @@ public setPlanetType(playerPlanet: PlanetType) {
 
     public checkPlanetDistance(hex: Hex){
       var distance = this.nearDistance(hex);
-      if(this.range >= distance){
+      if(this.range + this.specialRange >= distance){
         return true;
       }else{
-        if(this.range + this.qic * 2 >= distance){
+        if(this.range + this.specialRange + this.qic * 2 >= distance){
           console.log("checkPanetDistance OK  but need QIC ");
           return true;
         }
@@ -761,8 +766,7 @@ public setPlanetType(playerPlanet: PlanetType) {
 
   // terraforming will cost ore according tech level
   public startGaiaProjectCost():number{
-    //// TODO:
-    return 6;
+    return this.gaiaFormingCost;
   }
 
   public checkPowerForGaiaProject(){
@@ -786,7 +790,7 @@ public setPlanetType(playerPlanet: PlanetType) {
   public transferGaiaPower(){
      let cost = this.startGaiaProjectCost();
      this.takePowersAwayFromBowl(cost);
-
+     this.power.gaia += cost;
    }
 
   // used in Federation
@@ -845,10 +849,11 @@ public setPlanetType(playerPlanet: PlanetType) {
     }
 
     public onPassBenefit(){
-      let benefits = this.getTrigerBenefit(Trigger.Pass);
-      for(const benefit of benefits){
-        this.onBenefit(benefit);
-      }
+      // let benefits = this.getTrigerBenefit(Trigger.Pass);
+      // for(const benefit of benefits){
+      //   this.onBenefit(benefit);
+      // }
+      this.triggerBenefit(Trigger.Pass, null);
     }
 
     public accessiblePlanets(board: MapBoard){
@@ -877,19 +882,20 @@ public setPlanetType(playerPlanet: PlanetType) {
     }
 
     public calculateIncomeBenefit(){
+
       // // for default income for race board
       // let benefits = this.incomes;
       // //roundBooster
-      // let list = this.roundBooster.benefit;
-      // for(let benefit of list){
-      //   if(benefit.trigger === Trigger.Income){
-      //     benefits.push(benefit);
-      //   }
-      // }
+      this.roundBoosterBenefits = [];
+      let list = this.roundBooster.benefit;
+      for(let benefit of list){
+          this.getRoundBoosterBenefit(benefit);
+      }
 
       // console.log(this.name)
       // console.log("before income");
       // console.log(this.gold +" gold vs ore "+ this.ore);
+
       this.triggerBenefit(Trigger.Income, null);
       // console.log(this.gold +" gold vs ore "+ this.ore);
       // console.log("after income");
@@ -964,6 +970,72 @@ public setPlanetType(playerPlanet: PlanetType) {
       }
 
       return count;
+    }
+
+    public removeTechtile(techId: number){  // when get advanced techTile
+      let index = 0;
+      let found = false;
+      for(let techTile of this.techTiles ){
+          if(techTile.techId === techId){
+            found = true;
+            break;
+          }
+          index++;
+      }
+      if(found){
+        this.techTiles.splice(index, 1); //remove this techtile
+      }
+
+    }
+
+    public hasTechTileID(techId: number){
+
+      for(let techTile of this.techTiles ){
+          if(techTile.techId === techId){
+            return true;
+          }
+     }
+      return false;
+
+    }
+
+
+
+    public GaiaPhase(){
+       this.power.bowl1 += this.power.gaia;
+       for(let planet of this.gaiaProjectPlanets){
+         planet.type = PlanetType.Gaia;
+       }
+
+       this.gaiaProjectPlanets = [];
+
+
+    }
+
+    public getSectors(){
+      return this.sectors;
+    }
+
+    public getGaiaNum(){
+      let count = 0;
+      for(let planet of this.planets){
+        if(planet.type === PlanetType.Gaia){
+          count ++;
+        }
+      }
+      return count;
+    }
+
+    public getFedarationBuildings(){
+      let count = 0;
+      for(let federation of this.federations){
+        count += federation.planets.length;
+      }
+      return count;
+    }
+
+    public getBuildings(){
+      return this.planets.length;
     }
 
 }

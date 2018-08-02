@@ -106,6 +106,10 @@ class TechTile {
       //player.abilities[XX] = null;
       //how to turn it off;
     }
+
+    // remove techTiles from player.techTiles
+    player.removeTechtile(techId)
+
    }
 
    public onAdvanceTechTile(player: Player, offTechId: number){

@@ -22,7 +22,7 @@ const enum Trigger {
     Special,
     ScienceUp,
     GaiaBuild,
-    Buy,
+    Buy
 }
 
 enum Count {
@@ -50,7 +50,8 @@ enum BuildingType {  // when trigger is build, and buiding same BuildingType wil
     TradingStation,
     Lab,
     Academy,
-    Institute
+    Institute,
+    BigBuildings
 }
 
 class Benefit {

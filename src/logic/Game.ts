@@ -1,7 +1,7 @@
 import {Exchange} from './Exchange'
 import {MapBoard} from './MapBoard'
 import TechBoard from './TechBoard'
-import ScoringBoard from './ScoringBoard'
+import {ScoringBoard, FinalCount} from './ScoringBoard'
 import RoundBooster  from './RoundBooster'
 import {Player, CreatePlayer} from './Player'
 import {RaceType} from './Race'
@@ -9,13 +9,13 @@ import {Terrans} from './Races/Terrans'
 import {Xenos} from './Races/Xenos'
 import {Nevlas} from './Races/Nevlas'
 import {HadschHallas} from './Races/HadschHallas'
-import {Benefit} from './Benefit'
+import {Benefit, Trigger, BuildingType} from './Benefit'
 import {Request, RequestType, TechLaneType} from './Request'
 import {TypeState} from 'TypeState'
 import {Action, ActionType} from './Action'
 import {StructureStatus} from './Structure'
 import {Store} from './Store'
-import { Federations } from './Federation';
+import { FederationLib } from './Federation';
 
 import GFirebase from './GFirebase';
 
@@ -30,6 +30,7 @@ enum GameStatus{
   Income,   // income of round
   Gaiaforming,
   Actions,
+  CleanUp,
   Scoring,
   Over
 }
@@ -52,7 +53,7 @@ class Game {
     public board: MapBoard
     public techBoard: TechBoard
     public scoringBoard:ScoringBoard
-    public federations: Federations
+    public federationlib: FederationLib
     public benefits: Benefit[] = []
     public exchange: Exchange
     public roundBoosters:RoundBooster[]
@@ -75,7 +76,7 @@ class Game {
      this.exchange = new Exchange();
      this.scoringBoard = new ScoringBoard();
      this.roundBoosters = [];
-     this.federations = new Federations();
+     this.federationlib = new FederationLib();
      this.loadRoundBooster();
      this.firstStructuresRound = 0;
      this.store = new Store();
@@ -86,8 +87,9 @@ class Game {
      this.stateMachine.from(GameStatus.Income).to(GameStatus.Gaiaforming)
      this.stateMachine.from(GameStatus.Gaiaforming).to(GameStatus.Actions)
      this.stateMachine.from(GameStatus.Actions).to(GameStatus.Actions)
-     this.stateMachine.from(GameStatus.Actions).to(GameStatus.Scoring)
-     this.stateMachine.from(GameStatus.Scoring).to(GameStatus.Playing)
+     this.stateMachine.from(GameStatus.Actions).to(GameStatus.CleanUp)
+     this.stateMachine.from(GameStatus.CleanUp).to(GameStatus.Playing)
+     this.stateMachine.from(GameStatus.Actions).to(GameStatus.Scoring) // final score, after all player passes
      this.stateMachine.from(GameStatus.Scoring).to(GameStatus.Over)
 
      this.stateMachine.on(GameStatus.Setup, (from: GameStatus)=>{
@@ -101,20 +103,23 @@ class Game {
      })
 
      this.stateMachine.on(GameStatus.Gaiaforming, (from: GameStatus)=>{
-       // todo
-      //  this.IncomePhase();
+        this.GaiaPhase();
       this.stateMachine.go(GameStatus.Actions)
      })
 
-     this.stateMachine.on(GameStatus.Actions, (from: GameStatus)=>{
-      //  this.IncomePhase();
+     // this.stateMachine.on(GameStatus.Actions, (from: GameStatus)=>{
+     //  //  this.IncomePhase();
+     // })
+
+
+     this.stateMachine.on(GameStatus.CleanUp, (from: GameStatus)=>{
+      // after Clean-Up to play new game
+      this.stateMachine.go(GameStatus.Playing)
      })
 
-
      this.stateMachine.on(GameStatus.Scoring, (from: GameStatus)=>{
-
-      // after scoring play new game
-      this.stateMachine.go(GameStatus.Playing)
+       this.finalScore();
+      this.stateMachine.go(GameStatus.Over)
      })
 
    }
@@ -206,10 +211,19 @@ class Game {
      this.players = this.nextRound
      this.nextRound = tmp
     // action = > playing
-     this.stateMachine.go(GameStatus.Scoring)
+     if(this.round === 7){
+        this.stateMachine.go(GameStatus.Scoring)
+     }else{
+        this.stateMachine.go(GameStatus.CleanUp)
+     }
+
    }
 
    public newRound(){
+     if(this.stateMachine.currentState === GameStatus.Over){
+       console.log("game over winer "+ this.players[0].name)
+       return;
+     }
      this.stateMachine.go(GameStatus.Income)
    }
 
@@ -220,6 +234,15 @@ class Game {
      }
 
    }
+
+
+      public GaiaPhase(){
+
+        for(let i = 0; i < 4; i++ ){
+         this.players[i].GaiaPhase()
+        }
+
+      }
 
    public calculateIncome(player: Player){
      player.calculateIncomeBenefit();
@@ -397,15 +420,18 @@ console.log( stack )
       const prevRoundBoosterId =  player.roundBooster.id;
       player.onPassBenefit();
 
-      var roundBoosterId =  request.roundBoosterID;
-      if(this.roundBoosters[roundBoosterId].valid === true)
-      {
-        player.roundBooster = this.roundBoosters[roundBoosterId];
-        this.roundBoosters[roundBoosterId].valid = false;
-        this.roundBoosters[prevRoundBoosterId].valid = true;
-      }else{
-        throw new Error(`RoundRooter used by other user`)
+      if(this.round !== 6){ // final round not need  roundBoosterID
+        var roundBoosterId =  request.roundBoosterID;
+        if(this.roundBoosters[roundBoosterId].valid === true)
+        {
+          player.roundBooster = this.roundBoosters[roundBoosterId];
+          this.roundBoosters[roundBoosterId].valid = false;
+          this.roundBoosters[prevRoundBoosterId].valid = true;
+        }else{
+          throw new Error(`RoundRooter used by other user`)
+        }
       }
+
 
 
       // remove player from players to nextRound
@@ -441,6 +467,55 @@ console.log( stack )
       //throw new Error(`getPlayer error for pid is error`)
 
     }
+
+    public trigerRoundScoringBenefit(triger:Trigger, type:BuildingType){
+      let benefit = this.scoringBoard.roundBenefits[this.round];
+      if(triger === benefit.trigger  && type === benefit.object){  // only check two fields is enough
+          this.players[this.turn].onBenefit(benefit);
+      }
+      // such action also triger techtile or roundBooster benefits;
+      this.players[this.turn].triggerBenefit(triger, type)
+
+    }
+
+    public finalScore(){
+      // scoring Board
+
+
+    }
+    public getFinalCountPlayers(count:FinalCount){
+
+        for(let player of this.players){
+          if(count === FinalCount.Sectors){
+            player.sortByValue = player.getSectors();
+          }
+
+          if(count === FinalCount.Buildings){
+            player.sortByValue = player.getBuildings();
+          }
+
+          if(count === FinalCount.FederationBuildings){
+            player.sortByValue = player.getFedarationBuildings();
+          }
+
+          if(count === FinalCount.PlanetTypes){
+            player.sortByValue = player.getPlanetTypes();
+          }
+
+          if(count === FinalCount.Gaia){
+            player.sortByValue = player.getGaiaNum();
+          }
+
+          if(count === FinalCount.Satellites){
+            player.sortByValue = player.satellites;
+          }
+
+        }
+
+
+
+    }
+
 
     public clearSaveGame(){
       const itemsRef = GFirebase.database().ref('game/'+this.gid + '/mapboard');

@@ -42,6 +42,7 @@ class Space {
 
 
 class MapBoard {
+   public centers: Hex[]
    public spaces : Space[]
    public planets: Planet[]
    public planetsMap: Map<string, Planet|null>
@@ -79,7 +80,7 @@ class MapBoard {
 
   // setup map for player
   public setup(playerNumber: number){
-        var centers = [];
+        let centers = [];
         centers[0] = this.getHex(0, 0);
         centers[1] = this.getHex(2, 3);
         centers[2] = this.getHex(5, -2);
@@ -90,6 +91,8 @@ class MapBoard {
         centers[7] = this.getHex(4, 6);
         centers[8] = this.getHex(-1, 8);
         centers[9] = this.getHex(-6, 10);
+
+        this.centers = centers;
 
         var spaces0 = Space.spiral(centers[0], 2);
 
@@ -285,6 +288,19 @@ class MapBoard {
 
   }
 
+  public getPlanetsInRange(center:Hex, range:number){
+    let planets:Planet[] = [];
+    let neighborings = Hex.rangeHexs(center, range)
+    for(let hex of neighborings){
+
+      if(this.hasPlanet(hex)){
+        let planet = this.getPlanet(hex);
+        planets.push(planet);
+      }
+    }
+    return planets;
+  }
+
 
   public checkSpaceFeded(hexs:Hex[]): boolean{ // check federation ocuppied before or not
       for(const hex of hexs){
@@ -349,7 +365,31 @@ class MapBoard {
     for(let space of this.spaces){
       data.push(this.getSpace(space));
     }
+    console.log(data)
     return data;
+  }
+
+  public getPlayerSectors(playerID:number){
+    let count = 0;
+    for(let center of  this.centers){
+      if(this.checkSectorHasPlayerPlanet(center, playerID))
+          count++;
+      }
+      return count
+  }
+
+    public checkSectorHasPlayerPlanet(center : Hex, playerID:number):boolean{
+      const hexs = Hex.spiral(center, 2);
+      for(let hex of hexs){
+        if(this.hasPlanet(hex)){
+          let planet = this.getPlanet(hex);
+          if(planet.playerID === playerID){
+            return true;
+          }
+        }
+      }
+      return false;
+
   }
 
 

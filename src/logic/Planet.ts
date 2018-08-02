@@ -13,12 +13,12 @@ enum PlanetType{
   Lost,
   Gaia,  // green
   Transdim, // purple
-  Gaiaformer//  this is Transdim planet maybe need change
+  //Gaiaformer//  this is Transdim planet maybe need change
 }
 
 class Planet{
   public building: StructureType | null = null // change from StructureType[] to StructureType without concern specail race.
-  public structure: Structure | null
+  //public structure: Structure | null    no use
   public type : PlanetType
   public loc : Location
   public playerID: number
@@ -41,10 +41,10 @@ class Planet{
       return 0;
     }
 
-    if(type === PlanetType.Gaiaformer){  // Gaiaformer
-      console.log("nice Gaiaformer, no terraforming cost");
-      return 0;
-    }
+    // if(type === PlanetType.Gaiaformer){  // Gaiaformer
+    //   console.log("nice Gaiaformer, no terraforming cost");
+    //   return 0;
+    // }
 
      let distance = Math.abs(this.type - type);
      if(distance > 3) {
@@ -53,16 +53,37 @@ class Planet{
      return distance
   }
 
-  public onStructure(structure: Structure){
-    if(this.structure != null){
-      console.log("already built on this planet")
+  // public onStructure(structure: Structure){ no use
+  //   if(this.structure != null){
+  //     console.log("already built on this planet")
+  //   }
+  //   this.structure = structure;
+  // }
+
+  // public offStructure(){
+  //   this.structure = null;
+  // }
+
+  public buildingPower(){
+    let charge = 0;
+    if(this.playerID === -1){  // not building
+      return 0;
     }
-    this.structure = structure;
+    if(this.building === StructureType.Mine){
+      charge = 1;
+    }
+
+    if(this.building === StructureType.Station || this.building === StructureType.Lab){
+      charge = 2;
+    }
+
+    if(this.building === StructureType.Academy || this.building === StructureType.Institute){
+      charge = 3;
+     }
+     return charge;
+
   }
 
-  public offStructure(){
-    this.structure = null;
-  }
 
 
 }

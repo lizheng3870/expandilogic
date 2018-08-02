@@ -13,7 +13,7 @@ enum StructureStatus{
 }
 
 class Structure {
-  public value : number
+  public value : number   // for neighbor building power charge
   public cost : Value[]
   public type : StructureType
   public owner : number  // change type from player to numer for playerID

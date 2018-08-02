@@ -10,6 +10,7 @@ import {StructureType} from '../logic/Structure'
 import {StoreMerchandiseType} from '../logic/Store'
 import {Material} from '../logic/Benefit'
 import TechBoard from '../logic/TechBoard'
+import {ScoringBoard} from '../logic/ScoringBoard'
 
 const lab = Lab.script()
 const { describe, it, before } = lab
@@ -213,11 +214,11 @@ describe('Player Actions Tests', () => {
 
       // default value
       expect(player.digCost).to.equal(3)
-      expect(player.ore).to.equal(5)
+      expect(player.ore).to.equal(6)
       g.processPlayerRequest(request)
       // 0 ->1  add two ore
       expect(player.digCost).to.equal(3)
-      expect(player.ore).to.equal(7)
+      expect(player.ore).to.equal(8)
 
       expect(player.name).to.equal("yalei")
       expect(g.turn).to.equal(3)
@@ -226,7 +227,7 @@ describe('Player Actions Tests', () => {
       g.turn = 2;
       g.processPlayerRequest(request)
       // 1 ->2  add two ore
-      expect(player.ore).to.equal(7)
+      expect(player.ore).to.equal(8)
       expect(player.digCost).to.equal(2)
 
 
@@ -276,11 +277,11 @@ describe('Player Actions Tests', () => {
 
       // default value
       expect(player.ore).to.equal(4)
-      expect(player.gold).to.equal(13)
+      expect(player.gold).to.equal(15)
       g.processPlayerRequest(request)
       //
       expect(player.ore).to.equal(3)
-      expect(player.gold).to.equal(14)
+      expect(player.gold).to.equal(16)
 
       request.freeExchangeItems = [Material.Power, Material.Power]
       request.freeExchangeTimes = 2;
@@ -720,12 +721,74 @@ describe('Player Actions Tests', () => {
 
 
            g.processPlayerRequest(request)
+
            expect(player.specialRange).to.equal(0)
 
            expect(g.nextPlayerPid()).to.equal(0);
 
          });
 
+
+         it('new Round player(0) pass ', () => {
+           let request = new Request()
+           request.type = RequestType.Action
+           request.actionType = ActionType.Pass
+           request.pid = 0;
+           request.roundBoosterID = 0;
+           //g.getRoundBooster()
+
+           let player = g.getPlayer(request.pid);
+
+
+            g.processPlayerRequest(request)
+
+           expect(g.nextPlayerPid()).to.equal(2)
+
+
+         });
+
+
+         it('player(pid:2) send a build mine structure request to Game', () => {
+           let request = new Request()
+           request.type = RequestType.Action
+           request.actionType = ActionType.BuildMine
+           request.pid = 2;
+           request.hex = new Hex(-4, 1, 3);
+           let player = g.getPlayer(request.pid);
+           player.specialRange = 100; // just make player accsible to this location
+
+           let neighbor = g.getPlayer(3);
+           // console.log("before bowl1 " + neighbor.power.bowl1)
+           //  console.log("before bowl2 " + neighbor.power.bowl2)
+           //  console.log("before bowl3 " + neighbor.power.bowl3)
+           expect(neighbor.power.bowl1).to.equal(5)
+           expect(neighbor.power.bowl2).to.equal(8)
+           expect(neighbor.power.bowl3).to.equal(1)
+           g.processPlayerRequest(request)
+           expect(g.nextPlayerPid()).to.equal(2)
+           expect(neighbor.power.bowl1).to.equal(3)
+           expect(neighbor.power.bowl2).to.equal(10)
+           expect(neighbor.power.bowl3).to.equal(1)
+           //
+
+
+          });
+
+
+          it('player(pid:2) check final scoring ', () => {
+            let request = new Request()
+            request.type = RequestType.Action
+            request.actionType = ActionType.Pass
+            request.pid = 2;
+
+            g.round = 6;
+
+
+            g.processPlayerRequest(request)
+            //  console.log(g.dumpPlayers());
+
+
+           });
 
 
 });

@@ -2,10 +2,12 @@ import {Game} from "./Game";
 import {MapBoard} from "./MapBoard";
 import {Player, CreatePlayer} from "./Player";
 //import {Hex} from "./Hex";
-import { Request , UpgradeType, SpecialActionSource} from './Request'
+import { Request , UpgradeType, RequestType, SpecialActionSource} from './Request'
 import { StructureType, StructureStatus} from './Structure'
-import {PlanetType} from './Planet'
-import {Material, Trigger} from './Benefit'
+import {PlanetType, Planet} from './Planet'
+import {Material, Trigger, BuildingType} from './Benefit'
+import {Hex} from './Hex'
+import {Federation, FederationTokenType} from './Federation'
 
 /**
  * Types of actions that a player can make on his turn
@@ -114,6 +116,27 @@ class Action {
      }
 
      if(this.request.techTileID > 8 ){
+       // rule 1 Your player token must be on level 4 or 5
+       let level = this.player.techs[this.request.techLane];
+       if(level === 4 || level === 5){}
+       else{
+         this.message = "tech level 4 or 5 required"
+         return false;
+       }
+       // rule 2 You must own at least one federation token with its green side faceup
+       if(this.request.federationTokenType === undefined){
+         this.message = "federationTokenType need "
+         return false;
+       }
+
+       if(this.hasGreenSideFederationToken(this.request.federationTokenType) === false){
+         this.message = "player does not have green usuable federation token "
+         return false;
+       }
+
+
+
+       // You must have at least one uncovered standard tech tile.
        if(this.request.offTechId === undefined){
          this.message = "this.request.offTechId === undefined when techTileID > 8 "
          return false;
@@ -123,6 +146,19 @@ class Action {
      return true;
 
    }
+
+
+   public hasGreenSideFederationToken(type : FederationTokenType){
+     for(let federation of this.player.federations){
+       if(federation.token.used === false && federation.token.type === type){
+         return true;
+       }
+     }
+     return false;
+
+   }
+
+
 
 
 
@@ -216,9 +252,14 @@ class Action {
        return false;
      }
 
+     if(planet.playerID !== -1){
+       console.log("GaiaProject  this planet has token by others");
+       return false;
+     }
+
      if(this.player.checkPlanetDistance(this.request.hex) === false){
-             console.log("checkPlanetDistance error ");
-             return false;
+        console.log("checkPlanetDistance error ");
+        return false;
      }
 
      if(this.player.checkPowerForGaiaProject() === false){
@@ -226,12 +267,24 @@ class Action {
        return false;
      }
 
+
+
      return true;
 
    }
 
    public checkFederation():boolean{
      // check any space of path used as federation before
+     if(this.request.federationTokenType === undefined && this.request.federationTokenType ===null){
+          this.message = "federationTokenType required"
+          return false;
+     }
+     let tokenType = this.request.federationTokenType;
+     if(this.game.federationlib.hasFederationToken(tokenType) === false){
+       this.message = "can not find this toke at game federationlib"
+       return false;
+     }
+
      if(this.board.checkSpaceFeded(this.request.path) === true) return false;
      let power = 0  // total power value of at least seven
      let satellite : number = 0;
@@ -265,6 +318,14 @@ class Action {
  }
 
  public checkResearch(){
+   if(this.request.techLane === undefined || this.request.techLane === null){
+     this.message = "undefine techLane"
+     return false;
+   }
+   if(this.game.techBoard.canUpdate(this.request.techLane, this.player) === false){
+     this.message = "can not update this techlane, it already max or other take level 5(only one can take)"
+     return false;
+   }
    if(this.player.science < 4)return false;
    return true;
 
@@ -332,6 +393,49 @@ public doAction(){
         console.log("error can not find action type")
       }
 
+      //trigerRoundScoringBenefit  we suppose the action successfully done
+      /*
+      Trigger.Build, null, BuildingType.Mine
+      Trigger.Build, null, BuildingType.TradingStation
+      Trigger.Build, null, BuildingType.MineOnGaia
+      Trigger.Build, null, BuildingType.BigBuildings
+      Trigger.Fed, null, null
+      Trigger.Dig, null, null
+      Trigger.ScienceUp, null, null
+      */
+
+      if(this.request.actionType === ActionType.BuildMine){
+            this.game.trigerRoundScoringBenefit(Trigger.Build, BuildingType.Mine);
+      }
+
+      if(this.request.actionType === ActionType.Upgrade &&
+        this.request.upgradeType === UpgradeType.MineToStation){
+            this.game.trigerRoundScoringBenefit(Trigger.Build, BuildingType.TradingStation);
+      }
+
+      if(this.request.actionType === ActionType.BuildMine){
+        const planet = this.board.getPlanet(this.request.hex);
+
+        if(planet.type === PlanetType.Gaia){
+            this.game.trigerRoundScoringBenefit(Trigger.Build, BuildingType.MineOnGaia);
+        }
+      }
+
+
+      if(this.request.upgradeType === UpgradeType.StationToInstitute ||
+        this.request.upgradeType === UpgradeType.LabToAcademy){
+            this.game.trigerRoundScoringBenefit(Trigger.Build, BuildingType.TradingStation);
+      }
+
+      if(this.request.actionType === ActionType.Federate){
+            this.game.trigerRoundScoringBenefit(Trigger.Fed, null);
+      }
+
+      if(this.request.actionType === ActionType.Research){
+            this.game.trigerRoundScoringBenefit(Trigger.ScienceUp, null);
+      }
+
+
 
 
 
@@ -342,15 +446,23 @@ public doAction(){
 
    public buildMine() {
        const planet = this.board.getPlanet(this.request.hex);
+       // special case  build mine on new coverted gaia planet which from Transdim
+       // should return GaiaFormer
+       let isTransdim = false;
+       if(planet.type === PlanetType.Gaia && planet.playerID === this.request.pid){
+           this.player.gaiaformer++;
+           isTransdim = true;
+
+       }
 
 
        this.board.buildMine(this.request.hex, this.player.pid);
 
 
-
        // Habitability
        if(planet.type === PlanetType.Gaia){  // Gaia need one Q.I.C.
-         this.player.qic -= 1;
+         if(isTransdim === false)
+              this.player.qic -= 1;
        }else{
          // The seven colored planet types must first be terraformed
          const terraforming = planet.terraformingCalculate(this.player.planetType);
@@ -368,7 +480,63 @@ public doAction(){
 
        // player has this plenet
        this.player.planets.push(planet);
+       this.neighborBuildingsChargePower();
+       this.player.sectors = this.game.board.getPlayerSectors(this.player.pid);
        this.message = "built mine successfully"
+
+     }
+
+     //Passive Action: Charge Power
+     public neighborBuildingsChargePower(){
+       let currentPlayerID = this.request.pid;
+       let range = 2;
+       let players:number[] = [];
+       players.push(0)
+       players.push(0)
+       players.push(0)
+       players.push(0)
+
+       let planets = this.game.board.getPlanetsInRange(this.request.hex, range);
+
+       for(let planet of planets){
+           if(planet.playerID !== -1){
+             let charge = 0
+             if(planet.building === StructureType.Mine){
+               charge = 1;
+             }
+
+             if(planet.building === StructureType.Station || planet.building === StructureType.Lab){
+               charge = 2;
+             }
+
+             if(planet.building === StructureType.Academy || planet.building === StructureType.Institute){
+               charge = 3;
+               let player = this.game.getPlayer(planet.playerID);
+               if(player.hasTechTileID(8))
+                   charge = 4;  // this techtile will increase institute and academy charge to 4
+              }
+              let prevousCharge = players[planet.playerID]
+              if(charge > prevousCharge){
+                players[planet.playerID] =  charge;
+              }
+           }
+       }
+
+       for(let i = 0; i < 4;  i++){
+          if(i === currentPlayerID)continue;
+          let charge = players[i];
+          if(charge > 0){
+          // do charge
+            let player = this.game.getPlayer(i);
+            if(player.passiveActionOn === true){
+               // for techtile 4
+               player.chargePower(charge);
+               player.vp -= 1;
+               console.log("charge pid  " + i + " power " + charge)
+            }
+          }
+       }
+
 
      }
 
@@ -409,12 +577,26 @@ public doAction(){
      if(this.board.checkPlanetEmpty(this.request.hex)){
        return true;
      }else{
+      // speical cause
+      const planet = this.board.getPlanet(this.request.hex);
+      if(planet.type === PlanetType.Gaia && planet.building === null && planet.playerID === this.request.pid){
+        // this is new converted gaia planet after gaia project
+        return true;
+      }
+
+
        this.message = "checkPlanetEmpty failed ";
        return false;
      }
    }
 
    public checkAccessible() {
+     // speical case for coverted Transdim not need check
+     const planet = this.board.getPlanet(this.request.hex);
+     if(planet.type === PlanetType.Gaia && planet.building === null && planet.playerID === this.request.pid){
+       // this is new converted gaia planet after gaia project
+       return true;
+     }
 
      // Distance from one of the existing planets
      if(this.player.checkPlanetDistance(this.request.hex)){
@@ -448,6 +630,11 @@ public doAction(){
      this.player.gaiaformer--;
      this.player.transferGaiaPower();
 
+     const planet = this.board.getPlanet(this.request.hex);
+     planet.playerID = this.request.pid;
+     this.player.gaiaProjectPlanets.push(planet)
+     //planet.type = PlanetType.Gaiaformer;
+
   }
 
   /*
@@ -473,8 +660,20 @@ public doAction(){
     if(this.request.techTileID > 8 ){
       let index = this.request.techTileID - 9;
       this.game.techBoard.takeAdvancedTechTiles(this.request.techLane, this.request.offTechId, this.player);
+      this.takeGreenSideFederationToken(this.request.federationTokenType);
+
     }
 
+  }
+
+
+  public takeGreenSideFederationToken(type : FederationTokenType){
+    for(let federation of this.player.federations){
+      if(federation.token.used === false && federation.token.type === type){
+        federation.token.used = true;
+        return ;
+      }
+    }
   }
 
   public updateBuilding(){
@@ -540,6 +739,8 @@ public doAction(){
       this.takeTechTile()
     }
 
+     this.neighborBuildingsChargePower();
+
   }
 
   public FormFederation(){
@@ -547,14 +748,28 @@ public doAction(){
     this.board.markSpaceFeded(this.request.path);
 
     let satellite : number = 0;
+    let satelliteHexs : Hex[] = []
+    let planets: Planet[] = []
     for(const hex of this.request.path){
          if(this.board.hasPlanet(hex)){
            // this must own by player
+           planets.push(this.board.getPlanet(hex))
          }else{
           satellite++;
+          satelliteHexs.push(hex);
         }
     }
     this.player.discardPowersToBuildSatellites(satellite);
+    let token = this.game.federationlib.getFederationToken(this.request.federationTokenType);
+    let federation = new Federation();
+    federation.token = token;
+    federation.satellites = satelliteHexs;
+    federation.planets = planets;
+    federation.path = this.request.path;
+
+    // add federation benefit to player
+    this.player.getFedrationBenefit(token.benefit);
+
 
 
   }

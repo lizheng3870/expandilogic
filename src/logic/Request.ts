@@ -4,6 +4,7 @@ import {ActionType } from './Action'
 import {Merchandise} from './Exchange'
 import {StoreMerchandiseType} from './Store'
 import {Material} from './Benefit'
+import {FederationTokenType} from './Federation'
 
 
 
@@ -52,7 +53,8 @@ class Request {
     public freePurchase: Merchandise  // for free action
     public storeMerchandiseType: StoreMerchandiseType // Power and QIC
     public freeExchangeItems: Material[]   //
-    public freeExchangeTimes:number //
+    public freeExchangeTimes: number //
+    public federationTokenType: FederationTokenType
 
 }
 
