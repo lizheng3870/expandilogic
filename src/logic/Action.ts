@@ -532,7 +532,7 @@ public doAction(){
                // for techtile 4
                player.chargePower(charge);
                player.vp -= 1;
-               console.log("charge pid  " + i + " power " + charge)
+               //console.log("charge pid  " + i + " power " + charge)
             }
           }
        }

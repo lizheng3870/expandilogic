@@ -18,7 +18,14 @@ export class Nevlas extends Race{
         this.income.push(ore)
         this.income.push(science);
 
+        this.buildingLibSpecial();
     }
-    
+
+    public buildingLibSpecial(){
+      for(let i = 0; i < 3; i++ )
+        this.buildings.lab[i].benefit = new Benefit(Trigger.Income, null, null, [new Value(2, Material.Power)]); 
+
+    }
+
 
 }

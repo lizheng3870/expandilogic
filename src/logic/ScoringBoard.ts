@@ -85,8 +85,8 @@ enum FinalCount {
    public FinalCount(){
       let list : FinalCount[] = [];
       list.push(FinalCount.Sectors);
-      list.push(FinalCount.Gaia);
       list.push(FinalCount.Buildings);
+      list.push(FinalCount.Gaia);
       list.push(FinalCount.FederationBuildings);
       list.push(FinalCount.PlanetTypes);
       list.push(FinalCount.Satellites);

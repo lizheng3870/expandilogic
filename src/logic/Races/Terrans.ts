@@ -18,11 +18,21 @@ export class Terrans extends Race{
         this.income.push(ore)
         this.income.push(science);
 
-        //- todo - Initialize planet starting point 
+        //- todo - Initialize planet starting point
         // this.planets.push(PlanetType.Blue); // The planet array storing planets should surely be PlanetType
+    }
+
+    public GaiaPhase(){
+       this.power.bowl2 += this.power.gaia;
+       for(let planet of this.gaiaProjectPlanets){
+         planet.type = PlanetType.Gaia;
+       }
+
+       this.gaiaProjectPlanets = [];
     }
 
 
 
-}
 
+
+}

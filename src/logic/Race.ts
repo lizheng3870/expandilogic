@@ -1008,9 +1008,9 @@ public setPlanetType(playerPlanet: PlanetType) {
        }
 
        this.gaiaProjectPlanets = [];
-
-
     }
+
+
 
     public getSectors(){
       return this.sectors;

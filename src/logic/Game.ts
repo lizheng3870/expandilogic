@@ -480,7 +480,68 @@ console.log( stack )
 
     public finalScore(){
       // scoring Board
+      this.scoringBoardFinal();
+      this.techBoardFinalScoring();
+      this.ResourceFinalScoring();
 
+      this.players.sort( (a, b) => {
+            return b.vp - a.vp;
+      });
+
+        console.log("final score")
+        for(let player of this.players){
+          console.log( "player "+ player.name +" (pid:"+ player.pid+ ")  vp " + player.vp)
+        }
+
+
+    }
+
+    public ResourceFinalScoring(){
+      for(let player of this.players){
+        player.vp += Math.floor(player.science/3);
+        player.vp += Math.floor(player.ore/3);
+        player.vp += Math.floor(player.gold/3);
+        }
+
+
+    }
+
+    public techBoardFinalScoring(){
+      for(let player of this.players){
+        let count = 0;
+        for(let level of player.techs){
+          if(level >= 3){
+            count++;
+          }
+        }
+        player.vp += 4 * count;
+        //console.log(4 * count+ " tech vp add to "+ player.name)
+      }
+    }
+
+
+    public scoringBoardFinal(){
+      this.getFinalCountPlayers(this.scoringBoard.finalCounts[0]);
+
+
+      // for(let player of this.players){
+      //   console.log(player.pid + "  " + player.name + "   score "+ player.sortByValue)
+      // }
+
+      this.players[0].vp + 18;
+      this.players[0].vp + 12;
+      this.players[0].vp + 6;
+
+      // final second count
+      this.getFinalCountPlayers(this.scoringBoard.finalCounts[1]);
+
+      // for(let player of this.players){
+      //   console.log(player.pid + "  " + player.name + "   score "+ player.sortByValue)
+      // }
+
+      this.players[0].vp + 18;
+      this.players[0].vp + 12;
+      this.players[0].vp + 6;
 
     }
     public getFinalCountPlayers(count:FinalCount){
@@ -511,6 +572,9 @@ console.log( stack )
           }
 
         }
+        this.players.sort( (a, b) => {
+              return b.sortByValue - a.sortByValue;
+        });
 
 
 

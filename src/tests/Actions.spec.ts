@@ -783,6 +783,12 @@ describe('Player Actions Tests', () => {
 
             g.round = 6;
 
+            let nina = g.getPlayer(1);
+            nina.techs[1] = 4;
+            nina.techs[2] = 5;
+
+            let yousong = g.getPlayer(0);
+
 
             g.processPlayerRequest(request)
             //  console.log(g.dumpPlayers());
