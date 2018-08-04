@@ -23,9 +23,9 @@ listen the paths of
 game/[gid]/players
 game/[gid]/players
 
-even load data  or listen data change will reload webpage.
+when load data or on data change will reload webpage.
 
-for example: current is game id 2
+for example: current code  game id is 2
 firebase.database().ref('game/2/mapboard');
 firebase.database().ref('game/2/players');
 
@@ -44,9 +44,9 @@ src/logic
 
 src/tests
 
-### Driver for Demo
+### Driver for Demo 
 
-src/driver
+src/driver/driver.ts
 
 ```
 cd dist/driver
