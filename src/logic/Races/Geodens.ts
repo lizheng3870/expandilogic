@@ -2,6 +2,7 @@
 import {Race, BuildBenefit, RaceType} from "../Race";
 import { PlanetType } from "../Planet";
 import { Benefit, Trigger, BuildingType, Value, Material } from "../Benefit";
+import { Structure } from "../Structure";
 
 
 export class Geodens extends Race{
@@ -17,6 +18,9 @@ export class Geodens extends Race{
 
         this.income.push(ore)
         this.income.push(science);
+
+
+       
 
         
     }

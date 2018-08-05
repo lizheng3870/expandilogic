@@ -104,21 +104,18 @@ class BuildingLib {
         /**
          * Academy types on Faction Board
          */
-{
-  let values: Value[] = [new Value(6, Material.Gold), new Value(6, Material.Ore)];
-  let benefit1: Benefit = new Benefit(Trigger.Income, null, null, [new Value(2, Material.Science)]);
-  let benefit2: Benefit = new Benefit(Trigger.Special, null, null, [new Value(1, Material.QIC)]);
+        {
+        let values: Value[] = [new Value(6, Material.Gold), new Value(6, Material.Ore)];
+        let benefit1: Benefit = new Benefit(Trigger.Income, null, null, [new Value(2, Material.Science)]);
+        let benefit2: Benefit = new Benefit(Trigger.Special, null, null, [new Value(1, Material.QIC)]);
 
-  let academy1 = new Structure(StructureType.Academy, values, 3, benefit1);
-  let academy2 = new Structure(StructureType.Academy, values, 3, benefit2);
+        let academy1 = new Structure(StructureType.Academy, values, 3, benefit1);
+        let academy2 = new Structure(StructureType.Academy, values, 3, benefit2);
 
-  this.academies.push(academy1);
-  this.academies.push(academy2);
+        this.academies.push(academy1);
+        this.academies.push(academy2);
 
-}
-
-
-
+        }
 
         /**
          * Adds Institute
@@ -132,6 +129,11 @@ class BuildingLib {
 
 
       }
+
+    //   public changeInstitute(updateBenefit: Benefit) {
+    //       let raceInstitute = this.institute[0];
+    //       raceInstitute.benefit = updateBenefit;
+    //   }
 
 
 }
