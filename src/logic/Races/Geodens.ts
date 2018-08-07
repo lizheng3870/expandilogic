@@ -7,6 +7,10 @@ import { Structure } from "../Structure";
 
 export class Geodens extends Race{
 
+    /**
+     * Initialise the starting state of Geodens
+     * @param name 
+     */
     constructor(name:string) {
         super(name);
         this.setRaceType(RaceType.Geodens);

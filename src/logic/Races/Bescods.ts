@@ -7,6 +7,10 @@ import { Structure, StructureType } from "../Structure";
 
 export class Bescods extends Race{
 
+    /**
+     * Initialise the starting state of Bescods
+     * @param name 
+     */
     constructor(name:string) {
         super(name);
         this.setRaceType(RaceType.Bescods);

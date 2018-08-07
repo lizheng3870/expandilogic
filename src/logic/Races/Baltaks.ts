@@ -7,6 +7,10 @@ import { Structure, StructureType } from "../Structure";
 
 export class Baltaks extends Race{
 
+    /**
+     * Initialise the starting state of Taklons
+     * @param name 
+     */
     constructor(name:string) {
         super(name);
         this.setRaceType(RaceType.Baltaks);

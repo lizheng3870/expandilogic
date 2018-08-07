@@ -5,7 +5,9 @@ import {Benefit, Value, Material, Trigger} from "./Benefit";
 
 
 /**
- * Building Libraries for each faction
+ * Base building Library for all factions 
+ * Specific differences between each Faction is stored in their 
+ * respective Faction class in Races folder
  */
 class BuildingLib {
 
@@ -14,9 +16,7 @@ class BuildingLib {
     public institute: Structure[];
     public lab: Structure[];
     public academies: Structure[];
-    // public gaiaformer: Structure[];
-    // public race: RaceType;
-
+    
     constructor() {
         // this.race = race;
         this.mines = [];
@@ -129,11 +129,6 @@ class BuildingLib {
 
 
       }
-
-    //   public changeInstitute(updateBenefit: Benefit) {
-    //       let raceInstitute = this.institute[0];
-    //       raceInstitute.benefit = updateBenefit;
-    //   }
 
 
 }

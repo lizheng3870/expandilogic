@@ -7,12 +7,18 @@ import { Structure, StructureType } from "../Structure";
 
 export class Itars extends Race{
 
+    /**
+     * Initialise the starting state of Itars
+     * @param name 
+     */
     constructor(name:string) {
         super(name);
         this.setRaceType(RaceType.Itars);
         this.setPlanetType(PlanetType.White);
         this.ore = 5;
         this.power.bowl1 = 4;
+
+        //Permanent Incomes
         const ore = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Ore)]);
         const science = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]);
         const power = new Benefit(Trigger.Income, null, null, [new Value(1, Material.ExtraPower)]);
@@ -20,7 +26,8 @@ export class Itars extends Race{
         this.income.push(science);
         this.income.push(power);
 
-
+        //Player specific Buildboards
+        
          /**
          * Academy types on Faction Board
          */
