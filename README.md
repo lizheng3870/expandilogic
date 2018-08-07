@@ -61,3 +61,22 @@ as you can see. In driver code, Game initialize with gid = 2. like  let g = new 
 
 
 ```
+### Need to do
+
+src/race
+```
+the passive ability of charge several amount of power when some one update a building near to your building: not ready
+the special power of each race: not ready
+
+```
+
+src/ScoringBoard.ts
+```
+test case: not fully tested
+
+```
+front end
+back end: firebase, not recommended by sponsor
+
+
+
