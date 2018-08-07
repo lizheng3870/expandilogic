@@ -1,11 +1,11 @@
 import {Benefit, Value}   from './Benefit'
 
 enum StructureType {
-  Mine,
-  Station,
-  Lab,
-  Academy,
-  Institute,
+  Mine      = 0,
+  Station   = 1,
+  Lab       = 2,
+  Academy   = 3,
+  Institute = 4,
 }
 enum StructureStatus{
   Built = 0,

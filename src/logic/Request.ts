@@ -44,7 +44,7 @@ class Request {
     public hex: Hex   // location of planet
     public actionType: ActionType
     public upgradeType: UpgradeType  // upgrade
-    public path: Hex[]  // for Federation
+    public path: Hex[] = [] // for Federation
     public techLane: TechLaneType   // search action
     public techTileID: number    // 0 - 14   for update action lab or academy pickup techtile , detail below
     public offTechId: number  // related with advanced techtile, see detail below

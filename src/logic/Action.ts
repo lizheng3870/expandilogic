@@ -275,7 +275,7 @@ class Action {
 
    public checkFederation():boolean{
      // check any space of path used as federation before
-     if(this.request.federationTokenType === undefined && this.request.federationTokenType ===null){
+     if(this.request.federationTokenType === undefined || this.request.federationTokenType === null){
           this.message = "federationTokenType required"
           return false;
      }
@@ -285,14 +285,21 @@ class Action {
        return false;
      }
 
-     if(this.board.checkSpaceFeded(this.request.path) === true) return false;
+     if(this.board.checkSpaceFeded(this.request.path) === true) {
+       this.message = "this path has some place in another federation";
+       return false;
+      }
      let power = 0  // total power value of at least seven
      let satellite : number = 0;
      for(const hex of this.request.path){
           if(this.board.hasPlanet(hex)){
             const planet = this.board.getPlanet(hex);
             // Satellites cannot be placed on planets
-            if(planet.playerID !== this.player.pid)return false; //player does not own planet buiding
+            if(planet.playerID !== this.player.pid){
+              // console.log("planet pid is: " + planet.playerID + "; pid is: " + this.player.pid + "***************************");
+              this.message = "there is another players planet on the path";
+              return false;
+            } //player does not own planet buiding
             if(planet.building === StructureType.Mine){
               power++;
             }
@@ -309,9 +316,15 @@ class Action {
          }
      }
 
-     if(this.player.checkPowerForFederation(satellite) === false)return false;
+     if(this.player.checkPowerForFederation(satellite) === false){
+       this.message = "player do not have enough power to federate";
+       return false;
+     }
 
-     if(power < 7) return false;
+     if(power < 7) {
+       this.message = "value of the buildings is too low";
+       return false;
+     }
      else return true;
 
 
@@ -743,8 +756,8 @@ public doAction(){
 
   }
 
-  public FormFederation(){
-    if(this.checkFederation() === false)return;
+  public FormFederation(): boolean{
+    if(this.checkFederation() === false)return false;
     this.board.markSpaceFeded(this.request.path);
 
     let satellite : number = 0;
@@ -770,7 +783,7 @@ public doAction(){
     // add federation benefit to player
     this.player.getFedrationBenefit(token.benefit);
 
-
+    return true;
 
   }
 

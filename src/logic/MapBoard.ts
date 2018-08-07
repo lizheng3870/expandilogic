@@ -303,13 +303,20 @@ class MapBoard {
 
 
   public checkSpaceFeded(hexs:Hex[]): boolean{ // check federation ocuppied before or not
+    // console.log("**************we begin!!****************");
       for(const hex of hexs){
         let key:string = hex.q + '_' + hex.r + '_' + hex.s;
         let space = this.spacesMap.get(key);
-        if(space == null)return false;
-        if(space.feded === true)return false;
+        if(space == null){
+          // console.log("*********space is null**********")
+          return true;
+        }
+        if(space.feded === true){
+          // console.log("**************already feded!!!***************");
+          return true;
+        }
       }
-      return true;
+      return false;
   }
 
   public markSpaceFeded(hexs:Hex[]){ // federation ocuppy space, can not use anymore
