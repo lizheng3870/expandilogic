@@ -134,25 +134,50 @@ describe('Federation Test', () => {
         expect(judge).to.equal(true);
     })
 
-    // it('can from federation', () => {
-    //     p2.building = 4;
-    //     p3.building = 3;
-    //     p4.building = 3;
-    //     request.path.push(h2);
-    //     request.path.push(h3);
-    //     request.path.push(new Hex(4,2,-6));
-    //     request.path.push(new Hex(5,2,-7));
-    //     request.path.push(new Hex(6,1,-7));
-    //     request.path.push(new Hex(8,1,-9));
-    //     request.path.push(h4);
-    //     request.federationTokenType = 1;
-    //     action = new Action(g, p, request);
-    //     let judge = action.FormFederation();
-    //     expect(judge).to.equal(true);
-    // })
+    it('can form federation', () => {
+        p2.building = 4;
+        p3.building = 3;
+        p4.building = 3;
+        request.path.push(h2);
+        request.path.push(h3);
+        request.path.push(new Hex(4,2,-6));
+        request.path.push(new Hex(5,2,-7));
+        request.path.push(new Hex(6,1,-7));
+        request.path.push(new Hex(8,1,-9));
+        request.path.push(h4);
+        request.federationTokenType = 1;
+        action = new Action(g, p, request);
+        let judge = action.FormFederation();
+        expect(judge).to.equal(true);
+    })
 
-    // it('can not use the same space in another federation s path to fed', () => {
-        
-    // })
+    it('can not use the same space in another federation s path to fed', () => {
+        // fed a federation first
+        p1.building = 1;
+        p2.building = 4;
+        p3.building = 3;
+        p4.building = 3;
+        request.path.push(h2);
+        request.path.push(h3);
+        request.path.push(new Hex(4,2,-6));
+        request.path.push(new Hex(5,2,-7));
+        request.path.push(new Hex(6,1,-7));
+        request.path.push(new Hex(8,1,-9));
+        request.path.push(h4);
+        request.federationTokenType = 1;
+        action = new Action(g, p, request);
+        action.FormFederation();
+
+        // use one point in the former one to form another federation
+        let request2 = new Request();
+        request2.path.push(h1);
+        request2.path.push(h2);
+        request2.path.push(h3);
+        request2.federationTokenType = 2;
+        action = new Action(g, p, request2);
+        let judge = action.checkFederation();
+        expect(judge).to.equal(false);
+        expect(action.message).to.equal("this path has some place in another federation");
+    })
 
 })

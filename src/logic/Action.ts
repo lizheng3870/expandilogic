@@ -774,6 +774,7 @@ public doAction(){
     }
     this.player.discardPowersToBuildSatellites(satellite);
     let token = this.game.federationlib.getFederationToken(this.request.federationTokenType);
+    // console.log(token + " ************************** ");
     let federation = new Federation();
     federation.token = token;
     federation.satellites = satelliteHexs;

@@ -173,10 +173,13 @@ class FederationLib {  // for game
     for(let token of this.tokens){
       if(token.type === type){
         found = true;
+        break;
       }
       index++;
     }
     let tmp = null;
+    // console.log(found + " *************************** " + index + " *** " + this.tokens[index]);
+
     if(found){
       tmp = this.tokens[index];
       this.tokens.splice(index, 1);
