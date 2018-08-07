@@ -1,6 +1,6 @@
 import {PlanetType, Planet} from './Planet'
 import Tech from './Tech'
-import {Federation} from './Federation';
+import {Federation, FederationToken} from './Federation';
 import { Benefit, Trigger, BuildingType, Value, Material, Count } from "./Benefit";
 // from player class
 
@@ -447,6 +447,17 @@ public setPlanetType(playerPlanet: PlanetType) {
       if(benefit.trigger === Trigger.Special){
         this.activateSpecialPower(benefit);
       }
+    }
+
+    /**
+     * put the federation token into account and put the benefit inside of it into the benefit account
+     * @param fed 
+     */
+    public getSpecialFedration(fed: FederationToken){
+      let federation = new Federation();
+      federation.token = fed
+      this.federations.push(federation);
+      this.getFedrationBenefit(fed.benefit);
     }
 
 

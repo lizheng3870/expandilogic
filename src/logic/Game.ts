@@ -72,11 +72,14 @@ class Game {
      this.turn = 0;  // start from 0;
 //     this.status = GameStatus.Open
      this.board = new MapBoard()
-     this.techBoard = new TechBoard();
      this.exchange = new Exchange();
      this.scoringBoard = new ScoringBoard();
      this.roundBoosters = [];
      this.federationlib = new FederationLib();
+     // now for test, we set the boolean to false, so the tech tile position will not be random
+     // and the advanced tech tile would also stay in the same position
+     // in real game, the boolean should be true
+     this.techBoard = new TechBoard(false, this.federationlib.getDigLaneSpeicalFederationToken());
      this.loadRoundBooster();
      this.firstStructuresRound = 0;
      this.store = new Store();

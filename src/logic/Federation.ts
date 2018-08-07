@@ -6,13 +6,13 @@ import {MapBoard} from './MapBoard'
 import { Player } from './Player';
 
 enum FederationTokenType{
-  vp12, // id 0
-  vp8qic1, // id 1
-  vp8pw2, // id 2
-  vp7ore2, // id 3
-  vp7gold6, // id 4
-  vp6Sci2, // id 5
-  ore1Sci1gold2 // id 6
+  vp12          = 0, // id 0
+  vp8qic1       = 1, // id 1
+  vp8pw2        = 2, // id 2
+  vp7ore2       = 3, // id 3
+  vp7gold6      = 4, // id 4
+  vp6Sci2       = 5, // id 5
+  ore1Sci1gold2 = 6  // id 6
 }
 
 class FederationToken{
@@ -126,13 +126,12 @@ class Federation {  //for player
 }
 
 class FederationLib {  // for game
-  public specialOne: FederationToken[] // this one is on the techBoard as a special level 5 benefit in dig technology
+  public specialOne: FederationToken // this one is on the techBoard as a special level 5 benefit in dig technology
   public tokens: FederationToken[] // this is the normal selectable
   public gleensFed: FederationToken;
   public tempArr: number[];
 
   constructor(random:boolean = true){
-    this.specialOne = [];
     this.tokens = [];
     this.load(random);
   }
@@ -147,12 +146,13 @@ class FederationLib {  // for game
      for(let j = 0;  j< 6 ; j++){
        for(let i = 0; i < 3; i++){
          if(j === specialID){
-           this.specialOne.push(new FederationToken(j))
+           this.specialOne = new FederationToken(j);
          }else{
            this.tokens.push(new FederationToken(j))
          }
          }
        }
+       this.gleensFed = new FederationToken(6);
   }
 
   public hasFederationToken(type:FederationTokenType){
@@ -162,10 +162,10 @@ class FederationLib {  // for game
     return false;
   }
 
-  public hasDigLaneSpeicalFederationToken(){
-    return this.specialOne.length > 0
+  // public hasDigLaneSpeicalFederationToken(){
+  //   return this.specialOne.length > 0
 
-  }
+  // }
 
   public getFederationToken(type:FederationTokenType){
     let found = false;
@@ -187,10 +187,10 @@ class FederationLib {  // for game
   }
 
   public getDigLaneSpeicalFederationToken(){
-    let tmp = this.specialOne[0];
-    this.specialOne.splice(0, 1);
-    return tmp;
-
+    // let tmp = this.specialOne[0];
+    // this.specialOne.splice(0, 1);
+    // return tmp;
+    return this.specialOne;
   }
 
   // /**

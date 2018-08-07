@@ -6,6 +6,7 @@ import { Player , CreatePlayer, RaceType} from '../logic/Player';
 import { Benefit, Trigger, Value, Material } from '../logic/Benefit';
 import TechBoard from '../logic/TechBoard';
 import Tech from '../logic/Tech';
+import { FederationLib } from '../logic/Federation';
 
 const lab = Lab.script()
 const { describe, it, before, beforeEach } = lab
@@ -80,6 +81,7 @@ describe('Benefit Test', () => {
 describe('tech test', () => {
     let p: Player
     let techboard: TechBoard;
+    let fedLib = new FederationLib();
     beforeEach(() => {
         //console.log("tech test begin");
         p = CreatePlayer('jon', RaceType.Terrans);
@@ -89,7 +91,7 @@ describe('tech test', () => {
         expect(p.techs[3]).to.equal(1);
         expect(p.techs[4]).to.equal(0);
         expect(p.techs[5]).to.equal(0);
-        techboard = new TechBoard();
+        techboard = new TechBoard(false, fedLib.getDigLaneSpeicalFederationToken());
         // techboard.print();
     })
 
