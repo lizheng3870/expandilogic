@@ -1,9 +1,11 @@
 import {Benefit, Value, Material, Count, Trigger} from './Benefit'
 import {Player} from './Player'
+import { FederationToken } from './Federation';
 
 class Tech{
   public lane: number;
   public level: number;
+  public fed: FederationToken = null;
 
   /**
    * each square of technology in the tech board would have the this.lane and this.level to stand for its position
@@ -15,6 +17,13 @@ class Tech{
     this.level = level;
   }
 
+  /**
+   * for the tech of dig level 5, we put a fed into it to give it to the player
+   * @param fed 
+   */
+  public putFed(fed: FederationToken){
+    this.fed = fed;
+  }
 /**
  * update and get the benefit
  * @param player the player who do the update
@@ -35,7 +44,7 @@ class Tech{
       if(this.level === 2) {player.digCost = 2;}
       if(this.level === 3) {player.digCost = 1;}
       if(this.level === 4) {b2 = new Benefit(Trigger.Now, null, null, [new Value(2, Material.Ore)]);}
-      //if(this.level == 5) // player.getFedaration();
+      if(this.level == 5) player.getSpecialFedration(this.fed);
     }
 
     //range

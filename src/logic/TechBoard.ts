@@ -1,6 +1,7 @@
 import Tech from './Tech'
 import TechTile from './TechTiles';
 import { Player } from './Player';
+import { FederationToken } from './Federation';
 
 class TechBoard {
   public table: Tech[][];
@@ -13,7 +14,7 @@ class TechBoard {
   public topLevelTaken: boolean[]
 
 
-  constructor(randomTechtile:boolean = true) { // for testcase which will set to false
+  constructor(randomTechtile:boolean = true, fed: FederationToken = null) { // for testcase which will set to false
     this.table = []
     this.normal6Id = []
     this.normal6TechTiles = []
@@ -22,7 +23,7 @@ class TechBoard {
     this.advanceId = []
     this.advanceTechTiles = []
     this.topLevelTaken = [false, false, false, false, false, false]
-    this.loadTechs(randomTechtile);
+    this.loadTechs(randomTechtile, fed);
   }
 
   /**
@@ -115,7 +116,7 @@ class TechBoard {
     * initialize the tech board
     * @param randomTechtile 
     */
-   public loadTechs(randomTechtile : boolean){
+   public loadTechs(randomTechtile : boolean, fed: FederationToken){
     var i;
     var j;
 
@@ -123,7 +124,7 @@ class TechBoard {
       this.table[i] = [];
      for(j = 0; j< 6; j++){
        this.table[i][j] = new Tech(i, j);
-      //  console.log("a new tech at " + i + " " + j);
+       if(i === 0 && j === 5) this.table[i][j].putFed(fed);
      }
     }
 
