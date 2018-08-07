@@ -1,5 +1,6 @@
 import {Player} from './Player'
 import {Benefit, Value, Material, Count, BuildingType, Trigger} from './Benefit'
+import { SpecialPowerType } from './SpecialPower';
 
 class TechTile {
   public techId: number;
@@ -105,6 +106,7 @@ class TechTile {
       //ability: can charge 4 power, everyturn
       //player.abilities[XX] = null;
       //how to turn it off;
+      player.turnOffSpecialPower(SpecialPowerType.Power4);
     }
 
     // remove techTiles from player.techTiles
@@ -116,63 +118,63 @@ class TechTile {
      this.offTechTile(player, offTechId);//turn off the normal techtile;
      var adTechId = this.techId;
      let b1 = null;
-     if(adTechId === 0){
+     if(adTechId === 9){
        //every cleanup phase: player.VP += 3 * number of federation;
        b1 = new Benefit(Trigger.Pass, Count.Feds, null, [new Value(3, Material.VP)]);
      }
-     if(adTechId === 1){
+     if(adTechId === 10){
        //everytime update tech +2 VP;
        b1 = new Benefit(Trigger.ScienceUp, null, null, [new Value(2, Material.VP)]);
      }
-     if(adTechId === 2){
+     if(adTechId === 11){
        //get ability: every turn, +1 QIC +5 gold;
        b1 = new Benefit(Trigger.Special, null, null, [new Value(1, Material.QIC), new Value(5, Material.Gold)]);
      }
-     if(adTechId === 3){
+     if(adTechId === 12){
        //player.VP += number of mine * 2;
        b1 = new Benefit(Trigger.Now, Count.Mines, null, [new Value(2, Material.VP)]);
      }
-     if(adTechId === 4){
+     if(adTechId === 13){
        //every cleanup phase: player.VP += 3 * number of lab;
        b1 = new Benefit(Trigger.Pass, Count.Labs, null, [new Value(3, Material.VP)]);
      }
-     if(adTechId === 5){
+     if(adTechId === 14){
        //player.ore += 1 * player.number of sector
        b1 = new Benefit(Trigger.Now, Count.Sectors, null, [new Value(1, Material.Ore)]);
      }
-     if(adTechId === 6){
+     if(adTechId === 15){
        //every cleanup phase: player.VP += 1 * player.planetTypes.length;
        b1 = new Benefit(Trigger.Pass, Count.PlanetTypes, null, [new Value(1, Material.VP)]);
      }
-     if(adTechId === 7){
+     if(adTechId === 16){
       //  player.VP += 2 * player.numGaia;
       b1 = new Benefit(Trigger.Now, Count.Gaia, null, [new Value(2, Material.VP)]);
      }
-     if(adTechId === 8){
+     if(adTechId === 17){
        //player.VP += 4 * player.number of station;
        b1 = new Benefit(Trigger.Now, Count.TradingStations, null, [new Value(4, Material.VP)]);
      }
-     if(adTechId === 9){
+     if(adTechId === 18){
        //player.VP += 2 * number of sectors;
        b1 = new Benefit(Trigger.Now, Count.Sectors, null, [new Value(2, Material.VP)]);
      }
-     if(adTechId === 10){
+     if(adTechId === 19){
        //get ability: +3 ore;
        b1 = new Benefit(Trigger.Special, null, null, [new Value(3, Material.Ore)]);
      }
-     if(adTechId === 11){
+     if(adTechId === 20){
        //player.VP += 5 * number of federation;
        b1 = new Benefit(Trigger.Now, Count.Feds, null, [new Value(5, Material.VP)]);
      }
-     if(adTechId === 12){
+     if(adTechId === 21){
        //get ability: +3 science;
        b1 = new Benefit(Trigger.Special, null, null, [new Value(3, Material.Science)]);
      }
-     if(adTechId === 13){
+     if(adTechId === 22){
        //every time build mine: +3 VP;
        b1 = new Benefit(Trigger.Build, null, BuildingType.Mine, [new Value(3, Material.VP)]);
      }
-     if(adTechId === 14){
+     if(adTechId === 23){
        //every time build station: +3 VP;
        b1 = new Benefit(Trigger.Build, null, BuildingType.TradingStation, [new Value(3, Material.VP)]);
      }

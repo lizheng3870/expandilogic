@@ -11,6 +11,7 @@ import {Hex} from './Hex'
 import {Structure, StructureStatus} from './Structure'
 import {MapBoard} from './MapBoard'
 import { count } from '../../node_modules/@types/code';
+import { SpecialPowerType, SpecialPower } from './SpecialPower';
 
 
 interface RaceJSON {
@@ -109,7 +110,8 @@ export class Race {
     public roundBoosterBenefits: Benefit[];
     public federationBenefits: Benefit[];
 
-
+    //The special powers
+    public specialPowers: SpecialPower[] = [];
 
     // This buildBoard holds the benefits that are unlocked at each step
     public buildBoard : BuildBoard = {
@@ -343,7 +345,17 @@ public setPlanetType(playerPlanet: PlanetType) {
      * initiallize the lib of special powers
      */
     public initializeSpecialPowers(){
-
+      var powerTypes = [SpecialPowerType.QIC1,
+                        SpecialPowerType.Dig1,
+                        SpecialPowerType.SpecialRange3,
+                        SpecialPowerType.Power4,
+                        SpecialPowerType.QIC1Gold5,
+                        SpecialPowerType.Ore3,
+                        SpecialPowerType.Science3];
+      for(let i = 0; i < powerTypes.length; i++){
+        let specialPower = new SpecialPower(powerTypes[i]);
+        this.specialPowers.push(specialPower);
+      }
     }
 
     // /*
@@ -367,38 +379,73 @@ public setPlanetType(playerPlanet: PlanetType) {
     //   }
     // }
 
+    /**
+     * get the benefit from tech
+     * @param benefit 
+     */
     public getTechBenefit(benefit: Benefit){
       this.techBenefits.push(benefit);
       if(benefit.trigger === Trigger.Now){
         this.onBenefit(benefit);
       }
+      if(benefit.trigger === Trigger.Special){
+        this.activateSpecialPower(benefit);
+      }
     }
 
+    /**
+     * get the benefit from tech tile
+     * @param benefit 
+     */
     public getTechTileBenefit(benefit: Benefit){
       this.techTileBenefits.push(benefit);
       if(benefit.trigger === Trigger.Now){
         this.onBenefit(benefit);
       }
+      if(benefit.trigger === Trigger.Special){
+        this.activateSpecialPower(benefit);
+      }
     }
 
+    /**
+     * get the benefit from the round tile
+     * @param benefit 
+     */
     public getRoundTileBenefit(benefit: Benefit){
       this.roundTileBenefits.push(benefit);
       if(benefit.trigger === Trigger.Now){
         this.onBenefit(benefit);
       }
+      if(benefit.trigger === Trigger.Special){
+        this.activateSpecialPower(benefit);
+      }
     }
 
+    /**
+     * get the benefit from round booster
+     * @param benefit 
+     */
     public getRoundBoosterBenefit(benefit: Benefit){
       this.roundBoosterBenefits.push(benefit);
       if(benefit.trigger === Trigger.Now){
         this.onBenefit(benefit);
       }
+      if(benefit.trigger === Trigger.Special){
+        this.activateSpecialPower(benefit);
+      }
     }
 
+    /**
+     * get the benefit from federation
+     * @param benefit 
+     */
     public getFedrationBenefit(benefit: Benefit){
       this.federationBenefits.push(benefit);
       if(benefit.trigger === Trigger.Now){
         this.onBenefit(benefit);
+      }
+      if(benefit.trigger === Trigger.Special){
+        this.activateSpecialPower(benefit);
       }
     }
 
@@ -490,6 +537,7 @@ public setPlanetType(playerPlanet: PlanetType) {
       }
       return temp.length;
     }
+
     /**
      * the function which will add the amount of resource into players class
      * @param benefit
@@ -540,7 +588,75 @@ public setPlanetType(playerPlanet: PlanetType) {
      * @param benefit
      */
     public activateSpecialPower(benefit: Benefit){
+      var values = benefit.values;
+      if(values.length === 1){
+        var value = values[0];
+        if(value.quantity === 1 && value.material === Material.QIC){
+          this.specialPowers[0].activatePower();
+        }
+        if(value.quantity === 1 && value.material === Material.Dig){
+          this.specialPowers[1].activatePower();
+        }
+        if(value.quantity === 3 && value.material === Material.SpecialRange){
+          this.specialPowers[2].activatePower();
+        }
+        if(value.quantity === 4 && value.material === Material.Power){
+          this.specialPowers[3].activatePower();
+        }
+        if(value.quantity === 3 && value.material === Material.Ore){
+          this.specialPowers[5].activatePower();
+        }
+        if(value.quantity === 3 && value.material === Material.Science){
+          this.specialPowers[6].activatePower();
+        }
+      }else if(values.length === 2){
+        this.specialPowers[4].activatePower();
+      }
+      console.log("no such special power");
+      return;
+    }
 
+    /**
+     * turn off the special power if the tech tile is covered
+     * @param spt 
+     */
+    public turnOffSpecialPower(spt: SpecialPowerType){
+      if(spt === 'QIC1         ') this.specialPowers[0].turnOffPower();
+      if(spt === 'Dig1         ') this.specialPowers[1].turnOffPower();
+      if(spt === 'SpecialRange3') this.specialPowers[2].turnOffPower();
+      if(spt === 'Power4       ') this.specialPowers[3].turnOffPower();
+      if(spt === 'QIC1Gold5    ') this.specialPowers[4].turnOffPower();
+      if(spt === 'Ore3         ') this.specialPowers[5].turnOffPower();
+      if(spt === 'Science3     ') this.specialPowers[6].turnOffPower();
+      
+    }
+
+    /**
+     * print out the status of special powers
+     */
+    public printSpecialPower(){
+      for(let i = 0; i < this.specialPowers.length; i++){
+        let temp = this.specialPowers[i];
+        console.log("index: " + i + "; effect: " + temp.id + "; ifGet: " + temp.ifGet + "; ifUsable: " + temp.ifUsable);
+      }
+    }
+
+    /**
+     * use the special power
+     * @param id 
+     */
+    public useSpecialPower(id: number): boolean{
+      if(!this.specialPowers[id].ifGet){
+        console.log("special power not get");
+        return false;
+      }
+      if(!this.specialPowers[id].ifUsable){
+        console.log("special power used this round, please wait for the next round");
+        return false;
+      }
+      this.onBenefit(this.specialPowers[id].benefit);
+      this.specialPowers[id].ifUsable = false;
+      return true;
     }
 
 

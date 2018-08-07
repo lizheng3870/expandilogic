@@ -5,6 +5,7 @@ import { expect } from 'code'
 import { Player , CreatePlayer, RaceType} from '../logic/Player';
 import { Benefit, Trigger, Value, Material } from '../logic/Benefit';
 import TechBoard from '../logic/TechBoard';
+import Tech from '../logic/Tech';
 
 const lab = Lab.script()
 const { describe, it, before, beforeEach } = lab
@@ -188,4 +189,74 @@ describe('tech test', () => {
 
 
 
+})
+
+describe("special power test",() => {
+    let p: Player;
+
+    beforeEach(() => {
+        p = CreatePlayer('yalei', RaceType.Terrans);
+    })
+
+    it('begin the test', () => {
+        console.log();
+        console.log("***********special power test begin***********");
+        p.printSpecialPower();
+        expect(1).to.equal(1);
+        for(let i = 0; i < p.specialPowers.length; i++){
+            expect(p.specialPowers[i].ifGet).to.equal(false);
+        }
+    })
+
+    it('can directly activate the special power', () => {
+        p.specialPowers[0].activatePower();
+        expect(p.specialPowers[0].ifGet).to.equal(true);
+    })
+
+    it('can get the special power from the benefit', () => {
+        p.activateSpecialPower(new Benefit(Trigger.Special, null, null, [new Value(3, Material.Science)]));
+        // p.printSpecialPower();
+        expect(p.specialPowers[6].ifGet).to.equal(true);
+    })
+
+    it('can get the special power from the normal techtile', () => {
+        let t = new TechBoard(false);
+        t.takeNormal3TechTiles(2, 0, p);
+        expect(p.specialPowers[3].ifGet).to.equal(true);
+    })
+
+    it('can get the special power from the advance techtile', () => {
+        let t = new TechBoard(false);
+        t.takeAdvancedTechTiles(2, 0, p);
+        expect(p.specialPowers[4].ifGet).to.equal(true);
+    })
+
+    it('can get advance techtile special power and turn off the normal techtile special power', () => {
+        let t = new TechBoard(false);
+        t.takeNormal3TechTiles(2, 0, p);
+        expect(p.specialPowers[3].ifGet).to.equal(true);
+        t.takeAdvancedTechTiles(2, 8, p);
+        expect(p.specialPowers[3].ifGet).to.equal(false);
+        expect(p.specialPowers[4].ifGet).to.equal(true);
+    })
+
+    it('can not use a deactivated special power', () => {
+        let flag = p.useSpecialPower(0);
+        expect(flag).to.equal(false);
+    })
+
+    it('can not use one special power two times in one turn', () => {
+        let t = new TechBoard(false);
+        t.takeNormal3TechTiles(2, 0, p);
+        let flag = p.useSpecialPower(3);
+        expect(flag).to.equal(true);
+        flag = p.useSpecialPower(3);
+        expect(flag).to.equal(false);
+    })
+
+    it('has the right effect of QIC1', () => {
+        p.specialPowers[0].activatePower();
+        p.useSpecialPower(0);
+        expect(p.qic).to.equal(2);
+    })
 })

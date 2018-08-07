@@ -111,6 +111,10 @@ class TechBoard {
       this.update(lane, player);
    }
 
+   /**
+    * initialize the tech board
+    * @param randomTechtile 
+    */
    public loadTechs(randomTechtile : boolean){
     var i;
     var j;
@@ -136,7 +140,7 @@ class TechBoard {
       this.normal3Id[i] = arr[i + 6];
       this.normal3TechTiles[i] = new TechTile(arr[i + 6]);
     }
-    arr = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14];
+    arr = [9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
     if(randomTechtile === true){
         arr.sort(function(){ return 0.5 - Math.random() });
     }
