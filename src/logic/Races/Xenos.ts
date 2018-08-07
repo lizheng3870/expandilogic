@@ -7,6 +7,10 @@ import { Structure, StructureType } from "../Structure";
 
 export class Xenos extends Race{
 
+    /**
+     * Initialise the starting state of Xenos
+     * @param name 
+     */
     constructor(name:string) {
         super(name);
         this.setRaceType(RaceType.Xenos);

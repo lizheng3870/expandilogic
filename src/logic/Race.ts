@@ -13,7 +13,9 @@ import {MapBoard} from './MapBoard'
 import { count } from '../../node_modules/@types/code';
 import { SpecialPowerType, SpecialPower } from './SpecialPower';
 
-
+/**
+ * Player resources interface
+ */
 interface RaceJSON {
   name:       string;
   type:       number;
@@ -27,7 +29,9 @@ interface RaceJSON {
   bowl3:    number;
 }
 
-
+/**
+ * 14 Factions for Gaia project
+ */
 export enum RaceType {
   Terrans,
   Lantids,
@@ -45,11 +49,21 @@ export enum RaceType {
   Bescods,
 }
 
+/**
+ * BuildBenefit - Not used 
+ */
 export interface BuildBenefit{
     built : boolean
     benefit: Benefit
 }
 
+/**
+ * Faction buildboard
+ * Stores a standard set of buildings
+ * Specific differences between Factions 
+ * are written in the respective Factions 
+ * in Races Folder
+ */
 interface BuildBoard {
     mines : Structure[],
     stations : Structure[],
@@ -93,12 +107,12 @@ export class Race {
     public gaiaProjectPlanets:Planet[]; // Transdim planets start gaia project
     public gaiaformer: number;  // How many gaiaformers do I have
     public federations: Federation[]; // My Federations
-    public numGaia: number; // How many gaia planets have a conquered
-    public sectors: number = 0;
-    public satellites: number = 0;
-    public passiveActionOn:boolean = true; //
+    public numGaia: number; // How many gaia planets has player conquered
+    public sectors: number = 0; // How many sectors I have built on
+    public satellites: number = 0; 
+    public passiveActionOn:boolean = true; 
 
-    //Benefits not from the buildBoard
+    //Benefits not from the buildBoard - not used
     // public nowBenefits: Benefit[];
     // public incomeBenefits: Benefit[];
     // public specialBenefits: Benefit[];
@@ -110,10 +124,14 @@ export class Race {
     public roundBoosterBenefits: Benefit[];
     public federationBenefits: Benefit[];
 
-    //The special powers
+    //The special powers - Orange one time benefit
     public specialPowers: SpecialPower[] = [];
 
-    // This buildBoard holds the benefits that are unlocked at each step
+    /**
+     * 
+     * This buildBoard holds the benefits that are unlocked at each step
+     * All buildings are stored on the BuildBoard and set to true when built
+     */
     public buildBoard : BuildBoard = {
         mines : [],
         stations : [],
@@ -125,26 +143,24 @@ export class Race {
     // The permanent board incomes
     public income : Benefit[] = [];
 
-    //Player Status - should these be set to private????
+    //Player Status 
     public raceType: RaceType;
     public planetType: PlanetType;
     public passed: boolean;
     public gaiaColonize: Benefit;
     public range: number; // basic range, can be increased by upgrading the tech of range and will not decrease;
-    public specialDig: number;
+    public specialDig: number; // terraform cost
     public specialRange: number; // temporary range, increased by spend QIC or special power, will go back to 0 every new turn;
 
 
-    // variable from previous player currentPlayerPass  public name: string
-    public name: string
-    public techs: number[]
-    public techTiles: TechTiles[]
+    public name: string // Player name
+    public techs: number[] // Stores the level of the player's tech
+    public techTiles: TechTiles[] // Obtained techtiles
     public gaiaFormingCost: number = 6
     public digCost: number = 3
-    public pid: number
-    public roundBooster: RoundBooster
-    public buildings: BuildingLib
-
+    public pid: number // Player id 
+    public roundBooster: RoundBooster 
+    public buildings: BuildingLib // Player's building library i.e. Faction board
     public sortByValue:number  //  final scoring count and sort
 
   constructor(name:string){
@@ -169,9 +185,7 @@ export class Race {
     // - todo - initialize number of planets
     // - todo - initialize number of federations
 
-
-
-  //initialize  from player
+  //Initialize  from player
   this.initializeSpecialPowers();
   this.name = name;
   this.planets = [];
@@ -181,8 +195,10 @@ export class Race {
   this.federations = [];
   this.pid =  -1;  // pid is player id for example 0 1 2 3
   this.gaiaProjectPlanets = [];
+
   // this.nowBenefits = [];
   // this.incomeBenefits = [];
+
   this.techBenefits = [];
   this.techTileBenefits = [];
   this.roundTileBenefits = [];
@@ -286,6 +302,10 @@ public setPlanetType(playerPlanet: PlanetType) {
 
   }
 
+  /**
+   * Add a new Extra power to bowl1
+   * @param extra 
+   */
   public addPower(extra : number){
     this.power.bowl1 += extra
   }
@@ -307,39 +327,6 @@ public setPlanetType(playerPlanet: PlanetType) {
   public reseachArea(){
 
   }
-
-  // Previous player function
-
-    // map race type to plant types
-    // public getPlantType(raceType: RaceType):PlanetType{
-    //   if(raceType === RaceType.Terrans || raceType === RaceType.Lantids)
-    //     return PlanetType.Blue;
-
-    //   if(raceType === RaceType.Xenos || raceType === RaceType.Gleens)
-    //       return PlanetType.Yellow;
-
-    //   if(raceType === RaceType.Taklons || raceType === RaceType.Ambas)
-    //       return PlanetType.Brown;
-
-    //   if(raceType === RaceType.HadschHallas || raceType === RaceType.Ivits)
-    //       return PlanetType.Red;
-
-
-    //   if(raceType === RaceType.Nevlas || raceType === RaceType.Itars)
-    //       return PlanetType.White;
-
-    //   if(raceType === RaceType.Geodens || raceType === RaceType.Baltaks)
-    //       return PlanetType.Orange;
-
-    //   if(raceType === RaceType.Firaks || raceType === RaceType.Bescods)
-    //         return PlanetType.Black;
-
-
-    //   if(raceType === RaceType.Nevlas || raceType === RaceType.Itars)
-    //       return PlanetType.White;
-
-    //   return PlanetType.Blue;
-    // }
 
     /**
      * initiallize the lib of special powers
@@ -538,7 +525,7 @@ public setPlanetType(playerPlanet: PlanetType) {
     }
 
     /**
-     * get the number of how many different types of planet you have occupied
+     * Get the number of how many different types of planet you have occupied
      */
     public getPlanetTypes(): number{
       let temp: PlanetType[] = [];
@@ -550,7 +537,8 @@ public setPlanetType(playerPlanet: PlanetType) {
     }
 
     /**
-     * the function which will add the amount of resource into players class
+     * the function which will activate the benefit
+     * and store it in the private data member
      * @param benefit
      */
     public onBenefit(benefit: Benefit){
@@ -595,7 +583,8 @@ public setPlanetType(playerPlanet: PlanetType) {
     }
 
     /**
-     * activate the special power which has this benefit
+     * Activate the special power which has this benefit
+     * Orange base tech tile
      * @param benefit
      */
     public activateSpecialPower(benefit: Benefit){
@@ -643,7 +632,7 @@ public setPlanetType(playerPlanet: PlanetType) {
     }
 
     /**
-     * print out the status of special powers
+     * Print out the status of special powers
      */
     public printSpecialPower(){
       for(let i = 0; i < this.specialPowers.length; i++){
@@ -653,7 +642,7 @@ public setPlanetType(playerPlanet: PlanetType) {
     }
 
     /**
-     * use the special power
+     * Use the special power
      * @param id 
      */
     public useSpecialPower(id: number): boolean{
@@ -671,6 +660,10 @@ public setPlanetType(playerPlanet: PlanetType) {
     }
 
 
+    /**
+     * Check distance of the Hex
+     * @param hex 
+     */
     public nearDistance(hex: Hex){
       let min = 10000;
 
@@ -681,6 +674,10 @@ public setPlanetType(playerPlanet: PlanetType) {
       return min;
     }
 
+    /**
+     * 
+     * @param hex
+     */
     public checkPlanetDistance(hex: Hex){
       var distance = this.nearDistance(hex);
       if(this.range + this.specialRange >= distance){
@@ -695,12 +692,17 @@ public setPlanetType(playerPlanet: PlanetType) {
       return false;
   }
 
-  // terraforming will cost ore according tech level Dig Lane
+ /**
+  * Get the cost to terraform 
+  */
   public terraformingCost(){
-    //
     return this.digCost;
   }
 
+  /**
+   * Get the next available Mine
+   * Used in Action.ts
+   */
   public getAvalibleMine(){
     for(let mine of this.buildings.mines){
       if(mine.status === StructureStatus.Unbuilt)
@@ -710,6 +712,10 @@ public setPlanetType(playerPlanet: PlanetType) {
 
   }
 
+  /**
+   * Get the next available station
+   * Used in Action.ts
+   */
   public getAvalibleStation(){
     for(let s of this.buildings.station){
       if(s.status === StructureStatus.Unbuilt)
@@ -719,6 +725,11 @@ public setPlanetType(playerPlanet: PlanetType) {
 
   }
 
+
+  /**
+   * Get the next available lab
+   * Used in Action.ts
+   */
   public getAvalibleLab(){
     for(let l of this.buildings.lab){
       if(l.status === StructureStatus.Unbuilt)
@@ -728,6 +739,10 @@ public setPlanetType(playerPlanet: PlanetType) {
 
   }
 
+  /**
+   * Get the next available Institute
+   * Used in Action.ts
+   */
   public getAvalibleInstitute(){
     for(let i of this.buildings.institute){
       if(i.status === StructureStatus.Unbuilt)
@@ -737,6 +752,10 @@ public setPlanetType(playerPlanet: PlanetType) {
 
   }
 
+  /**
+   * Get the next available Academy
+   * Used in Action.ts
+   */
   public getAvalibleAcademies(){
     for(let a of this.buildings.academies){
       if(a.status === StructureStatus.Unbuilt)
@@ -746,6 +765,10 @@ public setPlanetType(playerPlanet: PlanetType) {
 
   }
 
+  /**
+   * Get back last built mine
+   * Used in Action.ts
+   */
   public getLastBuiltMine(){
     let last = null;
     for(let mine of this.buildings.mines){
@@ -756,6 +779,10 @@ public setPlanetType(playerPlanet: PlanetType) {
 
   }
 
+  /**
+   * Get back last built station
+   * Used in Action.ts
+   */
   public getLastBuiltStation(){
     let last = null;
     for(let s of this.buildings.station){
@@ -766,6 +793,9 @@ public setPlanetType(playerPlanet: PlanetType) {
 
   }
 
+  /**
+   * Get back the last built Lab
+   */
   public getLastBuiltLab(){
     let last = null;
     for(let l of this.buildings.lab){
@@ -779,20 +809,16 @@ public setPlanetType(playerPlanet: PlanetType) {
 
 
 
-
+  /**
+   * Checks if the player can afford to build a Mine
+   */
   public AffordMine(){
     const mine = this.getAvalibleMine();
     if(mine == null)return false;
 
     return this.haveResouces(mine.cost);
-    // for(const value : mine.values){
-    //
-    //
-    // }
+    
   }
-
-
-
 
 
   /*
@@ -806,7 +832,9 @@ public setPlanetType(playerPlanet: PlanetType) {
   Dig, // you can buy the dig chance from the store
   SpecialRange, // some special power or round booster can give you temporary range
   GaiaFormer, /
-  */
+  /**
+   * Checks if the player has the particular resource
+   */
   public haveResouce(value:Value){
     if(value.material === Material.Gold){
       return value.quantity <= this.gold;
@@ -836,6 +864,10 @@ public setPlanetType(playerPlanet: PlanetType) {
 
   }
 
+  /**
+   * Subtract the resource from the player
+   * @param value 
+   */
   public payResouce(value:Value){
     if(value.material === Material.Gold){
       this.gold -= value.quantity;
@@ -870,6 +902,11 @@ public setPlanetType(playerPlanet: PlanetType) {
     return false;
 
   }
+
+  /**
+   * Check if the player has the resources
+   * @param values 
+   */
   public haveResouces(values:Value[]){
     for(const value of values){
       if(this.haveResouce(value) === false){
@@ -882,6 +919,9 @@ public setPlanetType(playerPlanet: PlanetType) {
     return true;
   }
 
+  /**
+   * Pay the resource
+   */
   public payResouces(values:Value[]){
     for(const value of values){
       if(this.payResouce(value) === false)return false;
@@ -891,11 +931,17 @@ public setPlanetType(playerPlanet: PlanetType) {
 
 
 
-  // terraforming will cost ore according tech level
+  /**
+   *  terraforming will cost an ore quantity according tech level
+   */
   public startGaiaProjectCost():number{
     return this.gaiaFormingCost;
   }
 
+  /**
+   * Check if the player has sufficient power materials 
+   * to start a Gaia project
+   */
   public checkPowerForGaiaProject(){
     if(this.power.bowl1 + this.power.bowl2 + this.power.bowl3 >= this.startGaiaProjectCost()){
       return true;
@@ -905,6 +951,11 @@ public setPlanetType(playerPlanet: PlanetType) {
 
   }
 
+  /**
+   * Checks if the player has sufficient power materials to 
+   * form a federation
+   * @param satellite 
+   */
   public checkPowerForFederation(satellite:number){
     if(this.power.bowl1 + this.power.bowl2 + this.power.bowl3 >= satellite){
       return true;
@@ -914,17 +965,26 @@ public setPlanetType(playerPlanet: PlanetType) {
 
   }
 
+  /**
+   * Transfers powers into the Gaia bowl
+   */
   public transferGaiaPower(){
      let cost = this.startGaiaProjectCost();
      this.takePowersAwayFromBowl(cost);
      this.power.gaia += cost;
    }
 
-  // used in Federation
+  /**
+   * Take away power materials for each Sattellite 
+   * @param satellite 
+   */
    public discardPowersToBuildSatellites(satellite:number){
       this.takePowersAwayFromBowl(satellite);
    }
 
+   /**
+    * Remove power materials from the power bowls
+    */
     public takePowersAwayFromBowl(cost: number){
       let amount = cost
 
@@ -970,11 +1030,13 @@ public setPlanetType(playerPlanet: PlanetType) {
 
 
       }
-
       return result;
 
     }
 
+    /**
+     * Trigger the benefit when a person passes
+     */
     public onPassBenefit(){
       // let benefits = this.getTrigerBenefit(Trigger.Pass);
       // for(const benefit of benefits){
@@ -983,6 +1045,10 @@ public setPlanetType(playerPlanet: PlanetType) {
       this.triggerBenefit(Trigger.Pass, null);
     }
 
+    /**
+     * Planets that the player can reach/access
+     * @param board 
+     */
     public accessiblePlanets(board: MapBoard){
       let plants : Planet[] = []
     //  console.log(board.spaces);
@@ -1008,6 +1074,11 @@ public setPlanetType(playerPlanet: PlanetType) {
 
     }
 
+    /**
+     * Calculate the Income benefits for each player
+     * during the income phase
+     * - unfinished
+     */
     public calculateIncomeBenefit(){
 
       // // for default income for race board
@@ -1032,6 +1103,9 @@ public setPlanetType(playerPlanet: PlanetType) {
 
     }
 
+    /**
+     * Get as a JsonData Structure
+     */
     public getJsonData():RaceJSON{
       return {
         name:       this.name,
@@ -1061,6 +1135,9 @@ public setPlanetType(playerPlanet: PlanetType) {
          return count;
     }
 
+    /**
+     * Get the number of stations built
+     */
     public getStationNum():number{
       let count = 0;
       for(let s of this.buildings.station){
@@ -1070,6 +1147,9 @@ public setPlanetType(playerPlanet: PlanetType) {
          return count;
     }
 
+    /**
+     * Get the number of labs built
+     */
     public getLabNum():number{
       let count = 0;
       for(let s of this.buildings.lab){
@@ -1099,6 +1179,9 @@ public setPlanetType(playerPlanet: PlanetType) {
       return count;
     }
 
+    /**
+     * Replace normal tech tile with the advanced tech tile
+     */
     public removeTechtile(techId: number){  // when get advanced techTile
       let index = 0;
       let found = false;
@@ -1115,6 +1198,10 @@ public setPlanetType(playerPlanet: PlanetType) {
 
     }
 
+    /**
+     * Check if the player has the tech tile
+     * @param techId 
+     */
     public hasTechTileID(techId: number){
 
       for(let techTile of this.techTiles ){
@@ -1127,7 +1214,9 @@ public setPlanetType(playerPlanet: PlanetType) {
     }
 
 
-
+    /**
+     * GaiaPhase operation
+     */
     public GaiaPhase(){
        this.power.bowl1 += this.power.gaia;
        for(let planet of this.gaiaProjectPlanets){
@@ -1138,11 +1227,16 @@ public setPlanetType(playerPlanet: PlanetType) {
     }
 
 
-
+    /**
+     * Get method for sectors
+     */
     public getSectors(){
       return this.sectors;
     }
 
+    /**
+     * Get number of gaia planets conquered
+     */
     public getGaiaNum(){
       let count = 0;
       for(let planet of this.planets){
@@ -1153,6 +1247,9 @@ public setPlanetType(playerPlanet: PlanetType) {
       return count;
     }
 
+    /**
+     * Count the federation buildings
+     */
     public getFedarationBuildings(){
       let count = 0;
       for(let federation of this.federations){
@@ -1161,6 +1258,9 @@ public setPlanetType(playerPlanet: PlanetType) {
       return count;
     }
 
+    /**
+     * Double check
+     */
     public getBuildings(){
       return this.planets.length;
     }

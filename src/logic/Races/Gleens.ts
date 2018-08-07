@@ -7,6 +7,10 @@ import { Structure, StructureType } from "../Structure";
 
 export class Gleens extends Race{
 
+    /**
+     * Initialise the starting state of Gleens
+     * @param name 
+     */
     constructor(name:string) {
         super(name);
         this.setRaceType(RaceType.Gleens);

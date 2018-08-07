@@ -7,6 +7,10 @@ import { Structure, StructureType } from "../Structure";
 
 export class Ambas extends Race{
 
+    /**
+     * Initialise the starting state of Ambas
+     * @param name 
+     */
     constructor(name:string) {
         super(name);
         this.setRaceType(RaceType.Ambas);

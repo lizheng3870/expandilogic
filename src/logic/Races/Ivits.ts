@@ -7,11 +7,20 @@ import { Structure, StructureType } from "../Structure";
 
 export class Ivits extends Race{
 
+
+    /**
+     * Initialise the starting state of Ivits
+     * @param name 
+     */
     constructor(name:string) {
         super(name);
         this.setRaceType(RaceType.Ivits);
         this.setPlanetType(PlanetType.Red);
         this.techs = [0,0,0,0,0,0];
+
+        /**
+         * Permanent Incomes
+         */
         const ore = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Ore)]);
         const science = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]);
         const qic = new Benefit(Trigger.Income, null, null, [new Value(1, Material.QIC)]);

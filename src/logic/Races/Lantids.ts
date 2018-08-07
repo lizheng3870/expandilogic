@@ -7,11 +7,17 @@ import { Structure, StructureType } from "../Structure";
 
 export class Lantids extends Race{
 
+    /**
+     * Initialize starting point for Lantids
+     * @param name 
+     */
     constructor(name:string) {
         super(name);
         this.setRaceType(RaceType.Lantids);
         this.setPlanetType(PlanetType.Blue);
         this.gold = 13;
+
+        //Permanent Incomes
         const ore = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Ore)]);
         const science = new Benefit(Trigger.Income, null, null, [new Value(1, Material.Science)]);
 

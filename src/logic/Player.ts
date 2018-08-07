@@ -2,7 +2,6 @@ import {Terrans} from './Races/Terrans'
 import {Nevlas} from './Races/Nevlas'
 import {HadschHallas} from './Races/HadschHallas'
 import {Xenos} from './Races/Xenos'
-//add 10 races
 import {Lantids} from './Races/Lantids'
 import {Gleens} from './Races/Gleens'
 import {Taklons} from './Races/Taklons'
@@ -13,16 +12,22 @@ import {Geodens} from './Races/Geodens'
 import {Baltaks} from './Races/Baltaks'
 import {Firaks} from './Races/Firaks'
 import {Bescods} from './Races/Bescods'
-
 import {RaceType} from './Race'
-
 export {RaceType}   // from race
 
-
+/**
+ * Union Type
+ */
 export type Player = Terrans | Xenos | Nevlas | HadschHallas | Lantids | Gleens | Taklons
 | Ambas | Itars | Ivits | Geodens | Baltaks | Firaks | Bescods
 
 
+/**
+ * Create a player 
+ * Used by Game.ts
+ * @param name 
+ * @param raceType 
+ */
 export function CreatePlayer(name: string, raceType:RaceType):Player{
   let player = new Terrans("");
   if(raceType === RaceType.Terrans){ //blue

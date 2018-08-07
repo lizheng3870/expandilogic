@@ -5,6 +5,12 @@ import { Benefit, Trigger, BuildingType, Value, Material } from "../Benefit";
 
 export class Firaks extends Race{
 
+    
+    
+    /**
+     * Initialise the starting state of Firaks
+     * @param name 
+     */
     constructor(name:string) {
         super(name);
         this.setRaceType(RaceType.Firaks);
