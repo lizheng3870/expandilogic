@@ -61,12 +61,25 @@ as you can see. In driver code, Game initialize with gid = 2. like  let g = new 
 
 
 ```
+### Game interface for frontend Player   
+
+```
+player send instance of Request Class by (API/firebase/socketIO).
+game processing request by three function:
+processRoundRooter  setup 
+processSetupFirstStructures  setup
+processPlayerRequest 
+
+```
+
+
+
 ### Need to do
 
 src/race
 ```
-the passive ability of charge several amount of power when some one update a building near to your building: not ready
-the special power of each race: not ready
+special benefit of Planetary Institute in Faction Boards. for example in Gaia phase of Terrans. exchange power of gaia to other resoures. 
+special skill of right - top of faction boards. need test
 
 ```
 
@@ -75,8 +88,21 @@ src/ScoringBoard.ts
 test case: not fully tested
 
 ```
-front end
-back end: firebase, not recommended by sponsor
+
+```
+the order of roundbooster at seup. (According to rulebook page 7, Starting with the last player and continuing in counterclockwise order).  
+in code, place first structure in the order of 0 1 2 3 3 2 1.  order of roundbooster is 0 1 2 3
+
+```
+
+```
+special action: QIC exchange missing (right bottom of techboard)
+
+```
+
+
+
+
 
 
 
