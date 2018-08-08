@@ -89,6 +89,8 @@ test case: not fully tested
 
 ```
 
+others
+
 ```
 the order of roundbooster at seup. (According to rulebook page 7, Starting with the last player and continuing in counterclockwise order).  
 in code, place first structure in the order of 0 1 2 3 3 2 1.  order of roundbooster is 0 1 2 3
