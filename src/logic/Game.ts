@@ -232,7 +232,7 @@ class Game {
 
    public IncomePhase(){
 
-     for(let i = 0; i < 4; i++ ){
+     for(let i = 0; i < this.players.length; i++ ){
       this.calculateIncome(this.players[i]);
      }
 
@@ -241,7 +241,7 @@ class Game {
 
       public GaiaPhase(){
 
-        for(let i = 0; i < 4; i++ ){
+        for(let i = 0; i < this.players.length; i++ ){
          this.players[i].GaiaPhase()
         }
 
@@ -356,8 +356,8 @@ console.log( stack )
       if(this.firstStructuresRound === 1){
            this.turn++
            if (this.turn >= this.players.length){
-             this.turn = 4;  // not pid = 4 , just -- than pid = 3
-             this.firstStructuresRound = 2;
+             this.turn = this.players.length  // not pid = 4 , just -- than pid = 3
+             this.firstStructuresRound = 2
          }
       }
 

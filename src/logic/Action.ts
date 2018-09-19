@@ -503,12 +503,9 @@ public doAction(){
      public neighborBuildingsChargePower(){
        let currentPlayerID = this.request.pid;
        let range = 2;
-       let players:number[] = [];
-       players.push(0)
-       players.push(0)
-       players.push(0)
-       players.push(0)
-
+       let numPlayers = this.game.players.length
+       let players: number[] = new Array(numPlayers).fill(0)
+      
        let planets = this.game.board.getPlanetsInRange(this.request.hex, range);
 
        for(let planet of planets){
@@ -535,7 +532,7 @@ public doAction(){
            }
        }
 
-       for(let i = 0; i < 4;  i++){
+       for(let i = 0; i < players.length;  i++){
           if(i === currentPlayerID)continue;
           let charge = players[i];
           if(charge > 0){
