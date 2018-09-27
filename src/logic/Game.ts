@@ -472,7 +472,7 @@ console.log( stack )
     }
 
     public trigerRoundScoringBenefit(triger:Trigger, type:BuildingType){
-      let benefit = this.scoringBoard.roundBenefits[this.round];
+      let benefit = this.scoringBoard.roundBenefits[this.round - 1];
       if(triger === benefit.trigger  && type === benefit.object){  // only check two fields is enough
           this.players[this.turn].onBenefit(benefit);
       }

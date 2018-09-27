@@ -435,8 +435,9 @@ public doAction(){
       }
 
 
-      if(this.request.upgradeType === UpgradeType.StationToInstitute ||
-        this.request.upgradeType === UpgradeType.LabToAcademy){
+      if(this.request.actionType === ActionType.Upgrade && 
+        (this.request.upgradeType === UpgradeType.StationToInstitute ||
+        this.request.upgradeType === UpgradeType.LabToAcademy)){
             this.game.trigerRoundScoringBenefit(Trigger.Build, BuildingType.TradingStation);
       }
 
