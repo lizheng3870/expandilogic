@@ -64,6 +64,7 @@ class Game {
     // 1 normal:  0 1 2 3
     // 2 revserse:  3 2 1 0
     // 3 normal again
+    public playernum: number;
 
     constructor(gid: number){
       // console.log(`creating game ${gid}`)
@@ -76,6 +77,7 @@ class Game {
      this.scoringBoard = new ScoringBoard();
      this.roundBoosters = [];
      this.federationlib = new FederationLib();
+     this.playernum = 0
      // now for test, we set the boolean to false, so the tech tile position will not be random
      // and the advanced tech tile would also stay in the same position
      // in real game, the boolean should be true
@@ -127,7 +129,9 @@ class Game {
 
    }
 
-
+   public setPlayerNum (playernum: number){
+     this.playernum = playernum;
+   }
     public addPlayerNew(name: string, raceType:RaceType): boolean{
       // if(raceType === RaceType.Terrans){ //blue
       //   let player = new Terrans(name);
@@ -167,7 +171,7 @@ class Game {
        player.pid = this.players.length - 1
      }
 
-     if(this.players.length === Config.PlayerLimit){
+     if(this.players.length === this.playernum){
       // if we have the max number of players, automatically start the game
 
       this.stateMachine.go(GameStatus.Setup)
@@ -287,6 +291,8 @@ console.log( stack )
      if(this.checkTurn(request.pid) === false)return;
 
      if(this.stateMachine.currentState !== GameStatus.Setup){
+       console.log("this.stateMachine.currentState = " + this.stateMachine.currentState)
+       console.log("Expect " + GameStatus.Setup)
        throw new Error(`processRoundRooter error for status not setup`)
      }
 
@@ -365,7 +371,7 @@ console.log( stack )
 
       if(this.firstStructuresRound === 2){
            this.turn--
-           if (this.turn  < 0){
+           if (this.turn  <= 0){
              this.turn = 0;
              this.firstStructuresRound = 3;
          }
