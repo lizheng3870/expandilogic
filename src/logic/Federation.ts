@@ -105,10 +105,10 @@ class Federation {  //for player
   // /**
   //  * when buy a specific stuff in the store, the grey fed can turn green
   //  */
-  // public turnGreen(){
-  //   this.used = false;
-  // }
-  //
+   public turnGreen(){
+     this.used = false;
+   }
+  
   // // return the total number of buildings in the federation
   // public getTotalBuildings(): number{
   //   return this.planets.length;

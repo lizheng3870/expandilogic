@@ -345,6 +345,9 @@ class Action {
  }
 
 public checkPowerAndQIC(){
+  if(this.request.storeMerchandiseType == 7 || this.request.storeMerchandiseType == 8 || this.request.storeMerchandiseType == 9 ){
+    return this.game.store.checkQic(this.player, this.request.storeMerchandiseType)
+  }
   return this.game.store.checkTrade(this.player, this.request.storeMerchandiseType)
 }
 
