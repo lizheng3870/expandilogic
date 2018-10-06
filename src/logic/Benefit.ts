@@ -9,7 +9,8 @@ enum Material {
     Dig, // you can buy the dig chance from the store
     SpecialRange, // some special power or round booster can give you temporary range
     GaiaFormer, // the tech of Gaia will give the player new gaia former
-
+    techtile,
+    Feds,
 }
 
 const enum Trigger {

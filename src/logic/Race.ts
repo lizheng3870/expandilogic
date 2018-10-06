@@ -323,6 +323,15 @@ public setPlanetType(playerPlanet: PlanetType) {
     this.power.bowl1 += charge
   }
 
+  // spend qic
+  public spendQic(charge: number){
+    if(this.qic < charge){
+      throw new Error(`SPEND QIC ERROR: ${charge} is greater than ${this.qic}`)
+    }
+    this.qic -=charge
+  }
+
+
   // todo reseachArea
   public reseachArea(){
 
