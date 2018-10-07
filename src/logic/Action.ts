@@ -356,7 +356,10 @@ public checkSpecial(){
     this.message = "specialTokenType required"
     return false;
   }
-  return true;
+  let player = this.player
+  console.log("****************Print All Special")
+   return player.checkSpecialPower()
+
 }
 
 public checkFree(){
@@ -803,32 +806,39 @@ public doAction(){
 
   ///
   public special(){
-    if(this.request.specialActionSource === SpecialActionSource.RoundBooster){
-      let benefits = this.player.roundBooster.benefit;
-      for(let benefit of benefits){
-        if(benefit.trigger === Trigger.Special){
-          this.player.onBenefit(benefit);
-        }
-      }
+    // if(this.request.specialActionSource === SpecialActionSource.RoundBooster){
+    //   let benefits = this.player.roundBooster.benefit;
+    //   for(let benefit of benefits){
+    //     if(benefit.trigger === Trigger.Special){
+    //       this.player.onBenefit(benefit);
+    //     }
+    //   }
 
-     }
+    //  }
 
-     if(this.request.specialActionSource === SpecialActionSource.TechTile){
-       let techtile = null;
-       for(let item of this.player.techTiles){
-         if(item.techId === this.request.techTileID){
-           techtile = item;
-         }
-       }
+    //  if(this.request.specialActionSource === SpecialActionSource.TechTile){
+    //    let techtile = null;
+    //    for(let item of this.player.techTiles){
+    //      if(item.techId === this.request.techTileID){
+    //        techtile = item;
+    //      }
+    //    }
 
-       if(techtile !== null && techtile.benefit.trigger === Trigger.Special){
-             this.player.onBenefit(techtile.benefit);
+    //    if(techtile !== null && techtile.benefit.trigger === Trigger.Special){
+    //          this.player.onBenefit(techtile.benefit);
 
-       }
+    //    }
 
-     }
+    //  }
 
-    return true;
+    // return true;
+
+    let list = this.player.getExistPowerList()
+    console.log("Begin use special power, The play have special power "+ list)
+    let specialId:number 
+    specialId = list.pop()
+    console.log("For testing, it will only use the first special power " + specialId)
+    this.player.useSpecialPower(specialId)
   }
 
   public free(){

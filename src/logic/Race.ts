@@ -650,6 +650,27 @@ public setPlanetType(playerPlanet: PlanetType) {
       }
     }
 
+    public checkSpecialPower(){
+      let hasSpecialPower:boolean =false
+      for(let i = 0; i < this.specialPowers.length; i++){
+        let temp = this.specialPowers[i];
+        console.log("index: " + i + "; effect: " + temp.id + "; ifGet: " + temp.ifGet + "; ifUsable: " + temp.ifUsable);
+        if (temp.ifGet&& temp.ifUsable)
+          hasSpecialPower =true
+      }
+      return hasSpecialPower
+    }
+
+    public getExistPowerList(){
+      let list:number[] = new Array()
+      for(let i = 0; i < this.specialPowers.length; i++){
+        let temp = this.specialPowers[i];
+        if (temp.ifGet&& temp.ifUsable)
+          list.push(i)
+      } 
+      return list
+    }
+
     /**
      * Use the special power
      * @param id 
@@ -665,6 +686,8 @@ public setPlanetType(playerPlanet: PlanetType) {
       }
       this.onBenefit(this.specialPowers[id].benefit);
       this.specialPowers[id].ifUsable = false;
+      console.log("Turn off special power " + id + " Now: index: " + id + "; ifGet: " + this.specialPowers[id].ifGet + "; ifUsable: " + this.specialPowers[id].ifUsable);
+      
       return true;
     }
 
@@ -1093,9 +1116,11 @@ public setPlanetType(playerPlanet: PlanetType) {
       // // for default income for race board
       // let benefits = this.incomes;
       // //roundBooster
+      console.log("This is incoming Phase for Player "+ this.pid)
       this.roundBoosterBenefits = [];
       let list = this.roundBooster.benefit;
       for(let benefit of list){
+        console.log("Player have roundbooster "+ benefit.values)
           this.getRoundBoosterBenefit(benefit);
       }
 

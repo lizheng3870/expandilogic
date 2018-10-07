@@ -388,9 +388,7 @@ console.log( stack )
       let player = this.players[this.turn];
       let action = new Action(this, player, request)
       if(action.checkValid()){
-        console.log(111)
          action.doAction();
-         console.log(222)
          if(request.actionType === ActionType.Free || request.actionType === ActionType.Special ||
             (request.actionType === ActionType.PowerAndQIC && request.techLane === TechLaneType.Dig ) ){
               // can not to next turn
