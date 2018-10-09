@@ -2,10 +2,10 @@
   "name": "@expandi/expandi_logic",
   "version": "1.0.0",
   "description": "logic for expandi game",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "pretest": "npm run compile",
-    "build": "react-scripts-ts build",
+    "build": "tsc",
     "compile": "tsc",
     "test": "lab -l --timeout 10000 -S ./dist/tests",
     "eject": "react-scripts-ts eject"
