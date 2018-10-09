@@ -1,6 +1,6 @@
 {
   "name": "@expandi/expandi_logic",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "logic for expandi game",
   "main": "dist/index.js",
   "scripts": {
