@@ -30,14 +30,6 @@ function setPower(p:Player, bowl1?:number, bowl2?:number, bowl3?:number){
     }
 }
 
-describe('experiment', () => {
-    before(() => {});
-
-    it('verifies 1 equals 1', () => {
-        expect(1).to.equal(1);
-    });
-});
-
 describe('Basic Game Tests', () => {
     let g: Game
     beforeEach(() => {
