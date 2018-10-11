@@ -296,7 +296,7 @@ class Action {
             const planet = this.board.getPlanet(hex);
             // Satellites cannot be placed on planets
             if(planet.playerID !== this.player.pid){
-              // console.log("planet pid is: " + planet.playerID + "; pid is: " + this.player.pid + "***************************");
+              console.log("planet pid is: " + planet.playerID + "; pid is: " + this.player.pid + "***************************");
               this.message = "there is another players planet on the path";
               return false;
             } //player does not own planet buiding

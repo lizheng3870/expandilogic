@@ -29,7 +29,9 @@ describe('Player Actions Tests', () => {
     g.techBoard = new TechBoard(false);
     g.setPlayerNum(playernum);
     g.addPlayer(CreatePlayer('Play' + 0, 0)); 
-    g.addPlayer(CreatePlayer('Play' + 1, 3)); 
+    console.log("Player is a RaceType.Terrans " + RaceType.Terrans)
+    g.addPlayer(CreatePlayer('Play' + 1, 9)); 
+    console.log("Player is a RaceType.Ivits " + RaceType.Ivits)
 
     let player = g.players[0]
     //loop to pick random booster
@@ -44,7 +46,7 @@ describe('Player Actions Tests', () => {
     request = new Request()
     request.type = RequestType.Roundbooter
     request.pid = player.pid;;
-    request.roundBoosterID = 6; //Roundbooster which has special power
+    request.roundBoosterID = 4; //Roundbooster which has special power
     g.processRoundRooter(request)
     console.log("Player #" + request.pid + " pick roundBoosterID " + request.roundBoosterID)
   });
@@ -52,26 +54,30 @@ describe('Player Actions Tests', () => {
 
   //Begin Play
   it('New Game Start', () => {
-  
+    let request = new Request()
+
       let current_player = g.turn
-      let player = g.players[current_player];
-      let request = new Request()
-      player.roundBooster = g.roundBoosters[3]
-      request.type = RequestType.Action
+      let player = g.players[0]
       console.log("*************************************")
-
-
-      request.actionType = 6; // Special action
-      request.pid = player.pid;
       player.printSpecialPower()
-      console.log("player.specialDig "  + player.specialDig)
-
+      console.log("................player.specialDig "  + player.specialDig)
       console.log("................Test using Special Action")
       let list = player.getExistPowerList()
       player.useSpecialPower(list.pop())
-
       console.log("................After Special Action")
-      console.log("player.specialDig "  + player.specialDig)
+      console.log("................player.specialDig "  + player.specialDig)
+      player.printSpecialPower()
+      console.log("*************************************")
+
+      player = g.players[1]
+      console.log("*************************************")
+      player.printSpecialPower()
+      console.log("................player.specialRange "  + player.specialRange)
+      console.log("................Test using Special Action")
+      list = player.getExistPowerList()
+      player.useSpecialPower(list.pop())
+      console.log("................After Special Action")
+      console.log("................player.specialRange "  + player.specialRange)
       player.printSpecialPower()
       console.log("*************************************")
       // g.processPlayerRequest(request)

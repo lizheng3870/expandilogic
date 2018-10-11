@@ -16,7 +16,7 @@ import {Action, ActionType} from './Action'
 import {StructureStatus} from './Structure'
 import {Store} from './Store'
 import { FederationLib } from './Federation';
-
+import { Planet } from '../logic/Planet';
 import GFirebase from './GFirebase';
 
 
@@ -621,7 +621,26 @@ console.log( stack )
 
     }
 
-
+    public getPlayAvailablePlanetList (){
+      var playAvailablePlanetMap = new Map();
+      var playAvailablePlanetList: Array<Planet>;
+      for (let i = 0; i < this.board.planets.length; i++) {
+        // console.log(g.board.planets[i]);
+        for (let j = 0; j < this.players.length; j++) {
+          if (this.board.planets[i].type == this.players[j].planetType) {
+            // console.log("Planet type: "+g.board.planets[i].type+ "Player plant type: "+  g.players[j].planetType+ "Player's race type" + g.players[j].raceType);
+            if (!playAvailablePlanetMap.has(j))
+              playAvailablePlanetList = new Array();
+            else {
+              playAvailablePlanetList = playAvailablePlanetMap.get(j);
+            }
+            playAvailablePlanetList.push(this.board.planets[i]);
+            playAvailablePlanetMap.set(j, playAvailablePlanetList)
+          }
+        }
+      }
+      return playAvailablePlanetMap
+    }
 
 
 
