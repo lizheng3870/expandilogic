@@ -1,7 +1,8 @@
-import {Merchandise, Exchange} from './Exchange';
-import { Material } from "./Benefit";
+import {Merchandise, Exchange,} from './Exchange';
+import { Material, Count } from "./Benefit";
 import { Player } from "./Player";
-
+import TechTile from './TechTiles';
+import { Federation } from './Federation';
 enum StoreMerchandiseType{
   Pw7sci3, // id 0
   Pw5dig2, // id 1
@@ -31,18 +32,28 @@ class Store{
     public exchanges: Merchandise[];
 
     // qic item
+    public qic2vp:Merchandise;
     public qic4tile:Merchandise;
     public qic3fed:Merchandise;
-    public qic2vp:Merchandise;
+   
+
+
 
     constructor(){
           // qic item
         this.qic2vp = new Merchandise(Material.QIC, Material.VP, 2, 3);
         this.qic2vp.available = true;
-        this.qic3fed = new Merchandise(Material.QIC,Material.Feds, 3, 1);
+        this.qic3fed = new Merchandise(Material.QIC,Material.FederationToken, 3, 1);
         this.qic3fed.available = true;
-        this.qic4tile = new Merchandise(Material.QIC,Material.techtile, 4, 1);
+        this.qic4tile = new Merchandise(Material.QIC,Material.Techtile, 4, 1);
         this.qic4tile.available = true;
+
+
+     //   this.qic3fed = new MerchandiseForFederation(Material.QIC,Federation[1],3,1);
+     //   this.qic3fed.available = true;
+     //   this.qic4tile = new MerchandiseForTechTile(Material.QIC,TechTile[1],4,1);
+     //   this.qic4tile.available = true;
+
 
         this.pw7sci3 = new Merchandise(Material.Power, Material.Science, 7, 3);
         this.pw7sci3.available = true;
@@ -179,17 +190,16 @@ class Store{
 
          // qic item
          if(type == StoreMerchandiseType.qic2vp){
-             console.log("in the Store")
             good = this.qic2vp
             get = Material.VP
         }
         if(type == StoreMerchandiseType.qic3fed){
             good = this.qic3fed
-            get = Material.Feds 
+            get = Material.FederationToken 
         }
         if(type == StoreMerchandiseType.qic4tile){
             good = this.qic4tile
-            get = Material.techtile
+            get = Material.Techtile
         }
 
         if(good === null) {// if not find the type of trading
@@ -207,7 +217,6 @@ class Store{
 
         //check if you have enough resources
         if(type == StoreMerchandiseType.qic2vp || type == StoreMerchandiseType.qic3fed || type == StoreMerchandiseType.qic4tile){
-           console.log("check qic number")
             if(player.qic < totalGive){
                 console.log("not enough qic");
                 return;
@@ -217,10 +226,9 @@ class Store{
         player.spendQic(totalGive);
         good.available = false;
 
-        console.log("add vp step")
-        if(get == Material.Feds) player.federations += totalGet;
-        if(get == Material.VP) player.vp += totalGet + player.numGaia;
-        if(get == Material.techtile) player.techTiles += totalGet;
+        if(get == Material.FederationToken) player.federations += totalGet;
+        if(get == Material.VP) player.vp += totalGet + Count.PlanetTypes;
+        if(get == Material.Techtile) player.techTiles += totalGet;
         }
     
         if(type == StoreMerchandiseType.Pw3dig1 || type == StoreMerchandiseType.Pw3pw2 || type == StoreMerchandiseType.Pw4gold7

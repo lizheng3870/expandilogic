@@ -1,5 +1,7 @@
 import { Material } from "./Benefit";
 import { Player } from "./Player";
+import { Federation } from "./Federation";
+import TechTile from "./TechTiles";
 
 /**
  * the class Merchandise
@@ -24,7 +26,6 @@ class Merchandise{
     this.numGet = numGet;
   }
 }
-
 
 
 /**
@@ -188,3 +189,4 @@ class Exchange{
 }
 
 export {Merchandise, Exchange}
+

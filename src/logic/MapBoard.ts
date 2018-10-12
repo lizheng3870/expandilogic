@@ -99,69 +99,42 @@ class MapBoard {
 
         var spaces0 = Space.spiral(centers[0], 2);
 
-
-        //spaces0[0].setPlanetType(PlanetType.Blue);
-        //spaces0[2].setPlanetType(PlanetType.Transdim);
         spaces0[4].setPlanetType(PlanetType.Blue);
         spaces0[6].setPlanetType(PlanetType.Brown);
         spaces0[9].setPlanetType(PlanetType.Red);
         spaces0[10].setPlanetType(PlanetType.Orange);
         spaces0[12].setPlanetType(PlanetType.Transdim);
         spaces0[18].setPlanetType(PlanetType.Yellow);
-       // spaces0[5].setPlanetType(PlanetType.White);
-      //  spaces0[8].setPlanetType(PlanetType.Red);
-       // console.log(spaces0)
+
        // this.randomRotation(spaces0);
         var spaces1 = Space.spiral(centers[1], 2);
 
-
-       // spaces1[0].setPlanetType(PlanetType.Yellow);
           spaces1[3].setPlanetType(PlanetType.White);
           spaces1[6].setPlanetType(PlanetType.Gaia);
           spaces1[8].setPlanetType(PlanetType.Blue);
           spaces1[9].setPlanetType(PlanetType.Yellow);
           spaces1[12].setPlanetType(PlanetType.Black);
           spaces1[15].setPlanetType(PlanetType.Transdim);
-      //  spaces1[1].setPlanetType(PlanetType.Yellow);
-      //  spaces1[2].setPlanetType(PlanetType.Gaia);
-      //  spaces1[3].setPlanetType(PlanetType.Yellow);
-      //  spaces1[4].setPlanetType(PlanetType.Transdim);
-      //  spaces1[5].setPlanetType(PlanetType.White);
-       //  spaces1[8].setPlanetType(PlanetType.Red);
-
+  
         // this.randomRotation(spaces1);
         //
         var spaces2 = Space.spiral(centers[2], 2);
-
-        //spaces2[0].setPlanetType(PlanetType.Red);
         spaces2[6].setPlanetType(PlanetType.Gaia);
         spaces2[8].setPlanetType(PlanetType.Orange);
         spaces2[9].setPlanetType(PlanetType.Yellow);
         spaces2[12].setPlanetType(PlanetType.Red);
         spaces2[13].setPlanetType(PlanetType.Transdim);
         spaces2[15].setPlanetType(PlanetType.White);
-       // spaces2[1].setPlanetType(PlanetType.Red);
-       // spaces2[3].setPlanetType(PlanetType.Gaia);
-       // spaces2[5].setPlanetType(PlanetType.White);
-       // spaces2[8].setPlanetType(PlanetType.Transdim);
-        //
+ 
         //
         // this.randomRotation(spaces2);
         var spaces3 = Space.spiral(centers[3], 2);
-      //  console.log(spaces3)
-       // spaces3[0].setPlanetType(PlanetType.White);
        spaces3[3].setPlanetType(PlanetType.Gaia);
        spaces3[6].setPlanetType(PlanetType.Yellow);
        spaces3[7].setPlanetType(PlanetType.Blue);
        spaces3[8].setPlanetType(PlanetType.Red);
        spaces3[13].setPlanetType(PlanetType.Transdim);
        spaces3[14].setPlanetType(PlanetType.Transdim);
-       // spaces3[1].setPlanetType(PlanetType.White);
-       // spaces3[3].setPlanetType(PlanetType.Transdim);
-       // spaces3[4].setPlanetType(PlanetType.Red);
-       // spaces3[5].setPlanetType(PlanetType.Yellow);
-       // spaces3[8].setPlanetType(PlanetType.Gaia);
-        //
         // this.randomRotation(spaces3)
         //
         //
@@ -174,75 +147,59 @@ class MapBoard {
         spaces4[12].setPlanetType(PlanetType.Yellow);
         spaces4[15].setPlanetType(PlanetType.Black);
         spaces4[16].setPlanetType(PlanetType.Orange);
-       // spaces4[0].setPlanetType(PlanetType.Gaia);
-       // spaces4[2].setPlanetType(PlanetType.Red);
-        //
         // this.randomRotation(spaces4)
         //
          var spaces5 = Space.spiral(centers[5], 2);
-       //  spaces5[7].setPlanetType(PlanetType.Yellow);
        spaces5[1].setPlanetType(PlanetType.Black);
        spaces5[3].setPlanetType(PlanetType.Gaia);
        spaces5[7].setPlanetType(PlanetType.Brown);
        spaces5[13].setPlanetType(PlanetType.White);
        spaces5[14].setPlanetType(PlanetType.Transdim);
        spaces5[16].setPlanetType(PlanetType.Orange);
-      //   spaces5[3].setPlanetType(PlanetType.Red);
-       //  spaces5[4].setPlanetType(PlanetType.Gaia);
-        //
+     
         // this.randomRotation(spaces5);
         //
         //
          var spaces6 = Space.spiral(centers[6], 2);
-       //  spaces6[3].setPlanetType(PlanetType.Yellow);
        spaces6[2].setPlanetType(PlanetType.Gaia);
        spaces6[4].setPlanetType(PlanetType.Blue);
        spaces6[6].setPlanetType(PlanetType.Brown);
        spaces6[10].setPlanetType(PlanetType.Transdim);
        spaces6[11].setPlanetType(PlanetType.Yellow);
        spaces6[14].setPlanetType(PlanetType.Transdim);
-       //  spaces6[4].setPlanetType(PlanetType.Transdim);
         //
         // this.randomRotation(spaces6);
         //
         //
          var spaces7 = Space.spiral(centers[7], 2);
-       //  spaces7[3].setPlanetType(PlanetType.Yellow);
        spaces7[1].setPlanetType(PlanetType.Gaia);
        spaces7[3].setPlanetType(PlanetType.Gaia);
        spaces7[5].setPlanetType(PlanetType.Red);
        spaces7[9].setPlanetType(PlanetType.Black);
        spaces7[14].setPlanetType(PlanetType.Brown);
        spaces7[17].setPlanetType(PlanetType.Transdim);
-       //  spaces7[4].setPlanetType(PlanetType.Transdim);
-        // spaces7[0].setPlanetType(PlanetType.Blue);
-        //
+     
         // this.randomRotation(spaces7)
         //
         //
          var spaces8 = Space.spiral(centers[8], 2);
-       //  spaces8[0].setPlanetType(PlanetType.Gaia);
        spaces8[1].setPlanetType(PlanetType.Orange);
        spaces8[3].setPlanetType(PlanetType.Brown);
        spaces8[5].setPlanetType(PlanetType.Red);
        spaces8[11].setPlanetType(PlanetType.Blue);
        spaces8[15].setPlanetType(PlanetType.Black);
        spaces8[18].setPlanetType(PlanetType.White);
-        // spaces8[2].setPlanetType(PlanetType.Red);
-        // spaces8[3].setPlanetType(PlanetType.Red);
-        //
+       
         // this.randomRotation(spaces8)
         //
          var spaces9 = Space.spiral(centers[9], 2);
-        // spaces9[3].setPlanetType(PlanetType.Yellow);
         spaces9[1].setPlanetType(PlanetType.Orange);
         spaces9[3].setPlanetType(PlanetType.Black);
         spaces9[5].setPlanetType(PlanetType.White);
         spaces9[8].setPlanetType(PlanetType.Transdim);
         spaces9[13].setPlanetType(PlanetType.Transdim);
         spaces9[15].setPlanetType(PlanetType.Blue);
-       //  spaces9[4].setPlanetType(PlanetType.Transdim);
-        //
+       
         // this.randomRotation(spaces9)
         //
           var spaces = spaces0.concat(spaces1);

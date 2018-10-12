@@ -7,7 +7,6 @@ class TechTile {
   public benefit: Benefit;
   public round: number; // Each special action can be used only once per round.
 
-
   constructor(techId: number){
     this.techId = techId;
   }

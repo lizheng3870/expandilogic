@@ -1,3 +1,6 @@
+
+import TechTile from "./TechTiles";
+import { Federation } from "./Federation";
 enum Material {
     Gold,
     Ore,
@@ -9,8 +12,8 @@ enum Material {
     Dig, // you can buy the dig chance from the store
     SpecialRange, // some special power or round booster can give you temporary range
     GaiaFormer, // the tech of Gaia will give the player new gaia former
-    techtile,
-    Feds,
+    Techtile,
+    FederationToken,
 }
 
 const enum Trigger {
